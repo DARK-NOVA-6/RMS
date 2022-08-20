@@ -4,7 +4,6 @@ import '../../Components/Drawer/Drawer.dart';
 import '../../Components/NavBar.dart';
 import '../NavBarPages/MainHome/MainHome.dart';
 import '../NavBarPages/Jobs/Jobs.dart';
-import '../NavBarPages/Pages.dart';
 import '../NavBarPages/Profile/Profile.dart';
 
 class Home extends StatefulWidget {
