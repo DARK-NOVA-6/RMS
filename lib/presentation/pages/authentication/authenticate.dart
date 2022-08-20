@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../components/my_elevated_button.dart';
+import '../../components/components.dart';
 import 'login.dart';
 import 'signup.dart';
 

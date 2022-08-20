@@ -6,7 +6,7 @@ class MainHome extends StatefulWidget implements Pages{
   const MainHome({Key? key}) : super(key: key);
 
   @override
-  String get label => 'main_home';
+  String get label => 'Main Home';
 
   @override
   State<MainHome> createState() => _MainHomeState();

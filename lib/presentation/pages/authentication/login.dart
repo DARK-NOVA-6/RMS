@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../components/my_elevated_button.dart';
-import '../../components/rounded_text_field.dart';
+import '../../components/components.dart';
 import '../home/home.dart';
 import 'signup.dart';
 
