@@ -19,7 +19,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-  }
+  }  
 
   int index = 0;
   List<Widget> icons = const [
