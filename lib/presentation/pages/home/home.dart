@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../Components/Drawer/Drawer.dart';
-import '../../Components/NavBar.dart';
-import '../NavBarPages/MainHome/MainHome.dart';
-import '../NavBarPages/Jobs/Jobs.dart';
-import '../NavBarPages/Profile/Profile.dart';
+import '../../components/drawer/drawer.dart';
+import '../../components/nav_bar.dart';
+import '../nav_bar_pages/jobs/jobs.dart';
+import '../nav_bar_pages/main_home/main_home.dart';
+import '../nav_bar_pages/profile/profile.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);

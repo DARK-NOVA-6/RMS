@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../Components/MyElevatedButton.dart';
-import '../../Components/RoundedTextField.dart';
+import '../../components/my_elevated_button.dart';
+import '../../components/rounded_text_field.dart';
+
 
 class Confirmation extends StatefulWidget {
   const Confirmation({Key? key,required this.tec}) : super(key: key);

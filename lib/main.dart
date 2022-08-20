@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:untitled/Pages/Authentication/Authenticate.dart';
+
+import 'presentation/pages/authentication/authenticate.dart';
+
+
 void main() {
   runApp(const MyApp());
 }
@@ -14,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
       ),
-      home: const Authinticate(),
+      home: const Authenticate(),
     );
   }
 }

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-import '../Pages.dart';
+import '../pages.dart';
 
 
 class Profile extends StatefulWidget implements Pages {
   const Profile({Key? key}) : super(key: key);
 
   @override
-  String get label => 'Profile';
+  String get label => 'profile';
 
   @override
   State<Profile> createState() => _ProfileState();

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../Pages/Authentication/Authenticate.dart';
-import 'DrawerHead.dart';
+import '../../Pages/Authentication/authenticate.dart';
+import 'drawer_head.dart';
 
 class TheDrawer extends StatelessWidget {
   const TheDrawer({
@@ -23,7 +23,7 @@ class TheDrawer extends StatelessWidget {
             ),
             tileColor: Colors.blueGrey[300],
             title: const Text(
-              'Jobs',
+              'jobs',
               style: TextStyle(
                 fontSize: 20,
               ),
@@ -31,7 +31,7 @@ class TheDrawer extends StatelessWidget {
             onTap: () async {
               await Navigator.of(context).push(
                 MaterialPageRoute(builder: (_)=>
-                  const Authinticate()
+                  const Authenticate()
                 )
               );
             },
@@ -53,7 +53,7 @@ class TheDrawer extends StatelessWidget {
             onTap: () async {
               Navigator.of(context).popUntil((route) => false);
               await Navigator.of(context).push(
-                  MaterialPageRoute(builder: (_) => const Authinticate()));
+                  MaterialPageRoute(builder: (_) => const Authenticate()));
             },
           ),
         ],

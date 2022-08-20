@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:untitled/Pages/Authentication/SignUp.dart';
-import 'package:untitled/Pages/Authentication/LogIn.dart';
 
-import '../../Components/MyElevatedButton.dart';
+import '../../components/my_elevated_button.dart';
+import 'login.dart';
+import 'signup.dart';
 
-class Authinticate extends StatefulWidget {
-  const Authinticate({Key? key}) : super(key: key);
+class Authenticate extends StatefulWidget {
+  const Authenticate({Key? key}) : super(key: key);
   final String title = 'Home';
   @override
-  State<Authinticate> createState() => _AuthinticateState();
+  State<Authenticate> createState() => _AuthenticateState();
 }
 
-class _AuthinticateState extends State<Authinticate> {
+class _AuthenticateState extends State<Authenticate> {
   final TextEditingController tecEmailSignUp = TextEditingController(),
       tecPassSignUp = TextEditingController(),
       tecEmailLogIn = TextEditingController(),

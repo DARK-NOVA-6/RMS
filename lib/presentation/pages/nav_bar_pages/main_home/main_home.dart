@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../Pages.dart';
+import '../pages.dart';
 
 class MainHome extends StatefulWidget implements Pages{
   const MainHome({Key? key}) : super(key: key);
 
   @override
-  String get label => 'MainHome';
+  String get label => 'main_home';
 
   @override
   State<MainHome> createState() => _MainHomeState();

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:untitled/Pages/Authentication/SignUp.dart';
-import 'package:untitled/Pages/Home/home.dart';
 
-import '../../Components/MyElevatedButton.dart';
-import '../../Components/RoundedTextField.dart';
+import '../../components/my_elevated_button.dart';
+import '../../components/rounded_text_field.dart';
+import '../home/home.dart';
+import 'signup.dart';
+
 
 class LogIn extends StatefulWidget {
   const LogIn({

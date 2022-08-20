@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../Pages.dart';
+import '../pages.dart';
 
 class Jobs extends StatefulWidget implements Pages{
   const Jobs({Key? key}) : super(key: key);
 
   @override
-  String get label => 'Jobs';
+  String get label => 'jobs';
 
   @override
   State<Jobs> createState() => _JobsState();
