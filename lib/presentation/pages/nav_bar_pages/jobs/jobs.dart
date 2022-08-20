@@ -6,7 +6,7 @@ class Jobs extends StatefulWidget implements Pages{
   const Jobs({Key? key}) : super(key: key);
 
   @override
-  String get label => 'jobs';
+  String get label => 'Jobs';
 
   @override
   State<Jobs> createState() => _JobsState();

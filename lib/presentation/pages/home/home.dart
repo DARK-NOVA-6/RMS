@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../components/drawer/drawer.dart';
-import '../../components/nav_bar.dart';
-import '../nav_bar_pages/jobs/jobs.dart';
-import '../nav_bar_pages/main_home/main_home.dart';
-import '../nav_bar_pages/profile/profile.dart';
+import '../../components/components.dart';
+import '../nav_bar_pages/pages.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -40,7 +37,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
       bottomNavigationBar: BottomNavBar(
         index: index,
@@ -48,11 +44,10 @@ class _HomeState extends State<Home> {
         icons: icons,
       ),
       drawer: const TheDrawer(),
-      appBar: AppBar(
-        title: Text(pages[index].label),
-        centerTitle: true,
-      ),
+      appBar: CustomeAppBar(label: pages[index].label),
       body: pages[index],
     );
   }
 }
+
+
