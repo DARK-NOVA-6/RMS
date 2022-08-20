@@ -10,7 +10,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return MaterialApp(
-      title: 'RMS  WTF Demo',
+      title: 'RMS what r u doing '
+          ' Demo',
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
       ),
