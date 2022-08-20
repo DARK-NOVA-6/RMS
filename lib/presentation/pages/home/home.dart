@@ -23,10 +23,10 @@ class _HomeState extends State<Home> {
     Icon(Icons.work_outline_rounded),
     Icon(Icons.person)
   ];
-  List pages = const [
-    MainHome(),
+  List pages =  [
+    const MainHome(),
     Jobs(),
-    Profile(),
+    const Profile(),
   ];
 
   void changeIndex(int value) {
