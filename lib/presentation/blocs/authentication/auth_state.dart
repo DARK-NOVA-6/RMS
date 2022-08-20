@@ -23,7 +23,11 @@ class SignedUpState extends AuthState {
   final User user;
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [user];
+
+  const SignedUpState({
+    required this.user,
+  });
 }
 
 class SigningInState extends AuthState {
@@ -36,6 +40,10 @@ class SignedInState extends AuthState {
 
   @override
   List<Object> get props => [];
+
+  const SignedInState({
+    required this.user,
+  });
 }
 
 class SignInErrorState extends AuthState {
@@ -43,6 +51,10 @@ class SignInErrorState extends AuthState {
 
   @override
   List<Object> get props => [];
+
+  const SignInErrorState({
+    required this.message,
+  });
 }
 
 class SignUpErrorState extends AuthState {
@@ -50,6 +62,10 @@ class SignUpErrorState extends AuthState {
 
   @override
   List<Object> get props => [];
+
+  const SignUpErrorState({
+    required this.message,
+  });
 }
 
 class ConfCodeErrorState extends AuthState {
@@ -57,4 +73,8 @@ class ConfCodeErrorState extends AuthState {
 
   @override
   List<Object> get props => [];
+
+  const ConfCodeErrorState({
+    required this.message,
+  });
 }
