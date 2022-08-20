@@ -31,7 +31,16 @@ class _LogInState extends State<LogIn> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: Text(
+          widget.title,
+          style: const TextStyle(
+            color: Colors.redAccent,
+            fontWeight: FontWeight.bold,
+            fontSize: 24,
+          ),
+        ),
         centerTitle: true ,
       ),
       body: Center(
@@ -42,7 +51,7 @@ class _LogInState extends State<LogIn> {
               controller: widget.tecEmailLogIn,
               email: true,
               icon: Icons.mail,
-              color: Colors.blueGrey,
+              color: Colors.redAccent,
               secColor: Colors.white,
               hintText: 'Email',
             ),
@@ -53,7 +62,7 @@ class _LogInState extends State<LogIn> {
               controller: widget.tecPassLogIn,
               pass: true,
               icon:Icons.lock,
-              color: Colors.blueGrey,
+              color: Colors.redAccent,
               secColor: Colors.white,
               hintText: 'Password',
             ),

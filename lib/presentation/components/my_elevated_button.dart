@@ -5,7 +5,7 @@ class MyElevatedButton extends StatelessWidget {
     Key? key,
     required this.text,
     required this.press,
-    this.color = Colors.blueGrey,
+    this.color = Colors.redAccent,
     this.textColor = Colors.white,
     this.h = 0.05,
     this.w = 0.5,

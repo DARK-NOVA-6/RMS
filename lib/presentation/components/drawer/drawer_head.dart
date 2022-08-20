@@ -11,7 +11,7 @@ class DrawerHead extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     return DrawerHeader(
       decoration: const BoxDecoration(
-        color: Colors.blueGrey,
+        color: Colors.redAccent,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,

@@ -7,6 +7,7 @@ import 'signup.dart';
 class Authenticate extends StatefulWidget {
   const Authenticate({Key? key}) : super(key: key);
   final String title = 'Home';
+
   @override
   State<Authenticate> createState() => _AuthenticateState();
 }
@@ -16,6 +17,7 @@ class _AuthenticateState extends State<Authenticate> {
       tecPassSignUp = TextEditingController(),
       tecEmailLogIn = TextEditingController(),
       tecPassLogIn = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -26,52 +28,53 @@ class _AuthenticateState extends State<Authenticate> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
-        centerTitle: true ,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: Text(
+          widget.title,
+          style: const TextStyle(
+            color: Colors.redAccent,
+            fontWeight: FontWeight.bold,
+            fontSize: 24,
+          ),
+        ),
+        centerTitle: true,
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             MyElevatedButton(
-              text:'Log In',
+              text: 'Log In',
               press: () async {
-                Navigator.of(context)
-                  .push(
-                    MaterialPageRoute(builder: (_) =>
-                      LogIn(
-                        tecEmailLogIn: tecEmailLogIn,
-                        tecPassLogIn: tecPassLogIn,
-                        tecEmailSignUp: tecEmailSignUp,
-                        tecPassSignUp: tecPassSignUp,
-                      )
-                    )
-                  );
-                },
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (_) => LogIn(
+                          tecEmailLogIn: tecEmailLogIn,
+                          tecPassLogIn: tecPassLogIn,
+                          tecEmailSignUp: tecEmailSignUp,
+                          tecPassSignUp: tecPassSignUp,
+                        )));
+              },
               w: 0.35,
             ),
             SizedBox(
-              height: size.height*0.02,
+              height: size.height * 0.02,
             ),
             MyElevatedButton(
-              text:'Sign Up',
-              press:() async {
-                Navigator.of(context)
-                  .push(
-                    MaterialPageRoute(
-                      builder: (_) => SignUp(
-                        tecEmailLogIn: tecEmailLogIn,
-                        tecPassLogIn: tecPassLogIn,
-                        tecEmailSignUp: tecEmailSignUp,
-                        tecPassSignUp: tecPassSignUp,
-                      )
-                    )
-                  );
-                },
+              text: 'Sign Up',
+              press: () async {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (_) => SignUp(
+                          tecEmailLogIn: tecEmailLogIn,
+                          tecPassLogIn: tecPassLogIn,
+                          tecEmailSignUp: tecEmailSignUp,
+                          tecPassSignUp: tecPassSignUp,
+                        )));
+              },
               w: 0.35,
             ),
             SizedBox(
-              height: size.height*0.02,
+              height: size.height * 0.02,
             ),
           ],
         ),

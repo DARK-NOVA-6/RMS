@@ -9,7 +9,7 @@ class RoundedTextField extends StatelessWidget {
     this.email = false,
     this.code = false,
     this.icon = Icons.person,
-    this.color = Colors.blue,
+    this.color = Colors.redAccent,
     this.secColor = Colors.white,
     this.hintText = 'input here',
     this.w = 0.7,

@@ -20,7 +20,7 @@ class TheDrawer extends StatelessWidget {
               Icons.work_outline_rounded,
               color: Colors.black,
             ),
-            tileColor: Colors.blueGrey[300],
+            tileColor: Colors.redAccent[300],
             title: const Text(
               'jobs',
               style: TextStyle(
@@ -36,7 +36,7 @@ class TheDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            tileColor: Colors.blueGrey[700],
+            tileColor: Colors.red[700],
             contentPadding: const EdgeInsets.symmetric(horizontal: 100),
             title: const Text(
               'Log-out',

@@ -17,7 +17,7 @@ class CustomeAppBar extends StatelessWidget with PreferredSizeWidget {
           child: IconButton(
             icon: const Icon(
               Icons.notifications,
-              color: Colors.blueGrey,
+              color: Colors.redAccent,
               size: 30,
             ),
             onPressed: () {},
@@ -31,7 +31,7 @@ class CustomeAppBar extends StatelessWidget with PreferredSizeWidget {
             return IconButton(
               icon: const Icon(
                 Icons.menu,
-                color: Colors.blueGrey,
+                color: Colors.redAccent,
               ),
               onPressed: () {
                 Scaffold.of(context).openDrawer();
@@ -46,7 +46,7 @@ class CustomeAppBar extends StatelessWidget with PreferredSizeWidget {
       title: Text(
         label,
         style: const TextStyle(
-          color: Colors.blueGrey,
+          color: Colors.redAccent,
           fontSize: 24,
           fontWeight: FontWeight.bold,
         ),

@@ -26,7 +26,16 @@ class _ConfirmationState extends State<Confirmation> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: Text(
+          widget.title,
+          style: const TextStyle(
+            color: Colors.redAccent,
+            fontWeight: FontWeight.bold,
+            fontSize: 24,
+          ),
+        ),
         centerTitle: true,
       ),
       body: Center(
@@ -50,7 +59,7 @@ class _ConfirmationState extends State<Confirmation> {
                 style: const TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
-                  color: Colors.blue
+                  color: Colors.red
                 ),
               ),
             ),
@@ -61,7 +70,7 @@ class _ConfirmationState extends State<Confirmation> {
               controller: tecCCode,
               code: true,
               icon: Icons.code,
-              color: Colors.blueGrey,
+              color: Colors.redAccent,
               secColor: Colors.white,
               hintText: 'Verification Code',
             ),
