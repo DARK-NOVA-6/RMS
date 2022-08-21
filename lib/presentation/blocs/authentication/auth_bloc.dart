@@ -17,8 +17,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final SignInEmailAndPassword signInEmailAndPassword;
   final LogOut logOut;
 
-  // Stream<User> get user => userGetter;
-
   AuthBloc({
     required this.signUpEmailPassword,
     required this.signInEmailAndPassword,

@@ -13,6 +13,7 @@ abstract class AuthenticationRepo {
     required String password,
   });
 
-
   Future<Either<Failure, void>> logOut();
+
+  Stream<User> get connectedUser;
 }

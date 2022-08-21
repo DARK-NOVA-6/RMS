@@ -1,4 +1,5 @@
 import 'package:untitled/data/models/user_model.dart';
+import 'package:untitled/presentation/blocs/authentication/auth_bloc.dart';
 
 import '../../../core/errors/exceptions/authentication_exception.dart';
 import '../../../domain/entities/user.dart' as user_ent;
@@ -17,6 +18,8 @@ abstract class AuthenticationRemote {
     required String email,
     required String password,
   });
+
+  Stream<user_ent.User> get connectedUser ;
 }
 
 class FirebaseAuthentication extends AuthenticationRemote {
@@ -34,7 +37,8 @@ class FirebaseAuthentication extends AuthenticationRemote {
     try {
       final userCredential = await firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
-      return Future<user_ent.User>.value(UserModel.fromSnap(userCredential));
+      return Future<user_ent.User>.value(
+          UserModel.fromFirebaseUserCredential(userCredential));
     } on FirebaseAuthException {
       throw EmailAndPasswordNotMatchedException();
     } catch (e) {
@@ -55,7 +59,7 @@ class FirebaseAuthentication extends AuthenticationRemote {
     try {
       final userCredential = firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
-      final user = UserModel.fromSnap(await userCredential);
+      final user = UserModel.fromFirebaseUserCredential(await userCredential);
       return Future<user_ent.User>.value(user);
     } on FirebaseAuthException catch (e) {
       if (e.message == 'weak-password') {
@@ -71,4 +75,9 @@ class FirebaseAuthentication extends AuthenticationRemote {
       throw UnexpectedException();
     }
   }
+
+  @override
+  // TODO: implement connectedUser
+  Stream<user_ent.User> get connectedUser => throw UnimplementedError();
+
 }

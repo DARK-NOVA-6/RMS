@@ -62,4 +62,10 @@ class AuthenticationUsingTwoSteps extends AuthenticationRepo {
     }
     return Future<Either<Failure, user_ent.User>>.value(Left(failure));
   }
+
+  @override
+  // TODO: implement connectedUser
+  Stream<user_ent.User> get connectedUser => throw UnimplementedError();
+
+
 }
