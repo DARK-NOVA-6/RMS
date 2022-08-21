@@ -43,7 +43,8 @@ dependencies:
   firebase_auth: ^3.6.4
   cloud_firestore: ^3.4.5
   flutter_bloc: ^7.0.1
-
+  dartz: ^0.10.1
+  string_validator: ^0.3.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
