@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:untitled/presentation/blocs/authentication/auth_bloc.dart';
 
 import '../../components/components.dart';
 import '../home/home.dart';
 import 'signup.dart';
-
 
 class LogIn extends StatefulWidget {
   const LogIn({
@@ -14,8 +15,11 @@ class LogIn extends StatefulWidget {
     required this.tecPassSignUp,
   }) : super(key: key);
   final String title = 'Log In';
-  final TextEditingController tecEmailLogIn, tecPassLogIn,
-      tecEmailSignUp, tecPassSignUp;
+  final TextEditingController tecEmailLogIn,
+      tecPassLogIn,
+      tecEmailSignUp,
+      tecPassSignUp;
+
   @override
   State<LogIn> createState() => _LogInState();
 }
@@ -41,7 +45,7 @@ class _LogInState extends State<LogIn> {
             fontSize: 24,
           ),
         ),
-        centerTitle: true ,
+        centerTitle: true,
       ),
       body: Center(
         child: Column(
@@ -56,33 +60,30 @@ class _LogInState extends State<LogIn> {
               hintText: 'Email',
             ),
             SizedBox(
-              height: size.height*0.02,
+              height: size.height * 0.02,
             ),
             RoundedTextField(
               controller: widget.tecPassLogIn,
               pass: true,
-              icon:Icons.lock,
+              icon: Icons.lock,
               color: Colors.redAccent,
               secColor: Colors.white,
               hintText: 'Password',
             ),
             SizedBox(
-              height: size.height*0.04,
+              height: size.height * 0.04,
             ),
             MyElevatedButton(
-              text:'Log In',
-              press:() async {
+              text: 'Log In',
+              press: () async {
                 Navigator.of(context).popUntil((route) => false);
                 await Navigator.of(context)
-                    .push(MaterialPageRoute(
-                      builder: (_) => const Home()
-                  )
-                );
+                    .push(MaterialPageRoute(builder: (_) => const Home()));
               },
               w: 0.35,
             ),
             SizedBox(
-              height: size.height*0.02,
+              height: size.height * 0.02,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -94,20 +95,21 @@ class _LogInState extends State<LogIn> {
                   ),
                 ),
                 TextButton(
-                  onPressed: () async {
-                    await Navigator.of(context)
-                        .push(
-                        MaterialPageRoute(builder: (_) =>
-                            SignUp(
-                              tecEmailSignUp: widget.tecEmailSignUp,
-                              tecPassSignUp: widget.tecPassSignUp,
-                              tecEmailLogIn: widget.tecEmailLogIn,
-                              tecPassLogIn: widget.tecPassLogIn,
-                            )
-                        )
-                    );
+                  onPressed: () {
+                    BlocProvider.of<AuthBloc>(context).add(GetSignUpEvent());
+                    // await Navigator.of(context)
+                    //     .push(
+                    //     MaterialPageRoute(builder: (_) =>
+                    //         SignUp(
+                    //           tecEmailSignUp: widget.tecEmailSignUp,
+                    //           tecPassSignUp: widget.tecPassSignUp,
+                    //           tecEmailLogIn: widget.tecEmailLogIn,
+                    //           tecPassLogIn: widget.tecPassLogIn,
+                    //         )
+                    //     )
+                    // );
                     // ignore: use_build_context_synchronously
-                    Navigator.of(context).pop();
+                    // Navigator.of(context).pop();
                   },
                   child: const Text(
                     'Sign-up',

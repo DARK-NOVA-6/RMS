@@ -3,7 +3,7 @@ import 'package:untitled/core/errors/failures/failure.dart';
 import 'package:untitled/domain/entities/entities.dart';
 
 abstract class AuthenticationRepo {
-  Future<Either<Failure, void>> signUpEmailAndPassword({
+  Future<Either<Failure, User>> signUpEmailAndPassword({
     required String email,
     required String password,
   });
@@ -13,9 +13,6 @@ abstract class AuthenticationRepo {
     required String password,
   });
 
-  Future<Either<Failure, User>> submitConfCode({
-    required String code,
-  });
 
   Future<Either<Failure, void>> logOut();
 }

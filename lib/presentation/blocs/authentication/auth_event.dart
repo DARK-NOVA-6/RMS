@@ -14,7 +14,7 @@ class GetSignUpEvent extends AuthEvent {
   List<Object?> get props => [];
 }
 
-class GetConfCodeEvent extends AuthEvent {
+class SignUpEvent extends AuthEvent {
   final String email;
   final String password;
   final String confPassword;
@@ -26,7 +26,7 @@ class GetConfCodeEvent extends AuthEvent {
         confPassword,
       ];
 
-  const GetConfCodeEvent({
+  const SignUpEvent({
     required this.email,
     required this.password,
     required this.confPassword,
@@ -46,16 +46,5 @@ class LoginEvent extends AuthEvent {
   const LoginEvent({
     required this.email,
     required this.password,
-  });
-}
-
-class SubmitConfCodeEvent extends AuthEvent {
-  final String code;
-
-  @override
-  List<Object?> get props => throw UnimplementedError();
-
-  const SubmitConfCodeEvent({
-    required this.code,
   });
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:untitled/presentation/blocs/authentication/auth_bloc.dart';
 
 import '../../components/components.dart';
 import 'login.dart';
@@ -46,14 +48,17 @@ class _AuthenticateState extends State<Authenticate> {
           children: <Widget>[
             MyElevatedButton(
               text: 'Log In',
-              press: () async {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (_) => LogIn(
-                          tecEmailLogIn: tecEmailLogIn,
-                          tecPassLogIn: tecPassLogIn,
-                          tecEmailSignUp: tecEmailSignUp,
-                          tecPassSignUp: tecPassSignUp,
-                        )));
+              press: () {
+                BlocProvider.of<AuthBloc>(context).add(GetSignInEvent());
+                // Navigator.of(context).push(MaterialPageRoute(
+                //   builder: (_) => LogIn(
+                //     tecEmailLogIn: tecEmailLogIn,
+                //     tecPassLogIn: tecPassLogIn,
+                //     tecEmailSignUp: tecEmailSignUp,
+                //     tecPassSignUp: tecPassSignUp,
+                //   ),
+                // ),
+                // ),
               },
               w: 0.35,
             ),
@@ -62,14 +67,15 @@ class _AuthenticateState extends State<Authenticate> {
             ),
             MyElevatedButton(
               text: 'Sign Up',
-              press: () async {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (_) => SignUp(
-                          tecEmailLogIn: tecEmailLogIn,
-                          tecPassLogIn: tecPassLogIn,
-                          tecEmailSignUp: tecEmailSignUp,
-                          tecPassSignUp: tecPassSignUp,
-                        )));
+              press: () {
+                BlocProvider.of<AuthBloc>(context).add(GetSignUpEvent());
+                // Navigator.of(context).push(MaterialPageRoute(
+                //     builder: (_) => SignUp(
+                //           tecEmailLogIn: tecEmailLogIn,
+                //           tecPassLogIn: tecPassLogIn,
+                //           tecEmailSignUp: tecEmailSignUp,
+                //           tecPassSignUp: tecPassSignUp,
+                //         )));
               },
               w: 0.35,
             ),
