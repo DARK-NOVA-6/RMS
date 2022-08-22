@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:string_validator/string_validator.dart';
@@ -21,14 +23,32 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     required this.signUpEmailPassword,
     required this.signInEmailAndPassword,
     required this.logOut,
-  }) : super(AuthInitial()) {
-    on<GetSignUpEvent>((event, emit) => emit(SigningUpState()));
-    on<GetSignInEvent>((event, emit) => emit(SigningInState()));
+    required AuthState initialState,
+  }) : super(initialState) {
+    on<GetSignUpEvent>((event, emit) async {
+      emit(Loading());
+      await Future.delayed(const Duration(microseconds: 200));
+      emit(SigningUpState());
+    });
+    on<GetSignInEvent>((event, emit) async {
+      print('get log in');
+      emit(Loading());
+      await Future.delayed(const Duration(microseconds: 200));
+      emit(SigningInState());
+    });
     on<SignUpEvent>(signUpEventHandle);
     on<LoginEvent>(loginEventHandle);
+    on<LogOutEvent>((event, emit) async {
+      print('logging out ..!');
+      await logOut();
+      emit(AuthInitial());
+    });
   }
 
   void signUpEventHandle(SignUpEvent event, Emitter emit) async {
+    print('sign up..!');
+    emit(Loading());
+    await Future.delayed(const Duration(microseconds: 200));
     if (event.confPassword != event.password) {
       emit(const SignUpErrorState(message: 'pass dif from conf pass'));
     } else if (!isEmail(event.email)) {

@@ -77,7 +77,7 @@ class _SignUpState extends State<SignUp> {
                   SignUpEvent(
                     email: widget.controllers.tecEmailSignUp.text,
                     password: widget.controllers.tecPassSignUp.text,
-                    confPassword: widget.controllers.tecConfPassSignUp.text,
+                    confPassword: widget.controllers.tecPassSignUp.text,
                   ),
                 );
               },

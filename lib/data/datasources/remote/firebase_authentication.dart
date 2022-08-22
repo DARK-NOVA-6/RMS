@@ -19,7 +19,7 @@ abstract class AuthenticationRemote {
     required String password,
   });
 
-  Stream<user_ent.User> get connectedUser ;
+  Stream<user_ent.User> get connectedUser;
 }
 
 class FirebaseAuthentication extends AuthenticationRemote {
@@ -62,11 +62,12 @@ class FirebaseAuthentication extends AuthenticationRemote {
       final user = UserModel.fromFirebaseUserCredential(await userCredential);
       return Future<user_ent.User>.value(user);
     } on FirebaseAuthException catch (e) {
-      if (e.message == 'weak-password') {
+      print(e.message);
+      if (e.code == 'weak-password') {
         throw WeakPasswordException();
-      } else if (e.message == 'invalid-email') {
+      } else if (e.code == 'invalid-email') {
         throw InvalidEmailException();
-      } else if (e.message == 'email-already-in-use') {
+      } else if (e.code == 'email-already-in-use') {
         throw EmailAlreadyExistException();
       } else {
         throw UnexpectedException();
@@ -77,7 +78,7 @@ class FirebaseAuthentication extends AuthenticationRemote {
   }
 
   @override
-  // TODO: implement connectedUser
-  Stream<user_ent.User> get connectedUser => throw UnimplementedError();
-
+  Stream<user_ent.User> get connectedUser => firebaseAuth
+      .authStateChanges()
+      .map((user) => UserModel.fromFirebaseUser(user));
 }

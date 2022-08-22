@@ -68,13 +68,7 @@ class SignUpErrorState extends AuthState {
   });
 }
 
-class ConfCodeErrorState extends AuthState {
-  final String message;
-
+class Loading extends AuthState {
   @override
   List<Object> get props => [];
-
-  const ConfCodeErrorState({
-    required this.message,
-  });
 }

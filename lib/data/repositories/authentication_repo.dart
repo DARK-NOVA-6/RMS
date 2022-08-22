@@ -64,8 +64,5 @@ class AuthenticationUsingTwoSteps extends AuthenticationRepo {
   }
 
   @override
-  // TODO: implement connectedUser
-  Stream<user_ent.User> get connectedUser => throw UnimplementedError();
-
-
+  Stream<user_ent.User> get connectedUser => authenticationRemote.connectedUser;
 }

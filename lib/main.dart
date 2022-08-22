@@ -7,24 +7,31 @@ import 'package:untitled/presentation/blocs/authentication/auth_bloc.dart';
 import 'domain/entities/user.dart' as user_ent;
 import 'data/datasources/remote/firebase_authentication.dart';
 import 'data/repositories/authentication_repo.dart';
+import 'domain/usecases/authentication/get_connected_user.dart';
 import 'domain/usecases/authentication/log_out.dart';
 import 'domain/usecases/authentication/sign_in_email_password.dart';
 import 'domain/usecases/authentication/sign_up_email_password.dart';
+import 'presentation/components/restart_widget.dart';
 import 'presentation/wrapper.dart';
 import 'presentation/controllers/controllers.dart';
+
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
-  runApp(MyApp());
+  await FirebaseAuth.instance.signOut();
+  runApp(
+    RestartWidget(
+      child: MyApp(),
+    ),
+  );
 }
-
-
 
 class MyApp extends StatelessWidget {
   late final AuthenticationUsingTwoSteps authenticationUsingTwoSteps;
   late final AuthBloc authBloc;
+  late final GetConnectedUser getConnectedUser;
   final Controllers controllers = Controllers();
 
   MyApp({Key? key}) : super(key: key) {
@@ -39,6 +46,20 @@ class MyApp extends StatelessWidget {
       signInEmailAndPassword:
           SignInEmailAndPassword(authenticationUsingTwoSteps),
       logOut: LogOut(authenticationUsingTwoSteps),
+      initialState:
+          UserModel.fromFirebaseUser(FirebaseAuth.instance.currentUser).id == ''
+              ? AuthInitial()
+              : SignedInState(
+                  user: UserModel.fromFirebaseUser(
+                      FirebaseAuth.instance.currentUser)),
+    );
+
+    getConnectedUser = GetConnectedUser(
+      AuthenticationUsingTwoSteps(
+        authenticationRemote: FirebaseAuthentication(
+          firebaseAuth: FirebaseAuth.instance,
+        ),
+      ),
     );
   }
 
@@ -47,14 +68,11 @@ class MyApp extends StatelessWidget {
     return StreamProvider<user_ent.User>.value(
       initialData:
           UserModel.fromFirebaseUser(FirebaseAuth.instance.currentUser),
-      value: Stream<user_ent.User>.value(
-        UserModel.fromFirebaseUser(FirebaseAuth.instance.currentUser),
-      ),
+      value: getConnectedUser.connectedUser,
       child: Wrapper(
-          authBloc: authBloc,
-          controllers: controllers,
+        authBloc: authBloc,
+        controllers: controllers,
       ),
     );
   }
 }
-

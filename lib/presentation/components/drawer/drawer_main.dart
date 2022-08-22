@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../Pages/Authentication/authenticate.dart';
+import '../../blocs/authentication/auth_bloc.dart';
+import '../restart_widget.dart';
 import 'drawer_head.dart';
 
 class TheDrawer extends StatelessWidget {
@@ -29,10 +32,7 @@ class TheDrawer extends StatelessWidget {
             ),
             onTap: () async {
               await Navigator.of(context).push(
-                MaterialPageRoute(builder: (_)=>
-                  const Authenticate()
-                )
-              );
+                  MaterialPageRoute(builder: (_) => const Authenticate()));
             },
           ),
           ListTile(
@@ -50,9 +50,11 @@ class TheDrawer extends StatelessWidget {
               color: Colors.white,
             ),
             onTap: () async {
-              Navigator.of(context).popUntil((route) => false);
-              await Navigator.of(context).push(
-                  MaterialPageRoute(builder: (_) => const Authenticate()));
+              BlocProvider.of<AuthBloc>(context).add(LogOutEvent());
+              RestartWidget.restartApp(context);
+              // Navigator.of(context).popUntil((route) => route is AuthBloc);
+              // await Navigator.of(context).push(
+              //     MaterialPageRoute(builder: (_) => const Authenticate()));
             },
           ),
         ],

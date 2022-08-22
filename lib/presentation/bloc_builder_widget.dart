@@ -12,13 +12,28 @@ class BlocBuilderWidget extends StatelessWidget {
   const BlocBuilderWidget({
     Key? key,
     required this.controllers,
+    required this.initialState,
   }) : super(key: key);
 
   final Controllers controllers;
+  final AuthState initialState;
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthBloc, AuthState>(
+    return BlocConsumer<AuthBloc, AuthState>(
+      listener: (context, state) {
+        if (state is SignUpErrorState) {
+          print(state.message);
+        } else if (state is SignInErrorState) {
+          print(state.message);
+        } else if (state is SignedUpState) {
+          print('new account has been registered ${state.user.id}');
+        } else if (state is SignedUpState) {
+          print('welcome ${state.user.id}');
+        } else if (state is AuthInitial) {
+          print ('initial');
+        }
+      },
       builder: (context, state) {
         if (state is AuthInitial) {
           return const Authenticate();
@@ -52,6 +67,8 @@ class BlocBuilderWidget extends StatelessWidget {
             // hasPopup: true,
             // popupWidget: Popup(),
           );
+        } else if (state is Loading) {
+          return const Text('Wait for it!!');
         } else {
           return const Text('unexpected state!');
         }
