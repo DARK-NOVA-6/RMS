@@ -49,7 +49,7 @@ class _SignUpState extends State<SignUp> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             RoundedTextField(
-              controller: widget.tecEmailSignUp,
+              controller: widget.controllers.tecEmailSignUp,
               email: true,
               icon: Icons.mail,
               color: Colors.redAccent,
@@ -60,7 +60,7 @@ class _SignUpState extends State<SignUp> {
               height: size.height * 0.02,
             ),
             RoundedTextField(
-              controller: widget.tecPassSignUp,
+              controller: widget.controllers.tecPassSignUp,
               pass: true,
               icon: Icons.lock,
               color: Colors.redAccent,
@@ -75,9 +75,9 @@ class _SignUpState extends State<SignUp> {
               press: () {
                 BlocProvider.of<AuthBloc>(context).add(
                   SignUpEvent(
-                    email: widget.tecEmailSignUp.text,
-                    password: widget.tecPassSignUp.text,
-                    confPassword: widget.tecPassSignUp.text,
+                    email: widget.controllers.tecEmailSignUp.text,
+                    password: widget.controllers.tecPassSignUp.text,
+                    confPassword: widget.controllers.tecConfPassSignUp.text,
                   ),
                 );
               },
