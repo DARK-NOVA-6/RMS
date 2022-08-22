@@ -46,6 +46,7 @@ dependencies:
   dartz: ^0.10.1
   string_validator: ^0.3.0
   firebase_core: ^1.21.0
+  readmore: ^2.2.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

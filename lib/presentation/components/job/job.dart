@@ -36,39 +36,50 @@ class JobWidget extends StatelessWidget {
           Container(
             child: Text(job.jobDescription.summary),
           ),
-          Container(
-            child: const Text('Educational Qualification:'),
-          ),
-          Column(
-            children: job.jobDescription.eduQualification
-                .map((item) => Text(item))
-                .toList(),
-          ),
-          Container(
-            child: const Text('Experience:'),
-          ),
-          Column(
-            children: job.jobDescription.experience
-                .map((item) => Text(item))
-                .toList(),
-          ),
-          Container(
-            child: const Text('Skills:'),
-          ),
-          Column(
-            children:
-                job.jobDescription.skills
+          ExpansionTile(
+            expandedAlignment: Alignment.topLeft,
+            expandedCrossAxisAlignment: CrossAxisAlignment.start,
+            childrenPadding: const EdgeInsets.only(left: 20),
+            tilePadding: const EdgeInsets.only(left: 0),
+            leading: const Icon(
+              Icons.info_outline,
+              color: Colors.redAccent,
+            ),
+            title: const Text('Job Details:'),
+            children: [
+              Container(
+                child: const Text('Educational Qualification:'),
+              ),
+              Column(
+                children: job.jobDescription.eduQualification
                     .map((item) => Text(item))
                     .toList(),
-          ),
-          Container(
-            child: const Text('Languages:'),
-          ),
-          Column(
-            children:
-                job.jobDescription.languages
+              ),
+              Container(
+                child: const Text('Experience:'),
+              ),
+              Column(
+                children: job.jobDescription.experience
                     .map((item) => Text(item))
                     .toList(),
+              ),
+              Container(
+                child: const Text('Skills:'),
+              ),
+              Column(
+                children: job.jobDescription.skills
+                    .map((item) => Text(item))
+                    .toList(),
+              ),
+              Container(
+                child: const Text('Languages:'),
+              ),
+              Column(
+                children: job.jobDescription.languages
+                    .map((item) => Text(item))
+                    .toList(),
+              ),
+            ],
           ),
         ],
       ),

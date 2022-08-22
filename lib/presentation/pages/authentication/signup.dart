@@ -3,22 +3,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../blocs/authentication/auth_bloc.dart';
 import '../../components/components.dart';
-import 'confirmation_code.dart';
-import 'login.dart';
+import '../../controllers/controllers.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({
     Key? key,
-    required this.tecEmailSignUp,
-    required this.tecPassSignUp,
-    required this.tecEmailLogIn,
-    required this.tecPassLogIn,
+    required this.controllers,
+    this.popupWidget = const Center(),
+    this.hasPopup = false,
   }) : super(key: key);
   final String title = 'Sign Up';
-  final TextEditingController tecEmailLogIn,
-      tecPassLogIn,
-      tecEmailSignUp,
-      tecPassSignUp;
+  final Controllers controllers;
+  final bool hasPopup;
+  final Widget popupWidget;
 
   @override
   State<SignUp> createState() => _SignUpState();
@@ -52,7 +49,7 @@ class _SignUpState extends State<SignUp> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             RoundedTextField(
-              controller: widget.tecEmailSignUp,
+              controller: widget.controllers.tecEmailSignUp,
               email: true,
               icon: Icons.mail,
               color: Colors.redAccent,
@@ -63,7 +60,7 @@ class _SignUpState extends State<SignUp> {
               height: size.height * 0.02,
             ),
             RoundedTextField(
-              controller: widget.tecPassSignUp,
+              controller: widget.controllers.tecPassSignUp,
               pass: true,
               icon: Icons.lock,
               color: Colors.redAccent,
@@ -76,20 +73,13 @@ class _SignUpState extends State<SignUp> {
             MyElevatedButton(
               text: 'Sign Up',
               press: () {
-                BlocProvider.of<AuthBloc>(context).add(SignUpEvent(
-                  email: widget.tecEmailSignUp.text,
-                  password: widget.tecPassSignUp.text,
-                  confPassword: widget.tecPassSignUp.text,
-                ));
-
-                // await Navigator.of(context)
-                //   .push(
-                // MaterialPageRoute(builder: (_) =>
-                //            Confirmation(
-                //              tec: widget.tecEmailSignUp,
-                //            )
-                //        )
-                //    );
+                BlocProvider.of<AuthBloc>(context).add(
+                  SignUpEvent(
+                    email: widget.controllers.tecEmailSignUp.text,
+                    password: widget.controllers.tecPassSignUp.text,
+                    confPassword: widget.controllers.tecConfPassSignUp.text,
+                  ),
+                );
               },
               w: 0.35,
             ),
@@ -107,20 +97,9 @@ class _SignUpState extends State<SignUp> {
                 ),
                 TextButton(
                   onPressed: () {
-                    BlocProvider.of<AuthBloc>(context).add(GetSignInEvent());
-                    // await Navigator.of(context)
-                    //     .push(
-                    //       MaterialPageRoute(builder: (_) =>
-                    //         LogIn(
-                    //           tecEmailSignUp: widget.tecEmailSignUp,
-                    //           tecPassSignUp: widget.tecPassSignUp,
-                    //           tecEmailLogIn: widget.tecEmailLogIn,
-                    //           tecPassLogIn: widget.tecPassLogIn,
-                    //         )
-                    //       )
-                    //     );
-                    // ignore: use_build_context_synchronously
-                    // Navigator.of(context).pop();
+                    BlocProvider.of<AuthBloc>(context).add(
+                      GetSignInEvent(),
+                    );
                   },
                   child: const Text(
                     'Log-in',
