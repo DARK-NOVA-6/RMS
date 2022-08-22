@@ -13,6 +13,10 @@ class LogIn extends StatefulWidget {
     required this.tecPassLogIn,
     required this.tecEmailSignUp,
     required this.tecPassSignUp,
+    this.popup = false,
+    this.popupText = '',
+    this.popupActions = const [],
+    this.popupOnPressActions = const [],
   }) : super(key: key);
   final String title = 'Log In';
   final TextEditingController tecEmailLogIn,
@@ -20,6 +24,10 @@ class LogIn extends StatefulWidget {
       tecEmailSignUp,
       tecPassSignUp;
 
+  final bool popup;
+  final String popupText;
+  final List<String> popupActions;
+  final List popupOnPressActions;
   @override
   State<LogIn> createState() => _LogInState();
 }
