@@ -12,18 +12,22 @@ class Jobs extends StatefulWidget implements Pages {
   String get label => 'Jobs';
 
   Job job = Job(
-      id: '1',
-      companyName: 'Company Name',
-      jobDescription: const JobDescription(
-        title: 'Job Title',
-        eduQualification: ['edu1','edu2'],
-        experience: ['exp1','exp2'],
-        languages: ['languages1','languages2'],
-        skills: ['skills1','skills2','skills3'],
-        summary: 'summary summary summary summary summary',
-      ),
-      publishedTime: DateTime.now(),
+    id: '1',
+    companyName: 'Company Name',
+    jobDescription: const JobDescription(
+      title: 'Job Title',
+      eduQualification: ['edu1', 'edu2'],
+      experience: ['exp1', 'exp2'],
+      languages: ['languages1', 'languages2'],
+      skills: ['skills1', 'skills2', 'skills3'],
+      summary: 'summary sum mary summary summary summary'
+          'asddddddddddddddd   ddddddddddddd   ddddddddddddddddddddddddddd'
+          'asddddddddddd   ddddddddddd   ddddddddddd ddddddasdddddddddas'
+          'asdasdas   dasdasdasdas   dasdasdasdasdasd',
+    ),
+    publishedTime: DateTime.now(),
   );
+
   @override
   State<Jobs> createState() => _JobsState();
 }
@@ -33,7 +37,7 @@ class _JobsState extends State<Jobs> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 3,
-      animationDuration: const  Duration(milliseconds: 600),
+      animationDuration: const Duration(milliseconds: 600),
       child: Scaffold(
         appBar: const TabBar(
           labelColor: Colors.redAccent,
@@ -49,13 +53,48 @@ class _JobsState extends State<Jobs> {
         ),
         body: TabBarView(
           children: [
-            Center(
-              child: JobWidget(
-                job: widget.job,
-              ),
+            ListView(
+              padding: const EdgeInsets.all(8),
+              children: [
+                JobWidget(
+                  job: widget.job,
+                ),
+                JobWidget(
+                  job: widget.job,
+                ),
+              ],
             ),
-            const Center(child: Text('Unavailable')),
-            const Center(child: Text('Applied')),
+            ListView(
+              padding: const EdgeInsets.all(8),
+              children: [
+                JobWidget(
+                  job: widget.job,
+                ),
+                JobWidget(
+                  job: widget.job,
+                ),
+                JobWidget(
+                  job: widget.job,
+                ),
+                JobWidget(
+                  job: widget.job,
+                ),
+              ],
+            ),
+            ListView(
+              padding: const EdgeInsets.all(8),
+              children: [
+                JobWidget(
+                  job: widget.job,
+                ),
+                JobWidget(
+                  job: widget.job,
+                ),
+                JobWidget(
+                  job: widget.job,
+                ),
+              ],
+            ),
           ],
         ),
       ),
