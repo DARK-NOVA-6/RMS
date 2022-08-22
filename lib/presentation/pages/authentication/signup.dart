@@ -3,28 +3,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../blocs/authentication/auth_bloc.dart';
 import '../../components/components.dart';
+import '../../controllers/controllers.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({
     Key? key,
-    required this.tecEmailSignUp,
-    required this.tecPassSignUp,
-    required this.tecEmailLogIn,
-    required this.tecPassLogIn,
-    this.popupText = '',
-    this.popupActions = const [],
-    this.popupOnPressActions = const [],
-    this.popup = false,
+    required this.controllers,
+    this.popupWidget = const Center(),
+    this.hasPopup = false,
   }) : super(key: key);
   final String title = 'Sign Up';
-  final TextEditingController tecEmailLogIn,
-      tecPassLogIn,
-      tecEmailSignUp,
-      tecPassSignUp;
-  final bool popup;
-  final String popupText;
-  final List<String> popupActions;
-  final List popupOnPressActions;
+  final Controllers controllers;
+  final bool hasPopup;
+  final Widget popupWidget;
 
   @override
   State<SignUp> createState() => _SignUpState();

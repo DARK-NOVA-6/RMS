@@ -1,33 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:untitled/presentation/blocs/authentication/auth_bloc.dart';
+import 'package:untitled/presentation/controllers/controllers.dart';
 
 import '../../components/components.dart';
+import '../../controllers/controllers.dart';
 import '../home/home.dart';
-import 'signup.dart';
 
 class LogIn extends StatefulWidget {
   const LogIn({
     Key? key,
-    required this.tecEmailLogIn,
-    required this.tecPassLogIn,
-    required this.tecEmailSignUp,
-    required this.tecPassSignUp,
+    required this.controllers,
+    this.popupWidget = const Center(),
     this.popup = false,
-    this.popupText = '',
-    this.popupActions = const [],
-    this.popupOnPressActions = const [],
   }) : super(key: key);
   final String title = 'Log In';
-  final TextEditingController tecEmailLogIn,
-      tecPassLogIn,
-      tecEmailSignUp,
-      tecPassSignUp;
-
+  final Controllers controllers;
   final bool popup;
-  final String popupText;
-  final List<String> popupActions;
-  final List popupOnPressActions;
+  final Widget popupWidget;
+
   @override
   State<LogIn> createState() => _LogInState();
 }
@@ -60,7 +51,7 @@ class _LogInState extends State<LogIn> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             RoundedTextField(
-              controller: widget.tecEmailLogIn,
+              controller: widget.controllers.tecEmailLogIn,
               email: true,
               icon: Icons.mail,
               color: Colors.redAccent,
@@ -71,7 +62,7 @@ class _LogInState extends State<LogIn> {
               height: size.height * 0.02,
             ),
             RoundedTextField(
-              controller: widget.tecPassLogIn,
+              controller: widget.controllers.tecPassLogIn,
               pass: true,
               icon: Icons.lock,
               color: Colors.redAccent,
@@ -105,19 +96,6 @@ class _LogInState extends State<LogIn> {
                 TextButton(
                   onPressed: () {
                     BlocProvider.of<AuthBloc>(context).add(GetSignUpEvent());
-                    // await Navigator.of(context)
-                    //     .push(
-                    //     MaterialPageRoute(builder: (_) =>
-                    //         SignUp(
-                    //           tecEmailSignUp: widget.tecEmailSignUp,
-                    //           tecPassSignUp: widget.tecPassSignUp,
-                    //           tecEmailLogIn: widget.tecEmailLogIn,
-                    //           tecPassLogIn: widget.tecPassLogIn,
-                    //         )
-                    //     )
-                    // );
-                    // ignore: use_build_context_synchronously
-                    // Navigator.of(context).pop();
                   },
                   child: const Text(
                     'Sign-up',
