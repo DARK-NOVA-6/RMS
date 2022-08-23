@@ -1,5 +1,5 @@
-import 'package:untitled/core/errors/failures/authentication_failures.dart';
-import 'package:untitled/core/errors/failures/failure.dart';
+import '../failures/authentication_failures.dart';
+import '../failures/failure.dart';
 
 abstract class AuthenticationException implements Exception {
   AuthenticationException({required this.failure});
@@ -24,7 +24,7 @@ class EmailAndPasswordNotMatchedException extends AuthenticationException {
       : super(failure: const EmailAndPasswordNotMatched());
 }
 
-class UnexpectedException extends AuthenticationException {
-  UnexpectedException({Failure failure = const Unexpected()})
+class UnexpectedAuthException extends AuthenticationException {
+  UnexpectedAuthException({Failure failure = const Unexpected()})
       : super(failure: failure);
 }

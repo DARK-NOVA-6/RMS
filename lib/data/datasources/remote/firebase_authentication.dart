@@ -1,7 +1,7 @@
 import 'package:untitled/data/models/user_model.dart';
 import 'package:untitled/presentation/blocs/authentication/auth_bloc.dart';
 
-import '../../../core/errors/exceptions/authentication_exception.dart';
+import '../../../core/errors/exceptions/authentication_exceptions.dart';
 import '../../../domain/entities/user.dart' as user_ent;
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -42,7 +42,7 @@ class FirebaseAuthentication extends AuthenticationRemote {
     } on FirebaseAuthException {
       throw EmailAndPasswordNotMatchedException();
     } catch (e) {
-      throw UnexpectedException();
+      throw UnexpectedAuthException();
     }
   }
 
@@ -70,10 +70,10 @@ class FirebaseAuthentication extends AuthenticationRemote {
       } else if (e.code == 'email-already-in-use') {
         throw EmailAlreadyExistException();
       } else {
-        throw UnexpectedException();
+        throw UnexpectedAuthException();
       }
     } on Exception {
-      throw UnexpectedException();
+      throw UnexpectedAuthException();
     }
   }
 

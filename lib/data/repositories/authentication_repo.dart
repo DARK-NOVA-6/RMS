@@ -1,12 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:untitled/core/errors/exceptions/authentication_exception.dart';
-
-import 'package:untitled/core/errors/failures/failure.dart';
-import 'package:untitled/core/errors/failures/authentication_failures.dart';
-
+import '../../core/errors/exceptions/authentication_exceptions.dart';
+import '../../core/errors/failures/failure.dart';
 import '../../domain/repositories/authentication_repo.dart';
 import '../datasources/remote/firebase_authentication.dart';
-
 import '../../domain/entities/user.dart' as user_ent;
 
 class AuthenticationUsingTwoSteps extends AuthenticationRepo {

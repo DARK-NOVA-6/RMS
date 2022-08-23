@@ -1,7 +1,7 @@
 import 'job.dart';
 
-class RecommendedJob extends Job {
-  const RecommendedJob({
+class UnavailableJob extends Job {
+  const UnavailableJob({
     required super.id,
     required super.companyName,
     required super.jobDescription,
@@ -10,10 +10,10 @@ class RecommendedJob extends Job {
 
   @override
   List<Object?> get props => [
-        id,
-        companyName,
-        jobDescription,
-        publishedTime,
-      ];
+    id,
+    companyName,
+    jobDescription,
+    publishedTime,
+  ];
 }
 

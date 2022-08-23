@@ -7,3 +7,7 @@ abstract class Failure extends Equatable {
   @override
   List<Object?> get props => [message];
 }
+
+class Unexpected extends Failure {
+  const Unexpected({String message = 'Unexpected'}) : super(message);
+}

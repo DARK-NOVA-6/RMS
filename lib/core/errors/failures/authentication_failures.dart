@@ -1,4 +1,4 @@
-import 'package:untitled/core/errors/failures/failure.dart';
+import 'failure.dart';
 
 class PassNotMatchedConfPass extends Failure {
   const PassNotMatchedConfPass() : super('PassNotMatchedConfPass');
@@ -18,8 +18,4 @@ class InvalidEmail extends Failure {
 
 class EmailAndPasswordNotMatched extends Failure {
   const EmailAndPasswordNotMatched() : super('EmailAndPasswordNotMatched');
-}
-
-class Unexpected extends Failure {
-  const Unexpected({String message = 'Unexpected'}) : super(message);
 }

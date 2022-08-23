@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:string_validator/string_validator.dart';
-import 'package:untitled/core/errors/failures/authentication_failures.dart';
 
+import '../../../core/errors/failures/authentication_failures.dart';
 import '../../../domain/entities/user.dart';
 import '../../../domain/usecases/authentication/log_out.dart';
 import '../../../domain/usecases/authentication/sign_in_email_password.dart';

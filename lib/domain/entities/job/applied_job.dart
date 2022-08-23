@@ -1,7 +1,7 @@
 import 'job.dart';
 
-class RecommendedJob extends Job {
-  const RecommendedJob({
+class AppliedJob extends Job {
+  const AppliedJob({
     required super.id,
     required super.companyName,
     required super.jobDescription,
@@ -16,4 +16,3 @@ class RecommendedJob extends Job {
         publishedTime,
       ];
 }
-
