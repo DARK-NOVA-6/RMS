@@ -43,7 +43,7 @@ class _HomeState extends State<Home> {
         changeIndex: changeIndex,
         icons: icons,
       ),
-      drawer: const TheDrawer(),
+      // drawer: const TheDrawer(),
       appBar: CustomeAppBar(label: pages[index].label),
       body: pages[index],
     );
