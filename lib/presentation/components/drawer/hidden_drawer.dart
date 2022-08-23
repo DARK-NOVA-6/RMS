@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hidden_drawer_menu/hidden_drawer_menu.dart';
 import 'package:untitled/presentation/Pages/home/home.dart';
 
+import '../../pages/home/test.dart';
+
 class HiddenDrawer extends StatefulWidget {
   const HiddenDrawer({Key? key}) : super(key: key);
 
@@ -14,6 +16,7 @@ class _HiddenDrawerState extends State<HiddenDrawer> {
 
   @override
   void initState() {
+    super.initState();
     _pages = [
       ScreenHiddenDrawer(
         ItemHiddenMenu(
@@ -21,17 +24,24 @@ class _HiddenDrawerState extends State<HiddenDrawer> {
           baseStyle: const TextStyle(),
           selectedStyle: const TextStyle(),
         ),
-        const Home(),
+        const Test(),
+      ),
+      ScreenHiddenDrawer(
+        ItemHiddenMenu(
+          name: 'Home',
+          baseStyle: const TextStyle(),
+          selectedStyle: const TextStyle(),
+        ),
+        const Test(),
       ),
     ];
-    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return HiddenDrawerMenu(
       screens: _pages,
-      backgroundColorMenu: Colors.redAccent.shade100,
+      backgroundColorMenu: Colors.redAccent,
       initPositionSelected: 0,
     );
   }
