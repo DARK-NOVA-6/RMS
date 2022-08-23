@@ -15,12 +15,14 @@ import 'presentation/components/restart_widget.dart';
 import 'presentation/wrapper.dart';
 import 'presentation/controllers/controllers.dart';
 
-
+import 'temp_back.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await FirebaseAuth.instance.signOut();
+  // final temp = Temp();
+  // temp.getJob(id: 'c4btKeMdOAga0AjqiMet');
   runApp(
     RestartWidget(
       child: MyApp(),

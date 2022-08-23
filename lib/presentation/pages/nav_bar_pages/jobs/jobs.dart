@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled/presentation/components/job/job.dart';
 
@@ -25,7 +26,7 @@ class Jobs extends StatefulWidget implements Pages {
           'asddddddddddd   ddddddddddd   ddddddddddd ddddddasdddddddddas'
           'asdasdas   dasdasdasdas   dasdasdasdasdasd',
     ),
-    publishedTime: DateTime.now(),
+    publishedTime: Timestamp.now(),
   );
 
   @override

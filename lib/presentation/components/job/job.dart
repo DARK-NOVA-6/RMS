@@ -34,7 +34,7 @@ class JobWidget extends StatelessWidget {
                   fontSize: 20,
                 ),
               ),
-              Text(DateFormat.yMMMEd().format(job.publishedTime)),
+              Text(DateFormat.yMMMEd().format(job.publishedTime.toDate())),
             ],
           ),
           Center(
