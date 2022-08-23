@@ -5,7 +5,6 @@ import 'package:untitled/presentation/controllers/controllers.dart';
 
 import '../../components/components.dart';
 import '../../controllers/controllers.dart';
-import '../home/home.dart';
 
 class LogIn extends StatefulWidget {
   const LogIn({
@@ -77,7 +76,7 @@ class _LogInState extends State<LogIn> {
               press: () async {
                 Navigator.of(context).popUntil((route) => false);
                 await Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (_) => const Home()));
+                    .push(MaterialPageRoute(builder: (_) => const HiddenDrawer()));
               },
               w: 0.35,
             ),

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hidden_drawer_menu/hidden_drawer_menu.dart';
-import 'package:untitled/presentation/components/components.dart';
 
 class CustomeAppBar extends StatelessWidget with PreferredSizeWidget {
-  const CustomeAppBar({
+   const CustomeAppBar({
     Key? key,
     required this.label,
   }) : super(key: key);
@@ -36,7 +35,7 @@ class CustomeAppBar extends StatelessWidget with PreferredSizeWidget {
                 color: Colors.redAccent,
               ),
               onPressed: () {
-
+                SimpleHiddenDrawerController.of(context).toggle();
               },
               tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
             );
