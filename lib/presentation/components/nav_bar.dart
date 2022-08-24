@@ -29,7 +29,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       child: CurvedNavigationBar(
         onTap: widget.changeIndex,
         index: widget.index,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.transparent,
         color: Colors.redAccent,
         items: widget.icons,
       ),

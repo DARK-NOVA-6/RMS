@@ -3,6 +3,8 @@ import '../../../domain/entities/entities.dart';
 import 'package:readmore/readmore.dart';
 import 'package:intl/intl.dart';
 
+import 'costum_expansion_tile.dart';
+
 class JobWidget extends StatelessWidget {
   const JobWidget({Key? key, required this.job}) : super(key: key);
 
@@ -26,31 +28,40 @@ class JobWidget extends StatelessWidget {
         children: <Widget>[
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(
-                job.companyName,
-                style: const TextStyle(
-                  fontSize: 20,
+              TextButton(
+                onPressed: () {},
+                child: Text(
+                  job.companyName,
+                  style: const TextStyle(fontSize: 22),
                 ),
               ),
-              Text(DateFormat.yMMMEd().format(job.publishedTime.toDate())),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  DateFormat.yMMMEd().format(job.publishedTime.toDate()),
+                  style: const TextStyle(fontSize: 16),
+                ),
+              ),
             ],
           ),
-          Center(
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 8),
+          TextButton(
+            onPressed: () {},
+            child: Center(
               child: Text(
                 job.jobDescription.title,
-                style: const TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 22, color: Colors.black54),
               ),
             ),
           ),
           Container(
+            padding: const EdgeInsets.all(10),
             child: ReadMoreText(
               job.jobDescription.summary,
               trimMode: TrimMode.Line,
               trimLines: 3,
+              style: const TextStyle(fontSize: 16),
               lessStyle: const TextStyle(
                 color: Colors.redAccent,
                 fontSize: 18,
@@ -62,55 +73,7 @@ class JobWidget extends StatelessWidget {
               trimExpandedText: ' show less',
             ),
           ),
-          ExpansionTile(
-            expandedAlignment: Alignment.topLeft,
-            expandedCrossAxisAlignment: CrossAxisAlignment.start,
-            childrenPadding: const EdgeInsets.all(20).copyWith(top: 0),
-            tilePadding: const EdgeInsets.only(left: 0),
-            leading: const Icon(
-              Icons.info_outline,
-              color: Colors.redAccent,
-            ),
-            title: const Text('Job Details:'),
-            children: [
-              const Text('Educational Qualification:'),
-              Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Column(
-                  children: job.jobDescription.eduQualification
-                      .map((item) => Text(item))
-                      .toList(),
-                ),
-              ),
-              const Text('Experience:'),
-              Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Column(
-                  children: job.jobDescription.experience
-                      .map((item) => Text(item))
-                      .toList(),
-                ),
-              ),
-              const Text('Skills:'),
-              Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Column(
-                  children: job.jobDescription.skills
-                      .map((item) => Text(item))
-                      .toList(),
-                ),
-              ),
-              const Text('Languages:'),
-              Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Column(
-                  children: job.jobDescription.languages
-                      .map((item) => Text(item))
-                      .toList(),
-                ),
-              ),
-            ],
-          ),
+          CustomExpansionTile(job: job),
         ],
       ),
     );

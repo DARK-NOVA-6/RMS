@@ -40,6 +40,7 @@ class _JobsState extends State<Jobs> {
       length: 3,
       animationDuration: const Duration(milliseconds: 600),
       child: Scaffold(
+        extendBody: true,
         appBar: const TabBar(
           labelColor: Colors.redAccent,
           isScrollable: true,
