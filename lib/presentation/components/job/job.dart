@@ -78,7 +78,7 @@ class JobWidget extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 10),
                 child: Column(
                   children: job.jobDescription.eduQualification
-                      .map((item) => Text(item))
+                      .map((item) => Text(item.value))
                       .toList(),
                 ),
               ),
@@ -87,7 +87,7 @@ class JobWidget extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 10),
                 child: Column(
                   children: job.jobDescription.experience
-                      .map((item) => Text(item))
+                      .map((item) => Text(item.value))
                       .toList(),
                 ),
               ),
@@ -96,7 +96,7 @@ class JobWidget extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 10),
                 child: Column(
                   children: job.jobDescription.skills
-                      .map((item) => Text(item))
+                      .map((item) => Text(item.value))
                       .toList(),
                 ),
               ),
@@ -105,7 +105,7 @@ class JobWidget extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 10),
                 child: Column(
                   children: job.jobDescription.languages
-                      .map((item) => Text(item))
+                      .map((item) => Text(item.value))
                       .toList(),
                 ),
               ),

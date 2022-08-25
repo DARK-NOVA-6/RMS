@@ -11,14 +11,18 @@ class JobModel extends Job {
     required super.publishedTime,
   });
 
-  static Job fromSnapshot(Map<String, dynamic>? documentSnapshot) {
-    return Job(
-      id: 'id',
-      companyName: documentSnapshot!['companyName'],
-      jobDescription:
-          JobDescriptionModel.fromSnapshot(documentSnapshot['JobDescription']),
-      publishedTime: documentSnapshot['publishedTime'],
-    );
+  static Job? fromSnapshot(Map<String, dynamic>? documentSnapshot) {
+    try {
+      return Job(
+        id: 'id',
+        companyName: documentSnapshot!['companyName'],
+        jobDescription: JobDescriptionModel.fromSnapshot(
+            documentSnapshot['JobDescription'])!,
+        publishedTime: documentSnapshot['publishedTime'],
+      );
+    } catch (e) {
+      return null;
+    }
   }
 
   static Map<String, dynamic> toSnapshot(Job job) {
@@ -30,3 +34,4 @@ class JobModel extends Job {
     };
   }
 }
+

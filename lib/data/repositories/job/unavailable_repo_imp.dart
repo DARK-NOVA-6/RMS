@@ -17,7 +17,7 @@ class UnavailableRepoImp implements UnavailableRepo {
 
   @override
   Future<Either<Failure, List<UnavailableJob>>> fetch(
-      {required int skip, required int limit}) {
+      {required int limit}) {
     // TODO: implement fetch
     throw UnimplementedError();
   }
