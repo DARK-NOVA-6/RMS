@@ -24,13 +24,7 @@ class MenuPage extends StatefulWidget {
 }
 
 class _MenuPageState extends State<MenuPage> {
-  bool _val = false;
-
-  bool get val => _val;
-
-  set val(bool value) {
-    _val = value;
-  }
+  bool val = false;
 
   @override
   Widget build(BuildContext context) {
