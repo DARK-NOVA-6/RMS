@@ -94,10 +94,10 @@ class _MenuPageState extends State<MenuPage> {
                     child: Transform.scale(
                       scale: 2,
                       child: Switch(
-                        activeTrackColor: CustomeTheme.c2.withAlpha(100),
-                        activeColor: CustomeTheme.c2,
-                        inactiveTrackColor: CustomeTheme.c1.withAlpha(100),
-                        inactiveThumbColor: CustomeTheme.c1,
+                        activeTrackColor: CustomeTheme.c1.withAlpha(100),
+                        activeColor: CustomeTheme.c1,
+                        inactiveTrackColor: CustomeTheme.c2.withAlpha(100),
+                        inactiveThumbColor: CustomeTheme.c2,
                         onChanged: (bool value) => setState(
                           () {
                             themeNotifier.toggleTheme();
