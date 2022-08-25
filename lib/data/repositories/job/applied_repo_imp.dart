@@ -17,7 +17,7 @@ class AppliedRepoImp implements AppliedRepo {
 
   @override
   Future<Either<Failure, List<AppliedJob>>> fetch(
-      {required int skip, required int limit}) {
+      {required int limit}) {
     // TODO: implement fetch
     throw UnimplementedError();
   }

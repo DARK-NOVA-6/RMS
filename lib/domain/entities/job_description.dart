@@ -3,10 +3,10 @@ import 'package:equatable/equatable.dart';
 class JobDescription extends Equatable {
   final String title;
   final String summary;
-  final List<String> skills;
-  final List<String> eduQualification;
-  final List<String> experience;
-  final List<String> languages;
+  final List<DescriptionField> skills;
+  final List<DescriptionField> eduQualification;
+  final List<DescriptionField> experience;
+  final List<DescriptionField> languages;
 
   const JobDescription({
     required this.title,
@@ -26,4 +26,14 @@ class JobDescription extends Equatable {
         experience,
         languages,
       ];
+}
+
+class DescriptionField extends Equatable {
+  final String value;
+  final bool isRequired;
+
+  const DescriptionField({required this.value, required this.isRequired});
+
+  @override
+  List<Object?> get props => [value, isRequired];
 }

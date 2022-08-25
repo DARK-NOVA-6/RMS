@@ -17,10 +17,23 @@ class Jobs extends StatefulWidget implements Pages {
     companyName: 'Company Name',
     jobDescription: const JobDescription(
       title: 'Job Title',
-      eduQualification: ['edu1', 'edu2'],
-      experience: ['exp1', 'exp2'],
-      languages: ['languages1', 'languages2'],
-      skills: ['skills1', 'skills2', 'skills3'],
+      eduQualification: [
+        DescriptionField(value: 'edu1', isRequired: false),
+        DescriptionField(value: 'edu2', isRequired: false)
+      ],
+      experience: [
+        DescriptionField(value: 'exp1', isRequired: false),
+        DescriptionField(value: 'exp2', isRequired: false)
+      ],
+      languages: [
+        DescriptionField(value: 'languages1', isRequired: false),
+        DescriptionField(value: 'languages2', isRequired: false)
+      ],
+      skills: [
+        DescriptionField(value: 'skills1', isRequired: false),
+        DescriptionField(value: 'skills2', isRequired: false),
+        DescriptionField(value: 'skills3', isRequired: false)
+      ],
       summary: 'summary sum mary summary summary summary'
           'asddddddddddddddd   ddddddddddddd   ddddddddddddddddddddddddddd'
           'asddddddddddd   ddddddddddd   ddddddddddd ddddddasdddddddddas'
