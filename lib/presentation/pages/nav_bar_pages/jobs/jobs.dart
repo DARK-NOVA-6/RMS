@@ -55,7 +55,6 @@ class _JobsState extends State<Jobs> {
       child: Scaffold(
         extendBody: true,
         appBar: const TabBar(
-          labelColor: Colors.redAccent,
           isScrollable: true,
           labelStyle: TextStyle(
             fontSize: 20,

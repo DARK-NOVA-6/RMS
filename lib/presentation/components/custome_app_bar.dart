@@ -18,7 +18,6 @@ class CustomeAppBar extends StatelessWidget with PreferredSizeWidget {
           child: IconButton(
             icon: const Icon(
               Icons.notifications,
-              color: Colors.redAccent,
               size: 30,
             ),
             onPressed: () {},
@@ -32,7 +31,6 @@ class CustomeAppBar extends StatelessWidget with PreferredSizeWidget {
             return IconButton(
               icon: const Icon(
                 Icons.menu,
-                color: Colors.redAccent,
               ),
               onPressed: () {
                 ZoomDrawer.of(context)!.toggle();
@@ -46,10 +44,10 @@ class CustomeAppBar extends StatelessWidget with PreferredSizeWidget {
       elevation: 0,
       title: Text(
         label,
-        style: const TextStyle(
-          color: Colors.redAccent,
+        style: TextStyle(
           fontSize: 24,
           fontWeight: FontWeight.bold,
+          color: Theme.of(context).primaryColorLight,
         ),
       ),
       centerTitle: true,

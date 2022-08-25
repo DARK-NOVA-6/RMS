@@ -9,21 +9,24 @@ class RoundedTextField extends StatelessWidget {
     this.email = false,
     this.code = false,
     this.icon = Icons.person,
-    this.color = Colors.redAccent,
+    required this.color,
     this.secColor = Colors.white,
     this.hintText = 'input here',
     this.w = 0.7,
     this.h = 0.06,
   }) : super(key: key);
   final TextEditingController controller;
-  final bool pass,email,code;
+  final bool pass, email, code;
   final IconData icon;
-  final Color color,secColor;
+  final Color secColor,color;
   final String hintText;
-  final double w,h;
+  final double w, h;
+
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
+    final Size size = MediaQuery
+        .of(context)
+        .size;
     return Container(
       decoration: BoxDecoration(
         color: color,
@@ -39,22 +42,24 @@ class RoundedTextField extends StatelessWidget {
         borderRadius: const BorderRadius.all(Radius.circular(20)),
         child: TextFormField(
           keyboardType:
-            (email == true)? TextInputType.emailAddress:
-            (code == true)? TextInputType.number:null,
-          inputFormatters: (code==true)?[
+          (email == true) ? TextInputType.emailAddress :
+          (code == true) ? TextInputType.number : null,
+          inputFormatters: (code == true) ? [
             LengthLimitingTextInputFormatter(6),
             FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-          ]:[],
+          ] : [],
           controller: controller,
           obscureText: pass,
           autofocus: false,
           style: const TextStyle(
+            color: Colors.black,
             fontSize: 18,
           ),
           decoration: InputDecoration(
             icon: Icon(icon, color: secColor),
             hintText: hintText,
             fillColor: secColor,
+            hintStyle: const TextStyle(color: Colors.black),
             filled: true,
             contentPadding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
             border: OutlineInputBorder(

@@ -27,11 +27,6 @@ class _AuthenticateState extends State<Authenticate> {
         elevation: 0,
         title: Text(
           widget.title,
-          style: const TextStyle(
-            color: Colors.redAccent,
-            fontWeight: FontWeight.bold,
-            fontSize: 24,
-          ),
         ),
         centerTitle: true,
       ),

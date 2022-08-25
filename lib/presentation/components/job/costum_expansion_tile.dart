@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:untitled/provider/theme.dart';
 import '../../../domain/entities/entities.dart';
-
 
 // ignore: must_be_immutable
 class CustomExpansionTile extends StatelessWidget {
@@ -23,9 +23,15 @@ class CustomExpansionTile extends StatelessWidget {
       tilePadding: const EdgeInsets.only(left: 0),
       leading: const Icon(
         Icons.info_outline,
-        color: Colors.redAccent,
       ),
-      title: const Text('Job Details:', style: TextStyle(fontSize: 20)),
+      textColor: CustomeTheme.c1,
+      title: Text(
+        'Job Details:',
+        style: TextStyle(
+          fontSize: 20,
+          color: Theme.of(context).primaryColor,
+        ),
+      ),
       children: [
         Text('Educational Qualification:', style: fontSize_18),
         Padding(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:untitled/provider/theme.dart';
 import '../../../domain/entities/entities.dart';
 import 'package:readmore/readmore.dart';
 import 'package:intl/intl.dart';
@@ -15,9 +16,10 @@ class JobWidget extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       decoration: BoxDecoration(
+        color: CustomeTheme.c2.withAlpha(70),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: Colors.redAccent,
+          color: CustomeTheme.c2,
           width: 1,
         ),
       ),
@@ -46,12 +48,19 @@ class JobWidget extends StatelessWidget {
               ),
             ],
           ),
-          TextButton(
-            onPressed: () {},
-            child: Center(
-              child: Text(
-                job.jobDescription.title,
-                style: const TextStyle(fontSize: 22, color: Colors.black54),
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: ElevatedButton(
+              onPressed: () {},
+              child: Center(
+                child: Text(
+                  job.jobDescription.title,
+                  style: const TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
               ),
             ),
           ),
@@ -62,12 +71,12 @@ class JobWidget extends StatelessWidget {
               trimMode: TrimMode.Line,
               trimLines: 3,
               style: const TextStyle(fontSize: 16),
-              lessStyle: const TextStyle(
-                color: Colors.redAccent,
+              lessStyle: TextStyle(
+                color: Theme.of(context).colorScheme.secondary,
                 fontSize: 18,
               ),
-              moreStyle: const TextStyle(
-                color: Colors.redAccent,
+              moreStyle: TextStyle(
+                color: CustomeTheme.c2.withBlue(200).withGreen(200),
                 fontSize: 18,
               ),
               trimExpandedText: ' show less',

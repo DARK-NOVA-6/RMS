@@ -36,11 +36,6 @@ class _SignUpState extends State<SignUp> {
         elevation: 0,
         title: Text(
           widget.title,
-          style: const TextStyle(
-            color: Colors.redAccent,
-            fontWeight: FontWeight.bold,
-            fontSize: 24,
-          ),
         ),
         centerTitle: true,
       ),
@@ -49,22 +44,20 @@ class _SignUpState extends State<SignUp> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             RoundedTextField(
+              color: Theme.of(context).primaryColor,
               controller: widget.controllers.tecEmailSignUp,
               email: true,
               icon: Icons.mail,
-              color: Colors.redAccent,
-              secColor: Colors.white,
               hintText: 'Email',
             ),
             SizedBox(
               height: size.height * 0.02,
             ),
             RoundedTextField(
+              color: Theme.of(context).primaryColor,
               controller: widget.controllers.tecPassSignUp,
               pass: true,
               icon: Icons.lock,
-              color: Colors.redAccent,
-              secColor: Colors.white,
               hintText: 'Password',
             ),
             SizedBox(

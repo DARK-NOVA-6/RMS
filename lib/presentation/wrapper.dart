@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:untitled/provider/theme.dart';
 
+import '../provider/theme_notifier.dart';
 import 'bloc_builder_widget.dart';
 import 'blocs/authentication/auth_bloc.dart';
 import 'controllers/controllers.dart';
@@ -25,14 +27,21 @@ class Wrapper extends StatelessWidget {
     print(Provider.of<user_ent.User>(context));
     return BlocProvider.value(
       value: authBloc,
-      child: MaterialApp(
-        title: 'RMS Demo pla....',
-        theme: ThemeData(
-          primarySwatch: Colors.red,
-        ),
-        home: BlocBuilderWidget(
-          controllers: controllers,
-          initialState: init,
+      child: ChangeNotifierProvider(
+        create: (_) => ThemeNotifier(),
+        child: Consumer<ThemeNotifier>(
+          builder: (context, ThemeNotifier themeNotifier, child) {
+            return MaterialApp(
+              title: 'RMS Demo pla....',
+              theme: themeNotifier.darkTheme
+                  ? CustomeTheme.dark
+                  : CustomeTheme.light,
+              home: BlocBuilderWidget(
+                controllers: controllers,
+                initialState: init,
+              ),
+            );
+          },
         ),
       ),
     );

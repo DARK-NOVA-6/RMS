@@ -30,7 +30,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
         onTap: widget.changeIndex,
         index: widget.index,
         backgroundColor: Colors.transparent,
-        color: Colors.redAccent,
+        color: Theme.of(context).backgroundColor,
         items: widget.icons,
       ),
     );

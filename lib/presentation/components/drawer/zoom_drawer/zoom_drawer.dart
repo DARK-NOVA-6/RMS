@@ -20,16 +20,15 @@ class _CustomeZoomDrawerState extends State<CustomeZoomDrawer> {
   Widget build(BuildContext context) {
     return ZoomDrawer(
       borderRadius: 30,
-      angle:  0,
       androidCloseOnBackTap: true,
       clipMainScreen: true,
       mainScreenTapClose: true,
-      menuBackgroundColor: Colors.redAccent.shade100,
       menuScreenWidth: MediaQuery.of(context).size.width * 0.5,
       moveMenuScreen: false,
       slideWidth: MediaQuery.of(context).size.width * 0.6,
       showShadow: true,
       drawerShadowsBackgroundColor: Colors.white,
+      menuBackgroundColor: Theme.of(context).primaryColorDark.withAlpha(220),
       menuScreen: MenuPage(
         currentItem: currentItem,
         onSelectedItem: (item) => setState(

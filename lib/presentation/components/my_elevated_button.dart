@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../../provider/theme.dart';
+
 class MyElevatedButton extends StatelessWidget {
   const MyElevatedButton({
     Key? key,
     required this.text,
     required this.press,
-    this.color = Colors.redAccent,
+    this.color = CustomeTheme.c1,
     this.textColor = Colors.white,
     this.h = 0.05,
     this.w = 0.5,
@@ -20,16 +22,6 @@ class MyElevatedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return ElevatedButton(
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.resolveWith<Color>(
-              (Set<MaterialState> states) {
-            if (states.contains(MaterialState.pressed)){
-              return color.withAlpha(100);
-            }
-            return color; // Use the component's default.
-          },
-        ),
-      ),
       onPressed: press,
       child: SizedBox(
         width: size.width * w,
