@@ -11,6 +11,6 @@ class FetchMore {
 
   Future<Either<Failure, List<UnavailableJob>>> call(
       {required int skip, required int limit}) async {
-    return await unavailableRepo.fetch(limit: limit, skip: skip);
+    return await unavailableRepo.fetch(limit: limit);
   }
 }

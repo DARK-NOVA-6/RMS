@@ -75,8 +75,11 @@ class _LogInState extends State<LogIn> {
               text: 'Log In',
               press: () async {
                 Navigator.of(context).popUntil((route) => false);
-                await Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (_) => const HiddenDrawer()));
+                await Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => const CustomeZoomDrawer(),
+                  ),
+                );
               },
               w: 0.35,
             ),

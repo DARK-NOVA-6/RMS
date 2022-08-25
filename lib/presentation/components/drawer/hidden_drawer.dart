@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hidden_drawer_menu/hidden_drawer_menu.dart';
 import 'package:untitled/presentation/Pages/home/home.dart';
+import 'package:untitled/presentation/Pages/nav_bar_pages/pages.dart';
 
-import '../../pages/home/test.dart';
 
 class HiddenDrawer extends StatefulWidget {
   const HiddenDrawer({Key? key}) : super(key: key);
@@ -26,7 +26,7 @@ class _HiddenDrawerState extends State<HiddenDrawer> {
     _pages = [
       ScreenHiddenDrawer(
         ItemHiddenMenu(
-          name: 'Home',
+          name: 'Jobs',
           baseStyle: textStyle,
           selectedStyle: textStyle.copyWith(fontWeight: FontWeight.bold),
           colorLineSelected: Colors.redAccent,
@@ -35,12 +35,48 @@ class _HiddenDrawerState extends State<HiddenDrawer> {
       ),
       ScreenHiddenDrawer(
         ItemHiddenMenu(
-          name: 'Test',
+          name: 'Profile',
           baseStyle: textStyle,
           selectedStyle: textStyle,
           colorLineSelected: Colors.redAccent,
         ),
-        const Test(),
+        const Profile(),
+      ),
+      ScreenHiddenDrawer(
+        ItemHiddenMenu(
+          name: 'MailBox',
+          baseStyle: textStyle,
+          selectedStyle: textStyle,
+          colorLineSelected: Colors.redAccent,
+        ),
+        const Profile(),
+      ),
+      ScreenHiddenDrawer(
+        ItemHiddenMenu(
+          name: 'Reports',
+          baseStyle: textStyle,
+          selectedStyle: textStyle,
+          colorLineSelected: Colors.redAccent,
+        ),
+        const Profile(),
+      ),
+      ScreenHiddenDrawer(
+        ItemHiddenMenu(
+          name: 'About',
+          baseStyle: textStyle,
+          selectedStyle: textStyle,
+          colorLineSelected: Colors.redAccent,
+        ),
+        const Profile(),
+      ),
+      ScreenHiddenDrawer(
+        ItemHiddenMenu(
+          name: 'Log-Out',
+          baseStyle: textStyle,
+          selectedStyle: textStyle,
+          colorLineSelected: Colors.redAccent,
+        ),
+        const Profile(),
       ),
     ];
   }
@@ -48,6 +84,7 @@ class _HiddenDrawerState extends State<HiddenDrawer> {
   @override
   Widget build(BuildContext context) {
     return HiddenDrawerMenu(
+      curveAnimation: Curves.easeInExpo,
       disableAppBarDefault: true,
       slidePercent: 40,
       screens: _pages,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hidden_drawer_menu/hidden_drawer_menu.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 
 class CustomeAppBar extends StatelessWidget with PreferredSizeWidget {
    const CustomeAppBar({
@@ -35,7 +35,7 @@ class CustomeAppBar extends StatelessWidget with PreferredSizeWidget {
                 color: Colors.redAccent,
               ),
               onPressed: () {
-                SimpleHiddenDrawerController.of(context).toggle();
+                ZoomDrawer.of(context)!.toggle();
               },
               tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
             );

@@ -32,7 +32,7 @@ class CustomExpansionTile extends StatelessWidget {
           padding: const EdgeInsets.only(left: 10),
           child: Column(
             children: job.jobDescription.eduQualification
-                .map((item) => Text(item, style: fontSize_18))
+                .map((item) => Text(item.value, style: fontSize_18))
                 .toList(),
           ),
         ),
@@ -41,7 +41,7 @@ class CustomExpansionTile extends StatelessWidget {
           padding: const EdgeInsets.only(left: 10),
           child: Column(
             children: job.jobDescription.experience
-                .map((item) => Text(item, style: fontSize_18))
+                .map((item) => Text(item.value, style: fontSize_18))
                 .toList(),
           ),
         ),
@@ -50,7 +50,7 @@ class CustomExpansionTile extends StatelessWidget {
           padding: const EdgeInsets.only(left: 10),
           child: Column(
             children: job.jobDescription.skills
-                .map((item) => Text(item, style: fontSize_18))
+                .map((item) => Text(item.value, style: fontSize_18))
                 .toList(),
           ),
         ),
@@ -59,7 +59,7 @@ class CustomExpansionTile extends StatelessWidget {
           padding: const EdgeInsets.only(left: 10),
           child: Column(
             children: job.jobDescription.languages
-                .map((item) => Text(item, style: fontSize_18))
+                .map((item) => Text(item.value, style: fontSize_18))
                 .toList(),
           ),
         ),
