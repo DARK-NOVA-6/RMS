@@ -27,6 +27,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             color: Colors.white,
           )),
       child: CurvedNavigationBar(
+        height: 50,
         onTap: widget.changeIndex,
         index: widget.index,
         backgroundColor: Colors.transparent,

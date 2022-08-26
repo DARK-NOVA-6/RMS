@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../provider/theme.dart';
 
+// ignore: must_be_immutable
 class MyElevatedButton extends StatelessWidget {
-  const MyElevatedButton({
+  MyElevatedButton({
     Key? key,
     required this.text,
     required this.press,
@@ -16,22 +17,41 @@ class MyElevatedButton extends StatelessWidget {
   final String text;
   final press;
   final Color color;
+  Color newColor = CustomeTheme.c2;
   final Color textColor;
-  final double w,h;
+  final double w, h;
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    newColor = color == CustomeTheme.c1
+        ? Theme.of(context).primaryColor
+        : newColor = color;
+
     return ElevatedButton(
+      style: color != CustomeTheme.c1
+          ? ButtonStyle(
+              backgroundColor: MaterialStateProperty.resolveWith(
+                (states) {
+                  if (states.contains(MaterialState.pressed)) {
+                    return newColor.withAlpha(200);
+                  }
+                  return newColor;
+                },
+              ),
+              foregroundColor: MaterialStateProperty.all(textColor),
+            )
+          : null,
       onPressed: press,
       child: SizedBox(
         width: size.width * w,
         height: size.height * h,
-        child:  Center(
-          child: Text(text,
-            style: TextStyle(
+        child: Center(
+          child: Text(
+            text,
+            style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: textColor,
             ),
           ),
         ),

@@ -4,6 +4,7 @@ import '../../../domain/entities/entities.dart';
 import 'package:readmore/readmore.dart';
 import 'package:intl/intl.dart';
 
+import '../my_elevated_button.dart';
 import 'costum_expansion_tile.dart';
 
 class JobWidget extends StatelessWidget {
@@ -50,18 +51,11 @@ class JobWidget extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.all(10),
-            child: ElevatedButton(
-              onPressed: () {},
-              child: Center(
-                child: Text(
-                  job.jobDescription.title,
-                  style: const TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
+            child: MyElevatedButton(
+              press: () {},
+              text: job.jobDescription.title,
+              w: 1,
+              color: Theme.of(context).primaryColor.withAlpha(100),
             ),
           ),
           Container(

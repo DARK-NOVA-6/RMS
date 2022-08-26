@@ -65,12 +65,6 @@ class _MenuPageState extends State<MenuPage> {
                         : 'assets/svg/Asset 7.svg',
                   ),
                 ),
-                // child: SvgPicture.asset(
-                //   width: 100,
-                //   height: 100,
-                //
-                //   'assets/svg/Asset 9.svg',
-                // ),
               ),
               const Spacer(flex: 2),
               ...mi.MenuItems.group1.map(buildMenuItem).toList(),
@@ -84,6 +78,7 @@ class _MenuPageState extends State<MenuPage> {
               const Spacer(flex: 3),
               Consumer(
                 builder: (context, ThemeNotifier themeNotifier, child) {
+                  val = themeNotifier.darkTheme;
                   return Center(
                     child: Transform.scale(
                       scale: 2,
@@ -92,12 +87,12 @@ class _MenuPageState extends State<MenuPage> {
                         activeColor: CustomeTheme.c1,
                         inactiveTrackColor: CustomeTheme.c2.withAlpha(100),
                         inactiveThumbColor: CustomeTheme.c2,
-                        onChanged: (bool value) => setState(
-                          () {
+                        onChanged: (bool value) {
+                          setState(() {
                             themeNotifier.toggleTheme();
                             val = value;
-                          },
-                        ),
+                          });
+                        },
                         value: val,
                       ),
                     ),

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
-import '../../../Pages/home/home.dart';
-import '../../../Pages/nav_bar_pages/pages.dart';
 
+import '../../../Pages/nav_bar_pages/pages.dart';
 import 'menu_page.dart';
 import 'menu_items.dart' as mi;
 
@@ -42,19 +41,19 @@ class _CustomeZoomDrawerState extends State<CustomeZoomDrawer> {
   Widget getScreen() {
     switch (currentItem) {
       case mi.MenuItems.jobs:
-        return const Home();
+        return Jobs();
       case mi.MenuItems.profile:
-        return const Profile();
+        return Profile();
       case mi.MenuItems.mailBox:
-        return const Home();
+        return Jobs();
       case mi.MenuItems.reports:
         return const Profile();
       case mi.MenuItems.aboutUs:
-        return const Home();
+        return Jobs();
       case mi.MenuItems.rateUs:
         return const Profile();
       default:
-        return const Home();
+        return Jobs();
     }
   }
 }

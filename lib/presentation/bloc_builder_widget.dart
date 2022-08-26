@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:untitled/presentation/components/components.dart';
 
 import 'Pages/Authentication/authenticate.dart';
 import 'Pages/Authentication/login.dart';
 import 'Pages/Authentication/signup.dart';
-import 'Pages/home/home.dart';
 import 'blocs/authentication/auth_bloc.dart';
 import 'controllers/controllers.dart';
 
@@ -44,7 +44,7 @@ class BlocBuilderWidget extends StatelessWidget {
         } else if (state is SignedInState) {
           controllers.tecEmailLogIn.text = '';
           controllers.tecPassLogIn.text = '';
-          return const Home();
+          return const CustomeZoomDrawer();
         } else if (state is SignInErrorState) {
           return LogIn(
             controllers: controllers,

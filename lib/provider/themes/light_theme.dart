@@ -16,7 +16,7 @@ lightThemeData() => ThemeData(
           shadowColor: MaterialStateProperty.resolveWith<Color>(
             (Set<MaterialState> states) {
               if (states.contains(MaterialState.pressed)) {
-                return CustomeTheme.c1;
+                return CustomeTheme.c2.withAlpha(200);
               }
               return CustomeTheme.c2; // Use the component's default.
             },
@@ -37,7 +37,7 @@ lightThemeData() => ThemeData(
           backgroundColor: MaterialStateProperty.resolveWith<Color>(
             (Set<MaterialState> states) {
               if (states.contains(MaterialState.pressed)) {
-                return CustomeTheme.c1;
+                return CustomeTheme.c2.withAlpha(200);
               }
               return CustomeTheme.c2; // Use the component's default.
             },
@@ -64,13 +64,20 @@ lightThemeData() => ThemeData(
       ),
       primaryColor: CustomeTheme.c2,
       backgroundColor: CustomeTheme.c2,
-      tabBarTheme: TabBarTheme(
+      tabBarTheme: const TabBarTheme(
+        labelPadding: EdgeInsets.all(10),
+        indicatorSize: TabBarIndicatorSize.label,
         labelColor: Colors.white,
         unselectedLabelColor: CustomeTheme.c2,
         indicator: BoxDecoration(
-            borderRadius: BorderRadius.circular(20), color: CustomeTheme.c2),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+            ),
+            color: CustomeTheme.c2),
       ),
       appBarTheme: AppBarTheme(
+        foregroundColor: CustomeTheme.c2,
         backgroundColor: ThemeData.dark().appBarTheme.backgroundColor,
         actionsIconTheme: const IconThemeData(color: CustomeTheme.c2),
         iconTheme: const IconThemeData(color: CustomeTheme.c2),

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-export 'jobs/jobs.dart';
+export 'applied/applied.dart';
+export 'recomended/recomended.dart';
+export 'unavailable/unavailable.dart';
 export 'profile/profile.dart';
-export 'main_home/main_home.dart';
-
+export 'jobs/jobs.dart';
 abstract class Pages extends StatefulWidget {
   final String label = '';
 

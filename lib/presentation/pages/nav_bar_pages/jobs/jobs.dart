@@ -1,18 +1,69 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:untitled/presentation/components/job/job.dart';
 
 import '../../../../domain/entities/entities.dart';
+import '../../../components/components.dart';
 import '../pages.dart';
 
-// ignore: must_be_immutable
-class Jobs extends StatefulWidget implements Pages {
-  Jobs({Key? key}) : super(key: key);
+class Jobs extends StatefulWidget {
+  const Jobs({Key? key}) : super(key: key);
 
   @override
-  String get label => 'Jobs';
+  State<Jobs> createState() => _JobsState();
+}
 
-  Job job = Job(
+class _JobsState extends State<Jobs> {
+  late List pages;
+
+  @override
+  void initState() {
+    super.initState();
+    pages =  [
+      Recommended(job: job),
+      Unavailable(job: job),
+      Applied(job: job),
+    ];
+  }
+
+
+  int index = 0;
+  List<Widget> icons = const [
+    Icon(Icons.add_task_outlined),
+    Icon(Icons.unpublished),
+    Icon(Icons.event_available_outlined),
+  ];
+
+
+
+
+  Job job = createJob();
+
+  void changeIndex(int value) {
+    setState(() {
+      index = value;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      extendBody: true,
+      bottomNavigationBar: BottomNavBar(
+        index: index,
+        changeIndex: changeIndex,
+        icons: icons,
+      ),
+      appBar: CustomeAppBar(label: pages[index].label),
+      body: pages[index],
+    );
+  }
+}
+
+
+
+
+Job createJob(){
+  return Job(
     id: '1',
     companyName: 'Company Name',
     jobDescription: const JobDescription(
@@ -39,79 +90,5 @@ class Jobs extends StatefulWidget implements Pages {
           'asddddddddddd   ddddddddddd   ddddddddddd ddddddasdddddddddas'
           'asdasdas   dasdasdasdas   dasdasdasdasdasd',
     ),
-    publishedTime: Timestamp.now(),
-  );
-
-  @override
-  State<Jobs> createState() => _JobsState();
-}
-
-class _JobsState extends State<Jobs> {
-  @override
-  Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      animationDuration: const Duration(milliseconds: 600),
-      child: Scaffold(
-        extendBody: true,
-        appBar: const TabBar(
-          isScrollable: true,
-          labelStyle: TextStyle(
-            fontSize: 20,
-          ),
-          tabs: <Widget>[
-            Tab(text: 'Recommended'),
-            Tab(text: 'Unavailable'),
-            Tab(text: 'Applied'),
-          ],
-        ),
-        body: TabBarView(
-          children: [
-            ListView(
-              padding: const EdgeInsets.all(8),
-              children: [
-                JobWidget(
-                  job: widget.job,
-                ),
-                JobWidget(
-                  job: widget.job,
-                ),
-              ],
-            ),
-            ListView(
-              padding: const EdgeInsets.all(8),
-              children: [
-                JobWidget(
-                  job: widget.job,
-                ),
-                JobWidget(
-                  job: widget.job,
-                ),
-                JobWidget(
-                  job: widget.job,
-                ),
-                JobWidget(
-                  job: widget.job,
-                ),
-              ],
-            ),
-            ListView(
-              padding: const EdgeInsets.all(8),
-              children: [
-                JobWidget(
-                  job: widget.job,
-                ),
-                JobWidget(
-                  job: widget.job,
-                ),
-                JobWidget(
-                  job: widget.job,
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+    publishedTime: Timestamp.now(),);
 }
