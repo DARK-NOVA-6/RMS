@@ -5,25 +5,16 @@ class CustomeAppBar extends StatelessWidget with PreferredSizeWidget {
    const CustomeAppBar({
     Key? key,
     required this.label,
+    required this.actions,
   }) : super(key: key);
 
   final String label;
+  final List<Widget> actions;
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      actions: [
-        Padding(
-          padding: const EdgeInsets.only(right: 10),
-          child: IconButton(
-            icon: const Icon(
-              Icons.notifications,
-              size: 30,
-            ),
-            onPressed: () {},
-          ),
-        ),
-      ],
+      actions: actions,
       leading: Padding(
         padding: const EdgeInsets.only(left: 10),
         child: Builder(

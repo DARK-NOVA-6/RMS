@@ -6,18 +6,18 @@ import '../../../components/job/job.dart';
 import '../common/common.dart';
 import '../pages.dart';
 
-class Applied extends StatefulWidget implements Pages {
-  const Applied({Key? key, required this.job}) : super(key: key);
+class Recommended extends StatefulWidget implements Pages {
+  const Recommended({Key? key, required this.job}) : super(key: key);
   final Job job;
 
   @override
-  State<Applied> createState() => _AppliedState();
+  State<Recommended> createState() => _RecommendedState();
 
   @override
-  String get label => 'Applied';
+  String get label => 'Recommended';
 }
 
-class _AppliedState extends State<Applied> {
+class _RecommendedState extends State<Recommended> {
   ScrollController scrollController = ScrollController();
   final GlobalKey<LiquidPullToRefreshState> _refreshIndicatorKey = GlobalKey();
 
@@ -105,8 +105,8 @@ class _AppliedState extends State<Applied> {
                 const Spacer(flex: 5),
                 RefreshBox(
                   onRefresh: _handleRefresh,
-                  text: 'There is no Jobs !!',
-                  subText: 'Try Applying to some job then try again',
+                  text: 'There is no Jobs recommended for you right now !!',
+                  subText: 'Try enhancing your profile and try again',
                 ),
                 const Spacer(flex: 5),
               ],

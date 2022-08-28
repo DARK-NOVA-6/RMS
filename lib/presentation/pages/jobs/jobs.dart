@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../domain/entities/entities.dart';
-import '../../../components/components.dart';
-import '../pages.dart';
+import '../../components/components.dart';
+import '../nav_bar_pages/pages.dart';
 
 class Jobs extends StatefulWidget {
   const Jobs({Key? key}) : super(key: key);
@@ -18,13 +18,12 @@ class _JobsState extends State<Jobs> {
   @override
   void initState() {
     super.initState();
-    pages =  [
+    pages = [
       Recommended(job: job),
       Unavailable(job: job),
       Applied(job: job),
     ];
   }
-
 
   int index = 0;
   List<Widget> icons = const [
@@ -33,9 +32,6 @@ class _JobsState extends State<Jobs> {
     Icon(Icons.event_available_outlined),
   ];
 
-
-
-
   Job job = createJob();
 
   void changeIndex(int value) {
@@ -43,6 +39,19 @@ class _JobsState extends State<Jobs> {
       index = value;
     });
   }
+
+  List<Widget> actions = [
+    Padding(
+      padding: const EdgeInsets.only(right: 10),
+      child: IconButton(
+        icon: const Icon(
+          Icons.notifications,
+          size: 30,
+        ),
+        onPressed: () {},
+      ),
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -53,16 +62,13 @@ class _JobsState extends State<Jobs> {
         changeIndex: changeIndex,
         icons: icons,
       ),
-      appBar: CustomeAppBar(label: pages[index].label),
+      appBar: CustomeAppBar(label: pages[index].label, actions: actions),
       body: pages[index],
     );
   }
 }
 
-
-
-
-Job createJob(){
+Job createJob() {
   return Job(
     id: '1',
     companyName: 'Company Name',
@@ -90,5 +96,6 @@ Job createJob(){
           'asddddddddddd   ddddddddddd   ddddddddddd ddddddasdddddddddas'
           'asdasdas   dasdasdasdas   dasdasdasdasdasd',
     ),
-    publishedTime: Timestamp.now(),);
+    publishedTime: Timestamp.now(),
+  );
 }

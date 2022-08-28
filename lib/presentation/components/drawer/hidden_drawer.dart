@@ -1,8 +1,8 @@
 // not used
 import 'package:flutter/material.dart';
 import 'package:hidden_drawer_menu/hidden_drawer_menu.dart';
-import 'package:untitled/presentation/Pages/nav_bar_pages/pages.dart';
-
+import '../../pages/jobs/jobs.dart';
+import '../../pages/profile/profile.dart';
 
 class HiddenDrawer extends StatefulWidget {
   const HiddenDrawer({Key? key}) : super(key: key);
@@ -31,7 +31,7 @@ class _HiddenDrawerState extends State<HiddenDrawer> {
           selectedStyle: textStyle.copyWith(fontWeight: FontWeight.bold),
           colorLineSelected: Colors.redAccent,
         ),
-        Jobs(),
+        const Jobs(),
       ),
       ScreenHiddenDrawer(
         ItemHiddenMenu(
