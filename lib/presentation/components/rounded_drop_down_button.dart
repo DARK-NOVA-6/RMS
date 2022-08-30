@@ -1,34 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-class RoundedTextField extends StatelessWidget {
-  const RoundedTextField({
+// ignore: must_be_immutable
+class RoundedDropdownButton extends StatelessWidget {
+  RoundedDropdownButton({
     Key? key,
-    required this.controller,
-    this.pass = false,
-    this.email = false,
-    this.code = false,
-    this.icon = Icons.person,
     required this.color,
+    required this.valueChanged,
+    required this.value,
+    this.icon = Icons.person,
     this.secColor = Colors.white,
     this.hintText = 'input here',
     this.label = '',
     this.enabled = true,
+    this.list = const [],
     this.w = 0.7,
     this.h = 0.06,
   }) : super(key: key);
-  final TextEditingController controller;
-  final bool pass, email, code;
+  final List<String> list;
+  List<DropdownMenuItem<String>> newList = [];
   final IconData icon;
   final Color secColor, color;
   final String hintText;
   final double w, h;
   final String label;
   final bool enabled;
+  final Function valueChanged;
+  final String value;
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    newList = list
+        .map(
+          (e) => DropdownMenuItem<String>(
+            value: e,
+            child: Text(e),
+          ),
+        )
+        .toList();
     return Container(
       decoration: BoxDecoration(
         color: color,
@@ -42,20 +51,14 @@ class RoundedTextField extends StatelessWidget {
         color: color,
         shadowColor: color,
         borderRadius: const BorderRadius.all(Radius.circular(20)),
-        child: TextFormField(
-          keyboardType: (email == true)
-              ? TextInputType.emailAddress
-              : (code == true)
-                  ? TextInputType.number
-                  : null,
-          inputFormatters: (code == true)
-              ? [
-                  LengthLimitingTextInputFormatter(6),
-                  FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                ]
-              : [],
-          controller: controller,
-          obscureText: pass,
+        child: DropdownButtonFormField<String>(
+          value: newList[0].value,
+          dropdownColor: Colors.white,
+          items: newList,
+          icon: const Icon(Icons.keyboard_arrow_down_outlined),
+          onChanged: (enabled)?(String? val) {
+            valueChanged(val);
+          }:null,
           autofocus: false,
           style: const TextStyle(
             color: Colors.black,

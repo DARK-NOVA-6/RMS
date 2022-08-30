@@ -1,20 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:provider/provider.dart';
+import 'package:untitled/provider/update_action_bar_actions_notification.dart';
 
-class CustomeAppBar extends StatelessWidget with PreferredSizeWidget {
-   const CustomeAppBar({
+// ignore: must_be_immutable
+class CustomeAppBar extends StatefulWidget with PreferredSizeWidget {
+  CustomeAppBar({
     Key? key,
     required this.label,
-    required this.actions,
+    this.actions = const [],
+    this.actions1 = const [],
+    this.actions2 = const [],
   }) : super(key: key);
 
   final String label;
-  final List<Widget> actions;
+  List<Widget> actions, actions1, actions2;
 
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+
+  @override
+  State<CustomeAppBar> createState() => _CustomeAppBarState();
+}
+
+class _CustomeAppBarState extends State<CustomeAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      actions: actions,
+      actions: (widget.actions.isNotEmpty)
+          ? widget.actions
+          : (Provider.of<UpdateActionBarActions>(context).edit)
+              ? widget.actions1
+              : widget.actions2,
       leading: Padding(
         padding: const EdgeInsets.only(left: 10),
         child: Builder(
@@ -34,7 +51,7 @@ class CustomeAppBar extends StatelessWidget with PreferredSizeWidget {
       backgroundColor: Colors.transparent,
       elevation: 0,
       title: Text(
-        label,
+        widget.label,
         style: TextStyle(
           fontSize: 24,
           fontWeight: FontWeight.bold,
@@ -44,7 +61,4 @@ class CustomeAppBar extends StatelessWidget with PreferredSizeWidget {
       centerTitle: true,
     );
   }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
