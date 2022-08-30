@@ -54,6 +54,7 @@ dependencies:
   jovial_svg: ^1.1.5
   shared_preferences: ^2.0.15
   liquid_pull_to_refresh: ^3.0.0
+  http: ^0.13.5
 #  url_launcher: ^5.0.2
 dev_dependencies:
   flutter_test:
@@ -78,14 +79,14 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-     - assets/svg/Asset 9.svg
-     - assets/svg/Asset 8.svg
-     - assets/svg/Asset 7.svg
-     - assets/svg/Asset 6.svg
-     - assets/png/Asset 5.png
-     - assets/png/Asset 4.png
-     - assets/png/Asset 3.png
-     - assets/png/Asset 2.png
+    - assets/svg/Asset 9.svg
+    - assets/svg/Asset 8.svg
+    - assets/svg/Asset 7.svg
+    - assets/svg/Asset 6.svg
+    - assets/png/Asset 5.png
+    - assets/png/Asset 4.png
+    - assets/png/Asset 3.png
+    - assets/png/Asset 2.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:untitled/data/datasources/remote/evaluator_api.dart';
 import 'package:untitled/domain/entities/entities.dart';
 
 import 'data/models/job_model.dart';
@@ -53,15 +54,20 @@ class MyApp2 extends StatefulWidget {
 class _MyApp2State extends State<MyApp2> {
   @override
   Widget build(BuildContext context) {
-    final temp =
-        RecommendedRepoImp(firebaseFirestore: FirebaseFirestore.instance);
-
+    final myapi = EvaluatorApiImp();
+    final temp = RecommendedRepoImp(
+      firebaseFirestore: FirebaseFirestore.instance,
+      evaluatorApi: EvaluatorApiImp(),
+      userId: 'KNvVSQq2xSUaxUNsEbHCu5VvHWv2',
+    );
     return MaterialApp(
       home: TextButton(
         child: const Text('click'),
         onPressed: () async {
           // print(await temp.fetch(limit: 3));
-          print(await temp.detailed(id: 'jkfGAHUz0JQkaeINYMeY'));
+          // print(await myapi.getUnavailable('KNvVSQq2xSUaxUNsEbHCu5VvHWv2'));
+          print(await temp.fetch(limit: 1));
+          // print(await temp.detailed(id: 'jkfGAHUz0JQkaeINYMeY'));
           // Temp().getJob(id: 'id');
         },
       ),
