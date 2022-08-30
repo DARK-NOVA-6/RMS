@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import '../../../domain/entities/job/recommended_job.dart';
 import '../job_description_model.dart';
 
