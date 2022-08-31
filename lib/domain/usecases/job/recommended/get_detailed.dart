@@ -1,15 +1,17 @@
-import 'package:dartz/dartz.dart';
-
-import '../../../../core/errors/failures/failure.dart';
-import '../../../entities/job/recommended_job.dart';
+import '../../../entities/job/full_evaluated_job.dart';
 import '../../../repositories/job/recommended_repo.dart';
 
-class GetDetailed {
+class GetDetailedRecommended {
   final RecommendedRepo recommendedRepo;
 
-  GetDetailed(this.recommendedRepo);
+  GetDetailedRecommended(this.recommendedRepo);
 
-  Future<Either<Failure, RecommendedJob>> call({required String id}) async {
-    return await recommendedRepo.detailed(id: id);
+  Future<FullEvaluatedJob> call({required String id}) async {
+    FullEvaluatedJob? result;
+    (await recommendedRepo.detailed(id: id)).fold(
+      (failure) => print(failure.message),
+      (data) => result = data,
+    );
+    return result!;
   }
 }

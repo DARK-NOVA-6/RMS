@@ -38,5 +38,6 @@ class EvaluatedJob extends Equatable {
         eduQualifications,
         experiences,
         languages,
+        score,
       ];
 }

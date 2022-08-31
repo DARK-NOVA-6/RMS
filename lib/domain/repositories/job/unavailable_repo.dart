@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
-
 import '../../../core/errors/failures/failure.dart';
-import '../../entities/job/unavailable_job.dart';
+import '../../entities/job/evaluated_job.dart';
+import '../../entities/job/full_evaluated_job.dart';
 
 abstract class UnavailableRepo {
-  Future<Either<Failure, List<UnavailableJob>>> fetch({required int limit});
+  Future<Either<Failure, List<EvaluatedJob>>> fetch({required int limit});
 
-  Future<Either<Failure, UnavailableJob>> detailed({required String id});
+  Future<Either<Failure, FullEvaluatedJob>> detailed({required String id});
 }

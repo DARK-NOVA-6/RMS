@@ -1,15 +1,17 @@
-import 'package:dartz/dartz.dart';
-
-import '../../../../core/errors/failures/failure.dart';
-import '../../../entities/job/unavailable_job.dart';
+import '../../../entities/job/full_evaluated_job.dart';
 import '../../../repositories/job/unavailable_repo.dart';
 
-class GetDetailed {
+class GetDetailedUnavailable {
   final UnavailableRepo unavailableRepo;
 
-  GetDetailed(this.unavailableRepo);
+  GetDetailedUnavailable(this.unavailableRepo);
 
-  Future<Either<Failure, UnavailableJob>> call({required String id}) async {
-    return await unavailableRepo.detailed(id: id);
+  Future<FullEvaluatedJob> call({required String id}) async {
+    FullEvaluatedJob? result;
+    (await unavailableRepo.detailed(id: id)).fold(
+      (failure) => print(failure.message),
+      (data) => result = data,
+    );
+    return result!;
   }
 }

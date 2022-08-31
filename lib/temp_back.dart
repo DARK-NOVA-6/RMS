@@ -1,46 +1,58 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled/data/datasources/remote/evaluator_api.dart';
-import 'package:untitled/domain/entities/entities.dart';
-
-import 'data/models/job_model.dart';
+import 'package:untitled/data/repositories/job/unavailable_repo_imp.dart';
+import 'package:untitled/domain/usecases/job/unavailable/fetch_more.dart';
 import 'data/repositories/job/recommended_repo_imp.dart';
+import 'domain/usecases/job/recommended/fetch_more.dart';
 
 class Temp {
   void getJob({required String id}) async {
     print('test mod..');
     final fireStore = FirebaseFirestore.instance.collection('jobs');
-    Job job = Job(
-      id: 'some id',
-      companyName: 'companyName TEST',
-      jobDescription: JobDescription(
-        title: 'title TEST',
-        languages: const [
-          DescriptionField(value: 'languages1 TEST', isRequired: false),
-          DescriptionField(value: 'languages2 TEST', isRequired: true),
-        ].toList(),
-        experience: const [
-          DescriptionField(value: 'experience1 TEST', isRequired: true),
-          DescriptionField(value: 'experience2 TEST', isRequired: false),
-          DescriptionField(value: 'experience3 TEST', isRequired: false),
-          DescriptionField(value: 'experience4 TEST', isRequired: false),
-        ].toList(),
-        eduQualification: const [
-          DescriptionField(value: 'eduQualification1 TEST', isRequired: false),
-          DescriptionField(value: 'eduQualification2 TEST', isRequired: false),
-          DescriptionField(value: 'eduQualification3 TEST', isRequired: false),
-          DescriptionField(value: 'eduQualification4 TEST', isRequired: false),
-        ].toList(),
-        skills: const [
-          DescriptionField(value: 'skills1 TEST', isRequired: false),
-          DescriptionField(value: 'skills2 TEST', isRequired: false),
-        ].toList(),
-        summary: 'summary summary summary summary TEST',
-      ),
-      publishedTime: Timestamp.now(),
-    );
-    final temp = await fireStore.add(JobModel.toSnapshot(job));
-    print(temp.id);
+    await fireStore.add({
+      'company-name': 'Facebook',
+      'summary': 'summary 2',
+      'title': 'title 2',
+      'published-time': Timestamp.now(),
+      'edu-qualifications': [
+        {
+          'degree': 'Master',
+          'field': 'Software Engineer',
+          'is-required': false,
+        },
+        {
+          'degree': 'Bachelor',
+          'field': 'Software Engineer',
+          'is-required': true,
+        },
+      ],
+      'experiences': [],
+      'languages': [
+        {
+          'title': 'English',
+          'is-required': true,
+        },
+        {
+          'title': 'Arabic',
+          'is-required': false,
+        },
+      ],
+      'skills': [
+        {
+          'title': 'data migration',
+          'is-required': false,
+        },
+        {
+          'title': 'asp',
+          'is-required': true,
+        },
+        {
+          'title': 'php',
+          'is-required': true,
+        }
+      ],
+    });
   }
 }
 
@@ -55,21 +67,36 @@ class _MyApp2State extends State<MyApp2> {
   @override
   Widget build(BuildContext context) {
     final myapi = EvaluatorApiImp();
+    // Temp().getJob(id: 'id');
     final temp = RecommendedRepoImp(
       firebaseFirestore: FirebaseFirestore.instance,
       evaluatorApi: EvaluatorApiImp(),
       userId: 'KNvVSQq2xSUaxUNsEbHCu5VvHWv2',
     );
+    FetchMoreRecommended fetchMoreRecommended = FetchMoreRecommended(temp);
+    FetchMoreUnavailable fetchMoreUnavailable =
+        FetchMoreUnavailable(UnavailableRepoImp(
+      firebaseFirestore: FirebaseFirestore.instance,
+      evaluatorApi: EvaluatorApiImp(),
+      userId: 'KNvVSQq2xSUaxUNsEbHCu5VvHWv2',
+    ));
     return MaterialApp(
-      home: TextButton(
-        child: const Text('click'),
-        onPressed: () async {
-          // print(await temp.fetch(limit: 3));
-          // print(await myapi.getUnavailable('KNvVSQq2xSUaxUNsEbHCu5VvHWv2'));
-          print(await temp.fetch(limit: 1));
-          // print(await temp.detailed(id: 'jkfGAHUz0JQkaeINYMeY'));
-          // Temp().getJob(id: 'id');
-        },
+      home: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          TextButton(
+            child: const Text('fetch more recommended'),
+            onPressed: () async {
+              print(await fetchMoreRecommended(limit: 1));
+            },
+          ),
+          TextButton(
+            child: const Text('fetch more unavailable'),
+            onPressed: () async {
+              print(await fetchMoreUnavailable(limit: 1));
+            },
+          ),
+        ],
       ),
     );
   }

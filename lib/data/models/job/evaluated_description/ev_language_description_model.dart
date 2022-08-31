@@ -7,18 +7,34 @@ class EvLanguageDescriptionModel extends EvLanguageDescription {
     required super.isRequired,
   });
 
-  static EvLanguageDescription? fromJsonAndSnapshot({
-    required bool jsonData,
-    required Map<String, dynamic>? documentSnapshot,
+  static List<EvLanguageDescription>? fromJsonAndSnapshot({
+    required List<dynamic> jsonData,
+    required List<dynamic>? documentSnapshot,
   }) {
     try {
-      return EvLanguageDescription(
-        title: documentSnapshot!['title'],
-        isSatisfied: jsonData,
-        isRequired: documentSnapshot['is-required'],
-      );
+      List<EvLanguageDescription> result = [];
+      for (var idx = 0; idx < jsonData.length; idx++) {
+        result.add(
+          _fromJsonAndSnapshot(
+            jsonData: jsonData[idx],
+            documentSnapshot: documentSnapshot![idx],
+          ),
+        );
+      }
+      return result;
     } catch (e) {
       return null;
     }
+  }
+
+  static EvLanguageDescription _fromJsonAndSnapshot({
+    required bool jsonData,
+    required Map<String, dynamic> documentSnapshot,
+  }) {
+    return EvLanguageDescription(
+      title: documentSnapshot['title'],
+      isSatisfied: jsonData,
+      isRequired: documentSnapshot['is-required'],
+    );
   }
 }

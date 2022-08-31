@@ -14,20 +14,19 @@ import 'domain/usecases/authentication/sign_in_email_password.dart';
 import 'domain/usecases/authentication/sign_up_email_password.dart';
 import 'presentation/wrapper.dart';
 import 'presentation/controllers/controllers.dart';
-
+import 'temp_back.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await FirebaseAuth.instance.signOut();
-  // final temp = Temp();
-  // temp.getJob(id: 'c4btKeMdOAga0AjqiMet');
-  runApp(
-    ChangeNotifierProvider(
-      create: (_)=>UpdateActionBarActions(),
-      child: MyApp(),
-    ),
-  );
+  runApp(const MyApp2());
+  // runApp(
+  //   ChangeNotifierProvider(
+  //     create: (_)=>UpdateActionBarActions(),
+  //     child: MyApp(),
+  //   ),
+  // );
 }
 
 class MyApp extends StatelessWidget {

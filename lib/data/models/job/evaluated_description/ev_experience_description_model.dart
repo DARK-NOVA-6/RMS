@@ -8,19 +8,35 @@ class EvExperienceDescriptionModel extends EvExperienceDescription {
     required super.isRequired,
   });
 
-  static EvExperienceDescription? fromJsonAndSnapshot({
-    required bool jsonData,
-    required Map<String, dynamic>? documentSnapshot,
+  static List<EvExperienceDescription>? fromJsonAndSnapshot({
+    required List<dynamic> jsonData,
+    required List<dynamic>? documentSnapshot,
   }) {
     try {
-      return EvExperienceDescription(
-        title: documentSnapshot!['title'],
-        period: documentSnapshot['period'],
-        isSatisfied: jsonData,
-        isRequired: documentSnapshot['is-required'],
-      );
+      List<EvExperienceDescription> result = [];
+      for (var idx = 0; idx < jsonData.length; idx++) {
+        result.add(
+          _fromJsonAndSnapshot(
+            jsonData: jsonData[idx],
+            documentSnapshot: documentSnapshot![idx],
+          ),
+        );
+      }
+      return result;
     } catch (e) {
       return null;
     }
+  }
+
+  static EvExperienceDescription _fromJsonAndSnapshot({
+    required bool jsonData,
+    required Map<String, dynamic> documentSnapshot,
+  }) {
+    return EvExperienceDescription(
+      title: documentSnapshot['title'],
+      isSatisfied: jsonData,
+      isRequired: documentSnapshot['is-required'],
+      period: documentSnapshot['period'],
+    );
   }
 }

@@ -1,16 +1,17 @@
-import 'package:dartz/dartz.dart';
-
-import '../../../../core/errors/failures/failure.dart';
-import '../../../entities/job/recommended_job.dart';
+import '../../../entities/job/evaluated_job.dart';
 import '../../../repositories/job/recommended_repo.dart';
 
-class FetchMore {
+class FetchMoreRecommended {
   final RecommendedRepo recommendedRepo;
 
-  FetchMore(this.recommendedRepo);
+  FetchMoreRecommended(this.recommendedRepo);
 
-  Future<Either<Failure, List<RecommendedJob>>> call(
-      {required int skip, required int limit}) async {
-    return await recommendedRepo.fetch(limit: limit);
+  Future<List<EvaluatedJob>> call({required int limit}) async {
+    List<EvaluatedJob> result = [];
+    (await recommendedRepo.fetch(limit: limit)).fold(
+      (failure) => print(failure.message),
+      (data) => result = data,
+    );
+    return result;
   }
 }
