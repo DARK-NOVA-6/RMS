@@ -6,16 +6,17 @@ import 'user/education_certificate.dart';
 class User extends Equatable {
   final String id;
   final String? email;
-  final num rating;
+  final num rating;//
   final List<String> phones;
   final String? firstName;
   final String? middleName;
   final String? lastName;
-  final String? imgUrl;
+  final String? imgUrl;//
   final String? gender;
-  final String? location;
-  final String? summary;
-  final String? nationality;
+  final String? location;//
+  final String? summary;//
+  final String? nationality;//
+  //
   final List<String> skills;
   final List<EducationCertificate> eduQualification;
   final List<PastJob> experience;

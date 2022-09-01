@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/data/models/user_model.dart';
 import 'package:untitled/presentation/blocs/authentication/auth_bloc.dart';
+import 'package:untitled/provider/update_action_bar_actions_notification.dart';
 import 'domain/entities/user.dart' as user_ent;
 import 'data/datasources/remote/firebase_authentication.dart';
 import 'data/repositories/authentication_repo.dart';
@@ -13,7 +14,6 @@ import 'domain/usecases/authentication/sign_in_email_password.dart';
 import 'domain/usecases/authentication/sign_up_email_password.dart';
 import 'presentation/wrapper.dart';
 import 'presentation/controllers/controllers.dart';
-import 'temp_back.dart';
 import 'injection_container.dart';
 
 void main() async {
@@ -21,13 +21,13 @@ void main() async {
   await Firebase.initializeApp();
   await FirebaseAuth.instance.signOut();
   init();
-  runApp(const MyApp2());
-  // runApp(
-  //   ChangeNotifierProvider(
-  //     create: (_)=>UpdateActionBarActions(),
-  //     child: MyApp(),
-  //   ),
-  // );
+  // runApp(const MyApp2());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_)=>UpdateActionBarActions(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

@@ -67,7 +67,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
               mNameTextField(context),
               lNameTextField(context),
               emailTextField(context),
-              ExpansionTile(
+                ExpansionTile(
                 initiallyExpanded: true,
                 title: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.9,
@@ -149,7 +149,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
         horizontal: 20,
       ),
       child: RoundedTextField(
-        enabled: Provider.of<UpdateActionBarActions>(context).edit,
+        enabled: false,
         controller: TextEditingController(),
         color: Theme.of(context).primaryColor,
         icon: Icons.email_outlined,
