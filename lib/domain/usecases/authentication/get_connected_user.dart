@@ -7,4 +7,6 @@ class GetConnectedUser {
   GetConnectedUser(this.authenticationRepo);
 
   Stream<user_ent.User> get connectedUser => authenticationRepo.connectedUser;
+
+  String? get userId => authenticationRepo.userId;
 }

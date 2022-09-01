@@ -14,4 +14,6 @@ class FetchMoreRecommended {
     );
     return result;
   }
+
+  void refresh() => recommendedRepo.refresh();
 }

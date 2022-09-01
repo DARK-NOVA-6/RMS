@@ -16,4 +16,6 @@ abstract class AuthenticationRepo {
   Future<Either<Failure, void>> logOut();
 
   Stream<User> get connectedUser;
+
+  String? get userId;
 }

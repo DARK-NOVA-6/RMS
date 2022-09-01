@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:untitled/data/models/job_description_model.dart';
 
 import '../../domain/entities/job/job.dart';

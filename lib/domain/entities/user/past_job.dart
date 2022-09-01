@@ -1,14 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
 class PastJob extends Equatable {
   final String title;
-  final String company;
-  final DateTime start;
-  final DateTime end;
+  final Timestamp start;
+  final Timestamp end;
 
   const PastJob({
     required this.title,
-    required this.company,
     required this.start,
     required this.end,
   });
@@ -16,7 +15,6 @@ class PastJob extends Equatable {
   @override
   List<Object?> get props => [
         title,
-        company,
         start,
         end,
       ];

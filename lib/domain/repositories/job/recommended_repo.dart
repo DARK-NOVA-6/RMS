@@ -8,4 +8,6 @@ abstract class RecommendedRepo {
   Future<Either<Failure, List<EvaluatedJob>>> fetch({required int limit});
 
   Future<Either<Failure, FullEvaluatedJob>> detailed({required String id});
+
+  void refresh();
 }

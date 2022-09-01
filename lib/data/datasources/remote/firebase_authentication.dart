@@ -1,5 +1,4 @@
 import 'package:untitled/data/models/user_model.dart';
-import 'package:untitled/presentation/blocs/authentication/auth_bloc.dart';
 
 import '../../../core/errors/exceptions/authentication_exceptions.dart';
 import '../../../domain/entities/user.dart' as user_ent;
@@ -20,6 +19,8 @@ abstract class AuthenticationRemote {
   });
 
   Stream<user_ent.User> get connectedUser;
+
+  String? get userId;
 }
 
 class FirebaseAuthentication extends AuthenticationRemote {
@@ -81,4 +82,10 @@ class FirebaseAuthentication extends AuthenticationRemote {
   Stream<user_ent.User> get connectedUser => firebaseAuth
       .authStateChanges()
       .map((user) => UserModel.fromFirebaseUser(user));
+
+  @override
+  String? get userId {
+    if (firebaseAuth.currentUser == null) return null;
+    return firebaseAuth.currentUser?.uid;
+  }
 }

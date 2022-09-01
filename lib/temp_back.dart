@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:untitled/data/datasources/remote/evaluator_api.dart';
-import 'package:untitled/data/repositories/job/unavailable_repo_imp.dart';
 import 'package:untitled/domain/usecases/job/unavailable/fetch_more.dart';
-import 'data/repositories/job/recommended_repo_imp.dart';
 import 'domain/usecases/job/recommended/fetch_more.dart';
+import 'domain/usecases/user/get_profile_user.dart';
+import 'domain/entities/user/user_info.dart' as user_info;
+import 'domain/usecases/user/update_profile_user.dart';
+import 'injection_container.dart';
 
 class Temp {
   void getJob({required String id}) async {
@@ -54,6 +55,29 @@ class Temp {
       ],
     });
   }
+
+  void updateUser() {
+    user_info.UserInfo userInfo = const user_info.UserInfo(
+      email: 'don\'t use this email',
+      rating: 2.0,
+      firstName: 'first name',
+      middleName: 'middle name',
+      lastName: 'last name',
+      imgUrl: '',
+      gender: 'Male',
+      nationality: 'Syrian',
+      location: 'Syria',
+      summary: 'useless summary, this is an empty user',
+      skills: ['c++', 'php'],
+      languages: [],
+      phones: [],
+      emails: [],
+      experiences: [],
+      eduQualifications: [],
+    );
+    UpdateProfileUser updateProfileUser = UpdateProfileUser(userInfoRepo: sl());
+    updateProfileUser(newUserInfo: userInfo);
+  }
 }
 
 class MyApp2 extends StatefulWidget {
@@ -66,20 +90,11 @@ class MyApp2 extends StatefulWidget {
 class _MyApp2State extends State<MyApp2> {
   @override
   Widget build(BuildContext context) {
-    final myapi = EvaluatorApiImp();
-    // Temp().getJob(id: 'id');
-    final temp = RecommendedRepoImp(
-      firebaseFirestore: FirebaseFirestore.instance,
-      evaluatorApi: EvaluatorApiImp(),
-      userId: 'KNvVSQq2xSUaxUNsEbHCu5VvHWv2',
-    );
-    FetchMoreRecommended fetchMoreRecommended = FetchMoreRecommended(temp);
-    FetchMoreUnavailable fetchMoreUnavailable =
-        FetchMoreUnavailable(UnavailableRepoImp(
-      firebaseFirestore: FirebaseFirestore.instance,
-      evaluatorApi: EvaluatorApiImp(),
-      userId: 'KNvVSQq2xSUaxUNsEbHCu5VvHWv2',
-    ));
+    Temp().updateUser();
+
+    FetchMoreRecommended fetchMoreRecommended = FetchMoreRecommended(sl());
+    FetchMoreUnavailable fetchMoreUnavailable = FetchMoreUnavailable(sl());
+    GetProfileUser getProfileUser = GetProfileUser(userInfoRepo: sl());
     return MaterialApp(
       home: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -91,9 +106,24 @@ class _MyApp2State extends State<MyApp2> {
             },
           ),
           TextButton(
+            child: const Text('refresh recommended'),
+            onPressed: () => fetchMoreRecommended.refresh(),
+          ),
+          TextButton(
             child: const Text('fetch more unavailable'),
             onPressed: () async {
               print(await fetchMoreUnavailable(limit: 1));
+            },
+          ),
+          TextButton(
+            child: const Text('refresh unavailable'),
+            onPressed: () => fetchMoreUnavailable.refresh(),
+          ),
+          TextButton(
+            child: const Text('get profile info'),
+            onPressed: () async {
+              print(
+                  await getProfileUser(userId: 'KWKKUrBFSAPT7sqtP24nqa2gduN2'));
             },
           ),
         ],

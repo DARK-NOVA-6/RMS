@@ -27,4 +27,7 @@ class UnavailableRepoImp implements UnavailableRepo {
   @override
   Future<Either<Failure, List<EvaluatedJob>>> fetch({required int limit}) =>
       evaluatedJobRepo.fetch(limit: limit);
+
+  @override
+  void refresh() => evaluatedJobRepo.refresh();
 }

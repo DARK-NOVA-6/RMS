@@ -1,13 +1,12 @@
 import 'package:equatable/equatable.dart';
-import 'package:untitled/domain/entities/user/past_job.dart';
+import 'education_certificate.dart';
+import 'past_job.dart';
 
-import 'user/education_certificate.dart';
-
-class User extends Equatable {
-  final String id;
+class UserInfo extends Equatable {
   final String? email;
   final num rating;
   final List<String> phones;
+  final List<String> emails;
   final String? firstName;
   final String? middleName;
   final String? lastName;
@@ -17,12 +16,11 @@ class User extends Equatable {
   final String? summary;
   final String? nationality;
   final List<String> skills;
-  final List<EducationCertificate> eduQualification;
-  final List<PastJob> experience;
+  final List<EducationCertificate> eduQualifications;
+  final List<PastJob> experiences;
   final List<String> languages;
 
-  const User({
-    required this.id,
+  const UserInfo({
     this.email,
     this.rating = 0.0,
     this.firstName,
@@ -32,17 +30,17 @@ class User extends Equatable {
     this.gender,
     this.location,
     this.phones = const [],
+    this.emails = const [],
     this.summary,
     this.nationality,
     this.skills = const [],
-    this.eduQualification = const [],
-    this.experience = const [],
+    this.eduQualifications = const [],
+    this.experiences = const [],
     this.languages = const [],
   });
 
   @override
   List<Object?> get props => [
-        id,
         email,
         rating,
         firstName,
@@ -52,11 +50,12 @@ class User extends Equatable {
         gender,
         location,
         phones,
+        emails,
         summary,
         nationality,
         skills,
-        eduQualification,
-        experience,
+        eduQualifications,
+        experiences,
         languages,
       ];
 }

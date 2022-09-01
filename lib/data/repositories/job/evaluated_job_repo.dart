@@ -23,6 +23,12 @@ class EvaluatedJobRepo {
 
   Future<Either<Failure, FullEvaluatedJob>> detailed(
       {required String id}) async {
+    if (evaluatedApi == null) {
+      jobsId.clear();
+      evaluatedApi = await evaluatedAPiResponse;
+      jobsId.addAll(evaluatedApi!.keys);
+      currentIdx = 0;
+    }
     try {
       var tempData = await collection.doc(id).get();
       if (tempData.exists) {
@@ -48,8 +54,10 @@ class EvaluatedJobRepo {
   Future<Either<Failure, List<EvaluatedJob>>> fetch(
       {required int limit}) async {
     if (evaluatedApi == null) {
+      jobsId.clear();
       evaluatedApi = await evaluatedAPiResponse;
       jobsId.addAll(evaluatedApi!.keys);
+      currentIdx = 0;
     }
     print(currentIdx);
     print(jobsId);
@@ -75,4 +83,6 @@ class EvaluatedJobRepo {
     }
     return Future.value(Right(result));
   }
+
+  void refresh() => evaluatedApi = null;
 }

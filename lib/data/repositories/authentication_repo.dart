@@ -61,4 +61,7 @@ class AuthenticationUsingTwoSteps extends AuthenticationRepo {
 
   @override
   Stream<user_ent.User> get connectedUser => authenticationRemote.connectedUser;
+
+  @override
+  String? get userId => authenticationRemote.userId;
 }

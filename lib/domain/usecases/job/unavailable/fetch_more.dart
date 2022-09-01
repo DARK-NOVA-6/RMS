@@ -14,4 +14,6 @@ class FetchMoreUnavailable {
     );
     return result;
   }
+
+  void refresh() => unavailableRepo.refresh();
 }
