@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/presentation/components/components.dart';
+import 'package:untitled/presentation/controllers/personal_controllers.dart';
 import 'package:untitled/provider/update_action_bar_actions_notification.dart';
 
 import '../../../components/rounded_drop_down_button.dart';
@@ -18,6 +19,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
   late List<TextEditingController> phones;
   late List<String> genders;
   late String gender;
+  PersonalControllers personalControllers = PersonalControllers();
 
   addPhone() {
     phones.insert(phones.length, TextEditingController());
@@ -34,7 +36,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
   @override
   void initState() {
     super.initState();
-    phones = List.generate(3, (index) => TextEditingController());
+    phones = personalControllers.phones;
     genders = const ['Male', 'Female'];
     gender = 'Male';
   }
@@ -43,7 +45,6 @@ class _PersonalInformationState extends State<PersonalInformation> {
   Widget build(BuildContext context) {
     final mq = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
     return SingleChildScrollView(
-      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
       child: ConstrainedBox(
         constraints: BoxConstraints.tightFor(
           height: mq.size.height,
@@ -67,7 +68,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
               mNameTextField(context),
               lNameTextField(context),
               emailTextField(context),
-                ExpansionTile(
+              ExpansionTile(
                 initiallyExpanded: true,
                 title: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.9,
@@ -107,7 +108,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
                     itemCount: phones.length,
                     itemBuilder: (context, index) {
                       return PhoneTextField(
-                        enabled: Provider.of<UpdateActionBarActions>(context).edit,
+                        enabled:
+                            Provider.of<UpdateActionBarActions>(context).edit,
                         phone: phones[index],
                         removePhone: () => setState(
                           () => removePhone(index),
@@ -150,7 +152,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
       ),
       child: RoundedTextField(
         enabled: false,
-        controller: TextEditingController(),
+        controller: personalControllers.email,
         color: Theme.of(context).primaryColor,
         icon: Icons.email_outlined,
         label: 'Email',
@@ -169,7 +171,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
       ),
       child: RoundedTextField(
         enabled: Provider.of<UpdateActionBarActions>(context).edit,
-        controller: TextEditingController(),
+        controller: personalControllers.lName,
         color: Theme.of(context).primaryColor,
         icon: Icons.icecream_outlined,
         label: 'Last Name',
@@ -187,7 +189,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
       ),
       child: RoundedTextField(
         enabled: Provider.of<UpdateActionBarActions>(context).edit,
-        controller: TextEditingController(),
+        controller: personalControllers.mName,
         color: Theme.of(context).primaryColor,
         icon: Icons.icecream_outlined,
         label: 'Middle Name',
@@ -205,7 +207,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
       ),
       child: RoundedTextField(
         enabled: Provider.of<UpdateActionBarActions>(context).edit,
-        controller: TextEditingController(),
+        controller: personalControllers.fName,
         color: Theme.of(context).primaryColor,
         icon: Icons.icecream_outlined,
         label: 'First Name',

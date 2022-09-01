@@ -43,19 +43,19 @@ class _CustomeZoomDrawerState extends State<CustomeZoomDrawer> {
   Widget getScreen() {
     switch (currentItem) {
       case mi.MenuItems.jobs:
-        return const Jobs();
+        return Jobs();
       case mi.MenuItems.profile:
-        return const Profile();
+        return Profile();
       case mi.MenuItems.mailBox:
-        return const Jobs();
+        return Jobs();
       case mi.MenuItems.reports:
-        return const Profile();
+        return Profile();
       case mi.MenuItems.aboutUs:
-        return const Jobs();
+        return Jobs();
       case mi.MenuItems.rateUs:
-        return const Profile();
+        return Profile();
       default:
-        return const Jobs();
+        return Jobs();
     }
   }
 }

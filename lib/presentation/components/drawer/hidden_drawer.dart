@@ -31,7 +31,7 @@ class _HiddenDrawerState extends State<HiddenDrawer> {
           selectedStyle: textStyle.copyWith(fontWeight: FontWeight.bold),
           colorLineSelected: Colors.redAccent,
         ),
-        const Jobs(),
+        Jobs(),
       ),
       ScreenHiddenDrawer(
         ItemHiddenMenu(
@@ -40,7 +40,7 @@ class _HiddenDrawerState extends State<HiddenDrawer> {
           selectedStyle: textStyle,
           colorLineSelected: Colors.redAccent,
         ),
-        const Profile(),
+        Profile(),
       ),
       ScreenHiddenDrawer(
         ItemHiddenMenu(
@@ -49,7 +49,7 @@ class _HiddenDrawerState extends State<HiddenDrawer> {
           selectedStyle: textStyle,
           colorLineSelected: Colors.redAccent,
         ),
-        const Profile(),
+        Profile(),
       ),
       ScreenHiddenDrawer(
         ItemHiddenMenu(
@@ -58,7 +58,7 @@ class _HiddenDrawerState extends State<HiddenDrawer> {
           selectedStyle: textStyle,
           colorLineSelected: Colors.redAccent,
         ),
-        const Profile(),
+        Profile(),
       ),
       ScreenHiddenDrawer(
         ItemHiddenMenu(
@@ -67,7 +67,7 @@ class _HiddenDrawerState extends State<HiddenDrawer> {
           selectedStyle: textStyle,
           colorLineSelected: Colors.redAccent,
         ),
-        const Profile(),
+        Profile(),
       ),
       ScreenHiddenDrawer(
         ItemHiddenMenu(
@@ -76,7 +76,7 @@ class _HiddenDrawerState extends State<HiddenDrawer> {
           selectedStyle: textStyle,
           colorLineSelected: Colors.redAccent,
         ),
-        const Profile(),
+        Profile(),
       ),
     ];
   }

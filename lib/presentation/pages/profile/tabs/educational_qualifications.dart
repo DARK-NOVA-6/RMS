@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:substring_highlight/substring_highlight.dart';
+import 'package:untitled/presentation/controllers/edu_controllers.dart';
 import 'package:untitled/provider/theme.dart';
 import 'package:untitled/provider/update_action_bar_actions_notification.dart';
 
@@ -24,6 +25,7 @@ class _EducationalQualificationsState extends State<EducationalQualifications> {
   late List<String> degrees;
   late List<DateTime?> dates;
   late bool enabled;
+  List<EduControllers> eduControllers = [];
 
   Future fetchData() async {
     setState(() {
@@ -83,23 +85,61 @@ class _EducationalQualificationsState extends State<EducationalQualifications> {
           child: ListView(
             children: [
               if (enabled) ...[
-                MyElevatedButton(text: 'Add a Certificate', press: () {}),
+                MyElevatedButton(
+                  text: 'Add a Certificate',
+                  press: () {
+                    setState(() {
+                      eduControllers.insert(
+                        eduControllers.length,
+                        EduControllers(),
+                      );
+                    });
+                  },
+                ),
                 const SizedBox(height: 20),
               ],
-              ListView.separated(
-                separatorBuilder: ((context, index) =>
-                    const SizedBox(height: 30)),
-                itemBuilder: (context, index) => EduQualificationItem(
-                  enabled: enabled,
-                  certificateNames: certificateNames,
-                  degrees: degrees,
-                  index: index,
+              if (eduControllers.isNotEmpty) ...[
+                ListView.separated(
+                  separatorBuilder: ((context, index) =>
+                      const SizedBox(height: 30)),
+                  itemBuilder: (context, index) => EduQualificationItem(
+                    eduControllers: eduControllers[index],
+                    enabled: enabled,
+                    certificateNames: certificateNames,
+                    degrees: degrees,
+                    index: index,
+                    delete: (idx) {
+                      setState(() {
+                        eduControllers.removeAt(idx);
+                      });
+                    },
+                  ),
+                  itemCount: eduControllers.length,
+                  shrinkWrap: true,
+                  primary: false,
                 ),
-                itemCount: 5,
-                shrinkWrap: true,
-                primary: false,
-              ),
-              const SizedBox(height: 120),
+                const SizedBox(height: 120),
+              ],
+              if (eduControllers.isEmpty) ...[
+                const SizedBox(height: 100),
+                Image.asset('assets/png/Asset 2.png', height: 200),
+                const SizedBox(height: 50),
+                const Center(
+                  child: ListTile(
+                    title: Text(
+                      'No Educational Certificate',
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    subtitle: Text(
+                      'please add some Certificate to show them',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
+                )
+              ],
             ],
           ),
         ),
@@ -115,12 +155,16 @@ class EduQualificationItem extends StatefulWidget {
     required this.certificateNames,
     required this.degrees,
     required this.index,
+    required this.eduControllers,
+    required this.delete,
   }) : super(key: key);
 
   final bool enabled;
   final List<String> certificateNames;
   final List<String> degrees;
   final int index;
+  final EduControllers eduControllers;
+  final Function(int) delete;
 
   @override
   State<EduQualificationItem> createState() => _EduQualificationItemState();
@@ -128,7 +172,7 @@ class EduQualificationItem extends StatefulWidget {
 
 class _EduQualificationItemState extends State<EduQualificationItem> {
   DateTime gDate = DateTime.now();
-  TextEditingController gDateText = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -147,7 +191,9 @@ class _EduQualificationItemState extends State<EduQualificationItem> {
                 ),
                 child: IconButton(
                   padding: const EdgeInsets.only(right: 1, bottom: 2),
-                  onPressed: () {},
+                  onPressed: () {
+                    widget.delete(widget.index);
+                  },
                   icon: const Icon(
                     Icons.delete,
                     size: 40,
@@ -171,13 +217,14 @@ class _EduQualificationItemState extends State<EduQualificationItem> {
             children: [
               RoundedTextField(
                 color: Theme.of(context).primaryColor,
-                controller: TextEditingController(),
+                controller: widget.eduControllers.university,
                 label: 'University',
                 enabled: widget.enabled,
                 w: 0.8,
               ),
               const SizedBox(height: 10),
               CustomeAutoComplete(
+                controller: widget.eduControllers.certificateName,
                 list: widget.certificateNames,
                 label: 'Certificate Name',
                 enabled: widget.enabled,
@@ -185,6 +232,7 @@ class _EduQualificationItemState extends State<EduQualificationItem> {
               ),
               const SizedBox(height: 10),
               CustomeAutoComplete(
+                controller: widget.eduControllers.degree,
                 list: widget.degrees,
                 label: 'Degree',
                 enabled: widget.enabled,
@@ -200,7 +248,7 @@ class _EduQualificationItemState extends State<EduQualificationItem> {
                     margin: EdgeInsets.only(right: (widget.enabled ? 10 : 0)),
                     child: RoundedTextField(
                       enabled: false,
-                      controller: gDateText,
+                      controller: widget.eduControllers.graduation,
                       color: Theme.of(context).primaryColor,
                       label: 'Graduation',
                     ),
@@ -219,7 +267,8 @@ class _EduQualificationItemState extends State<EduQualificationItem> {
                           (value) => setState(() {
                             if (value != null && value != gDate) {
                               gDate = value;
-                              gDateText.text = DateFormat.yMMMd().format(value);
+                              widget.eduControllers.graduation.text =
+                                  DateFormat.yMMMd().format(value);
                             }
                           }),
                         ),
@@ -243,19 +292,27 @@ class CustomeAutoComplete extends StatefulWidget {
     required this.enabled,
     this.label = '',
     this.w = .7,
+    required this.controller,
   }) : super(key: key);
 
   final List<String> list;
   final bool enabled;
   final String label;
   final double w;
+  final TextEditingController controller;
 
   @override
   State<CustomeAutoComplete> createState() => _CustomeAutoCompleteState();
 }
 
 class _CustomeAutoCompleteState extends State<CustomeAutoComplete> {
-  late TextEditingController controller;
+  late TextEditingController tmpController;
+
+  @override
+  void initState() {
+    super.initState();
+    tmpController = widget.controller;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -272,7 +329,7 @@ class _CustomeAutoCompleteState extends State<CustomeAutoComplete> {
                 tileColor: Colors.white,
                 title: SubstringHighlight(
                   text: option,
-                  term: controller.text,
+                  term: tmpController.text,
                   textStyle: const TextStyle(
                     color: Colors.black,
                     fontSize: 18,
@@ -298,10 +355,13 @@ class _CustomeAutoCompleteState extends State<CustomeAutoComplete> {
           return widget.list;
         }
       },
-      onSelected: (selectedString) {},
+      initialValue: widget.controller.value,
+      onSelected: (selectedString) {
+        widget.controller.text = tmpController.text;
+      },
       fieldViewBuilder:
           (context, textEditingController, focusNode, onFieldSubmitted) {
-        controller = textEditingController;
+        tmpController = textEditingController;
         return RoundedTextFieldWithAutoComplete(
           w: widget.w,
           label: widget.label,

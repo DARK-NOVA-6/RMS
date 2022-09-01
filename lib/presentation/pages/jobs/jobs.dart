@@ -1,31 +1,37 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../domain/entities/entities.dart';
 import '../../components/components.dart';
-import '../nav_bar_pages/pages.dart';
+import 'job_navigator.dart';
 
+// ignore: must_be_immutable
 class Jobs extends StatefulWidget {
-  const Jobs({Key? key}) : super(key: key);
+  Jobs({Key? key}) : super(key: key) {
+    currentIndex = 0;
+    currentPage = 'Recommended';
+    pagesKeys = ['Recommended', 'Unavailable', 'Applied'];
+    navigatorState = {
+      'Recommended': GlobalKey<NavigatorState>(),
+      'Unavailable': GlobalKey<NavigatorState>(),
+      'Applied': GlobalKey<NavigatorState>(),
+    };
+  }
+
+  late String currentPage;
+  late int currentIndex;
+  late List<String> pagesKeys;
+  late Map<String, GlobalKey<NavigatorState>> navigatorState;
 
   @override
   State<Jobs> createState() => _JobsState();
 }
 
 class _JobsState extends State<Jobs> {
-  late List pages;
-
   @override
   void initState() {
     super.initState();
-    pages = [
-      Recommended(job: job),
-      Unavailable(job: job),
-      Applied(job: job),
-    ];
   }
 
-  int index = 0;
   List<Widget> icons = const [
     Icon(Icons.add_task_outlined),
     Icon(Icons.unpublished),
@@ -33,12 +39,6 @@ class _JobsState extends State<Jobs> {
   ];
 
   Job job = createJob();
-
-  void changeIndex(int value) {
-    setState(() {
-      index = value;
-    });
-  }
 
   List<Widget> actions = [
     Padding(
@@ -53,49 +53,45 @@ class _JobsState extends State<Jobs> {
     ),
   ];
 
+  void selectTab(int index) {
+    if (widget.currentPage == widget.pagesKeys[index]) {
+      widget.navigatorState[index]?.currentState
+          ?.popUntil((route) => route.isFirst);
+    } else {
+      setState(() {
+        widget.currentPage = widget.pagesKeys[index];
+        widget.currentIndex = index;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
       bottomNavigationBar: BottomNavBar(
-        index: index,
-        changeIndex: changeIndex,
+        index: widget.currentIndex,
+        changeIndex: selectTab,
         icons: icons,
       ),
-      appBar: CustomeAppBar(label: pages[index].label, actions: actions),
-      body: pages[index],
+      appBar: CustomeAppBar(
+        label: widget.pagesKeys[widget.currentIndex],
+        actions: actions,
+      ),
+      body: Stack(
+        children:
+            widget.pagesKeys.map((e) => buildOffstageNavigator(e)).toList(),
+      ),
     );
   }
-}
 
-Job createJob() {
-  return Job(
-    id: '1',
-    companyName: 'Company Name',
-    jobDescription: const JobDescription(
-      title: 'Job Title',
-      eduQualification: [
-        DescriptionField(value: 'edu1', isRequired: false),
-        DescriptionField(value: 'edu2', isRequired: false)
-      ],
-      experience: [
-        DescriptionField(value: 'exp1', isRequired: false),
-        DescriptionField(value: 'exp2', isRequired: false)
-      ],
-      languages: [
-        DescriptionField(value: 'languages1', isRequired: false),
-        DescriptionField(value: 'languages2', isRequired: false)
-      ],
-      skills: [
-        DescriptionField(value: 'skills1', isRequired: false),
-        DescriptionField(value: 'skills2', isRequired: false),
-        DescriptionField(value: 'skills3', isRequired: false)
-      ],
-      summary: 'summary sum mary summary summary summary'
-          'asddddddddddddddd   ddddddddddddd   ddddddddddddddddddddddddddd'
-          'asddddddddddd   ddddddddddd   ddddddddddd ddddddasdddddddddas'
-          'asdasdas   dasdasdasdas   dasdasdasdasdasd',
-    ),
-    publishedTime: Timestamp.now(),
-  );
+  Widget buildOffstageNavigator(String tabItem) {
+    return Offstage(
+      offstage: widget.currentPage != tabItem,
+      child: JobNavigator(
+        navigatorState: widget.navigatorState[tabItem]!,
+        tabItem: tabItem,
+      ),
+    );
+  }
 }

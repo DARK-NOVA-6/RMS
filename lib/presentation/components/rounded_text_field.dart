@@ -56,7 +56,6 @@ class RoundedTextField extends StatelessWidget {
               : [],
           controller: controller,
           obscureText: pass,
-          autofocus: false,
           style: const TextStyle(
             color: Colors.black,
             fontSize: 18,
