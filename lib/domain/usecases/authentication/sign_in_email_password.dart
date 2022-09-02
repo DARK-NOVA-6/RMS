@@ -1,15 +1,14 @@
 import 'package:dartz/dartz.dart';
-import 'package:untitled/domain/repositories/authentication_repo.dart';
 
 import '../../../core/errors/failures/failure.dart';
-import '../../entities/user.dart';
+import '../../repositories/authentication_repo.dart';
 
 class SignInEmailAndPassword {
   final AuthenticationRepo authenticationRepo;
 
   SignInEmailAndPassword(this.authenticationRepo);
 
-  Future<Either<Failure, User>> call({
+  Future<Either<Failure, void>> call({
     required String email,
     required String password,
   }) async {

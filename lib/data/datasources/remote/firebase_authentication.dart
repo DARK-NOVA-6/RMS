@@ -1,45 +1,62 @@
-import 'package:untitled/data/models/user_model.dart';
-
-import '../../../core/errors/exceptions/authentication_exceptions.dart';
-import '../../../domain/entities/user.dart' as user_ent;
-
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../../../core/errors/exceptions/authentication_exceptions.dart';
+import '../../../domain/repositories/user_info_repo.dart';
+import '../../../domain/entities/user/user_info.dart' as user_ent;
+
 abstract class AuthenticationRemote {
-  Future<user_ent.User> signInEmailPassword({
+  Future<void> signInEmailPassword({
     required String email,
     required String password,
   });
 
   Future<void> signOut();
 
-  Future<user_ent.User> signUp({
+  Future<void> signUp({
     required String email,
     required String password,
   });
 
-  Stream<user_ent.User> get connectedUser;
-
   String? get userId;
+
+  user_ent.UserInfo? get connectedUser;
 }
 
 class FirebaseAuthentication extends AuthenticationRemote {
   final FirebaseAuth firebaseAuth;
+  final UserInfoRepo userInfoRepo;
+  static user_ent.UserInfo? _userInfo;
+  static bool _initiated = false;
 
   FirebaseAuthentication({
     required this.firebaseAuth,
-  });
+    required this.userInfoRepo,
+  }) {
+    if (_initiated == false) {
+      _initiated = true;
+      _userInfo = null;
+      firebaseAuth.authStateChanges().forEach((element) async {
+        if (element == null) {
+          _userInfo = null;
+        } else {
+          (await userInfoRepo.getUserInfo(userId: element.uid)).fold(
+            (failure) => _userInfo = null,
+            (data) => _userInfo = data,
+          );
+        }
+      });
+    }
+  }
 
   @override
-  Future<user_ent.User> signInEmailPassword({
+  Future<void> signInEmailPassword({
     required String email,
     required String password,
   }) async {
     try {
-      final userCredential = await firebaseAuth.signInWithEmailAndPassword(
+      await firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
-      return Future<user_ent.User>.value(
-          UserModel.fromFirebaseUserCredential(userCredential));
+      return Future<void>.value(null);
     } on FirebaseAuthException {
       throw EmailAndPasswordNotMatchedException();
     } catch (e) {
@@ -53,15 +70,14 @@ class FirebaseAuthentication extends AuthenticationRemote {
   }
 
   @override
-  Future<user_ent.User> signUp({
+  Future<void> signUp({
     required String email,
     required String password,
   }) async {
     try {
-      final userCredential = firebaseAuth.createUserWithEmailAndPassword(
+      firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
-      final user = UserModel.fromFirebaseUserCredential(await userCredential);
-      return Future<user_ent.User>.value(user);
+      return Future<void>.value(null);
     } on FirebaseAuthException catch (e) {
       print(e.message);
       if (e.code == 'weak-password') {
@@ -79,13 +95,11 @@ class FirebaseAuthentication extends AuthenticationRemote {
   }
 
   @override
-  Stream<user_ent.User> get connectedUser => firebaseAuth
-      .authStateChanges()
-      .map((user) => UserModel.fromFirebaseUser(user));
-
-  @override
   String? get userId {
     if (firebaseAuth.currentUser == null) return null;
-    return firebaseAuth.currentUser?.uid;
+    return firebaseAuth.currentUser!.uid;
   }
+
+  @override
+  user_ent.UserInfo? get connectedUser => _userInfo;
 }

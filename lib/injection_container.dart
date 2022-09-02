@@ -50,7 +50,12 @@ void initData() {
   sl.registerSingleton(FirebaseFirestore.instance);
   sl.registerLazySingleton<EvaluatorApi>(() => EvaluatorApiImp());
   sl.registerLazySingleton<AuthenticationRemote>(
-    () => FirebaseAuthentication(firebaseAuth: FirebaseAuth.instance),
+    () => FirebaseAuthentication(
+      firebaseAuth: FirebaseAuth.instance,
+      userInfoRepo: UserInfoRepoImp(
+        firebaseFirestore: sl(),
+      ),
+    ),
   );
   sl.registerLazySingleton<AutocompleteSubstringApi>(
     () => AutocompleteSubstringApiImp(),
@@ -62,7 +67,6 @@ void initData() {
   sl.registerLazySingleton<UserInfoRepo>(
     () => UserInfoRepoImp(
       firebaseFirestore: sl(),
-      authenticationRepo: sl(),
     ),
   );
   sl.registerFactory<RecommendedRepo>(

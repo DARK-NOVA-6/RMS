@@ -1,3 +1,4 @@
+import '../../../core/utils/validation/user_info_validator.dart';
 import '../../../injection_container.dart';
 import '../../entities/user/user_info.dart';
 import '../../repositories/user_info_repo.dart';
@@ -7,12 +8,15 @@ class UpdateProfileUser {
 
   UpdateProfileUser() : userInfoRepo = sl();
 
-  Future<bool> call({required UserInfo newUserInfo}) async {
-    bool result = false;
+  Future<List<String>> call({required UserInfo newUserInfo}) async {
+    List<String> errors = (await UserInfoValidator.validate(newUserInfo))
+        .map((e) => e.message)
+        .toList();
+    if (errors.isNotEmpty) return Future<List<String>>.value(errors);
     (await userInfoRepo.updateUserInfo(newUserInfo: newUserInfo)).fold(
-      (failure) => print(failure.message),
-      (data) => result = data,
+      (failure) => errors = [failure.message],
+      (data) => errors = [],
     );
-    return result;
+    return Future<List<String>>.value(errors);
   }
 }

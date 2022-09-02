@@ -27,11 +27,11 @@ class BlocBuilderWidget extends StatelessWidget {
         } else if (state is SignInErrorState) {
           print(state.message);
         } else if (state is SignedUpState) {
-          print('new account has been registered ${state.user.id}');
+          print('new account has been registered ');
         } else if (state is SignedUpState) {
-          print('welcome ${state.user.id}');
+          print('welcome ');
         } else if (state is AuthInitial) {
-          print ('initial');
+          print('initial');
         }
       },
       builder: (context, state) {

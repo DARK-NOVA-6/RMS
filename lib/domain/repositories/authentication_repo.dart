@@ -1,21 +1,22 @@
 import 'package:dartz/dartz.dart';
-import 'package:untitled/core/errors/failures/failure.dart';
-import 'package:untitled/domain/entities/entities.dart';
+
+import '../../core/errors/failures/failure.dart';
+import '../entities/user/user_info.dart';
 
 abstract class AuthenticationRepo {
-  Future<Either<Failure, User>> signUpEmailAndPassword({
+  Future<Either<Failure, void>> signUpEmailAndPassword({
     required String email,
     required String password,
   });
 
-  Future<Either<Failure, User>> signInEmailAndPassword({
+  Future<Either<Failure, void>> signInEmailAndPassword({
     required String email,
     required String password,
   });
 
   Future<Either<Failure, void>> logOut();
 
-  Stream<User> get connectedUser;
-
   String? get userId;
+
+  UserInfo? get connectedUser;
 }

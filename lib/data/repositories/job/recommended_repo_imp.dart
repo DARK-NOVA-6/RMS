@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
-import 'package:untitled/domain/entities/job/full_evaluated_job.dart';
 import '../../../core/errors/failures/failure.dart';
 import '../../../domain/entities/job/evaluated_job.dart';
+import '../../../domain/entities/job/full_evaluated_job.dart';
 import '../../../domain/repositories/job/recommended_repo.dart';
 import '../../datasources/remote/evaluator_api.dart';
 import 'evaluated_job_repo.dart';

@@ -3,5 +3,6 @@ abstract class KeywordsFieldEduRepo {
     required String degree,
     required String word,
     int? limit,
+    bool? exact,
   });
 }

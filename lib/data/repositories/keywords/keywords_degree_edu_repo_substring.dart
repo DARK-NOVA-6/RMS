@@ -6,8 +6,16 @@ class KeywordsDegreeEduRepoSubstring implements KeywordsDegreeEduRepo {
   final KeywordsRepoSubstring keywordsRepoSubstring;
 
   @override
-  Future<List<String>> getSimilar({required String word, int? limit}) {
-    return keywordsRepoSubstring.getSimilar(word: word);
+  Future<List<String>> getSimilar({
+    required String word,
+    int? limit,
+    bool? exact,
+  }) {
+    return keywordsRepoSubstring.getSimilar(
+      word: word,
+      limit: limit,
+      exact: exact,
+    );
   }
 
   KeywordsDegreeEduRepoSubstring()

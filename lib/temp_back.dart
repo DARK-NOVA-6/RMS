@@ -98,12 +98,14 @@ class _MyApp2State extends State<MyApp2> {
   Widget build(BuildContext context) {
     Temp().updateUser();
 
-    FetchMoreRecommended fetchMoreRecommended = FetchMoreRecommended();
-    FetchMoreUnavailable fetchMoreUnavailable = FetchMoreUnavailable();
-    GetProfileUser getProfileUser = GetProfileUser();
+    FetchMoreRecommended fetchMoreRecommended = sl();
+    FetchMoreUnavailable fetchMoreUnavailable = sl();
+    GetProfileUser getProfileUser = sl();
 
     String? curr = 'sk';
     String word = 'java';
+    int? limit;
+    bool? exact;
     return MaterialApp(
       home: Scaffold(
         body: Center(
@@ -175,45 +177,73 @@ class _MyApp2State extends State<MyApp2> {
                       },
                     ),
                   ),
+                  Material(
+                    child: DropdownButtonFormField(
+                      items: const [
+                        DropdownMenuItem<bool>(
+                          value: true,
+                          child: Text('exact'),
+                        ),
+                        DropdownMenuItem<bool>(
+                          value: false,
+                          child: Text('not exact'),
+                        ),
+                      ],
+                      onChanged: (val) {
+                        exact = val as bool?;
+                      },
+                    ),
+                  ),
                   TextButton(
                     child: const Text('get complement'),
                     onPressed: () async {
                       if (curr == 'skill') {
                         print(
-                          await AutocompleteSkills()(word: word),
+                          await AutocompleteSkills()(
+                              word: word, limit: limit, exact: exact),
                         );
                       }
                       if (curr == 'language') {
                         print(
-                          await AutocompleteLanguages()(word: word),
+                          await AutocompleteLanguages()(
+                              word: word, limit: limit, exact: exact),
                         );
                       }
                       if (curr == 'degree') {
                         print(
-                          await AutocompleteDegrees()(word: word),
+                          await AutocompleteDegrees()(
+                              word: word, limit: limit, exact: exact),
                         );
                       }
                       if (curr == 'job-title') {
                         print(
-                          await AutocompleteJobTitles()(word: word),
+                          await AutocompleteJobTitles()(
+                              word: word, limit: limit, exact: exact),
                         );
                       }
                       if (curr == 'university') {
                         print(
-                          await AutocompleteUniversities()(word: word),
+                          await AutocompleteUniversities()(
+                              word: word, limit: limit, exact: exact),
                         );
                       }
 
                       if (curr == 'Bachelor') {
                         print(
                           await AutocompleteFieldEdu()(
-                              degree: 'Bachelor', word: word),
+                              degree: 'Bachelor',
+                              word: word,
+                              limit: limit,
+                              exact: exact),
                         );
                       }
                       if (curr == 'Master') {
                         print(
                           await AutocompleteFieldEdu()(
-                              degree: 'Master', word: word),
+                              degree: 'Master',
+                              word: word,
+                              limit: limit,
+                              exact: exact),
                         );
                       }
                     },
@@ -224,7 +254,14 @@ class _MyApp2State extends State<MyApp2> {
                         word = val.toString();
                       },
                     ),
-                  )
+                  ),
+                  Material(
+                    child: TextFormField(
+                      onChanged: (val) {
+                        limit = 2;
+                      },
+                    ),
+                  ),
                 ],
               ),
             ),
