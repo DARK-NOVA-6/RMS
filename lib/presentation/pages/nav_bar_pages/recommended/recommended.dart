@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import 'package:untitled/domain/entities/job/evaluated_job.dart';
+import 'package:untitled/domain/usecases/job/recommended/fetch_more.dart';
 
-import '../../../../domain/entities/job/job.dart';
+import '../../../../injection_container.dart';
 import '../../../components/job/job.dart';
 import '../common/common.dart';
 import '../pages.dart';
 
 class Recommended extends StatefulWidget implements Pages {
-  const Recommended({Key? key, required this.job}) : super(key: key);
-  final Job job;
+  const Recommended({Key? key}) : super(key: key);
 
   @override
   State<Recommended> createState() => _RecommendedState();
@@ -20,6 +21,8 @@ class Recommended extends StatefulWidget implements Pages {
 class _RecommendedState extends State<Recommended> {
   ScrollController scrollController = ScrollController();
   final GlobalKey<LiquidPullToRefreshState> _refreshIndicatorKey = GlobalKey();
+  final FetchMoreRecommended fetcherRecommended = FetchMoreRecommended(sl());
+  List<EvaluatedJob> jobList = [];
 
   Future<void> _handleRefresh() async {
     _refreshIndicatorKey.currentState?.show();
@@ -35,15 +38,8 @@ class _RecommendedState extends State<Recommended> {
     setState(() {
       loading = true;
     });
-    await Future.delayed(const Duration(seconds: 2));
-    List<Widget> newJobs = jobs.length >= 3
-        ? []
-        : List.generate(
-            3,
-            (index) => JobWidget(
-              job: widget.job,
-            ),
-          );
+    jobList.addAll(await fetcherRecommended(limit: 1));
+    List<Widget> newJobs = jobList.map((e) => JobWidget(job: e)).toList();
     if (newJobs.isNotEmpty) {
       jobs.addAll(Iterable.castFrom(newJobs));
     }
@@ -85,7 +81,7 @@ class _RecommendedState extends State<Recommended> {
       springAnimationDurationInMilliseconds: 300,
       child: LayoutBuilder(
         builder: (context, constraints) {
-          if (loading||jobs.isNotEmpty) {
+          if (loading || jobs.isNotEmpty) {
             return Stack(
               children: [
                 ListViewBuilder(

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import 'package:untitled/domain/usecases/job/unavailable/fetch_more.dart';
 
-import '../../../../domain/entities/job/job.dart';
+import '../../../../domain/entities/job/evaluated_job.dart';
+import '../../../../injection_container.dart';
 import '../../../components/job/job.dart';
 import '../common/common.dart';
 import '../pages.dart';
 
 class Unavailable extends StatefulWidget implements Pages {
-  const Unavailable({Key? key, required this.job}) : super(key: key);
-  final Job job;
+  const Unavailable({Key? key}) : super(key: key);
 
   @override
   State<Unavailable> createState() => _UnavailableState();
@@ -20,6 +21,8 @@ class Unavailable extends StatefulWidget implements Pages {
 class _UnavailableState extends State<Unavailable> {
   ScrollController scrollController = ScrollController();
   final GlobalKey<LiquidPullToRefreshState> _refreshIndicatorKey = GlobalKey();
+  final FetchMoreUnavailable fetchMoreUnavailable = FetchMoreUnavailable(sl());
+  List<EvaluatedJob> jobList = [];
 
   Future<void> _handleRefresh() async {
     _refreshIndicatorKey.currentState?.show();
@@ -35,15 +38,8 @@ class _UnavailableState extends State<Unavailable> {
     setState(() {
       loading = true;
     });
-    await Future.delayed(const Duration(seconds: 2));
-    List<Widget> newJobs = jobs.length >= 3
-        ? []
-        : List.generate(
-            3,
-            (index) => JobWidget(
-              job: widget.job,
-            ),
-          );
+    jobList.addAll(await fetchMoreUnavailable(limit: 1));
+    List<Widget> newJobs = jobList.map((e) => JobWidget(job: e)).toList();
     if (newJobs.isNotEmpty) {
       jobs.addAll(Iterable.castFrom(newJobs));
     }

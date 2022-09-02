@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:untitled/domain/entities/job/evaluated_job.dart';
 import 'package:untitled/provider/theme.dart';
 import '../../../domain/entities/entities.dart';
 
@@ -12,7 +13,7 @@ class CustomExpansionTile extends StatelessWidget {
   TextStyle fontSize_18 = const TextStyle(
     fontSize: 18,
   );
-  final Job job;
+  final EvaluatedJob job;
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +38,8 @@ class CustomExpansionTile extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: 10),
           child: Column(
-            children: job.jobDescription.eduQualification
-                .map((item) => Text(item.value, style: fontSize_18))
+            children: job.eduQualifications
+                .map((item) => Text(item.field, style: fontSize_18))
                 .toList(),
           ),
         ),
@@ -46,8 +47,8 @@ class CustomExpansionTile extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: 10),
           child: Column(
-            children: job.jobDescription.experience
-                .map((item) => Text(item.value, style: fontSize_18))
+            children: job.experiences
+                .map((item) => Text(item.title, style: fontSize_18))
                 .toList(),
           ),
         ),
@@ -55,8 +56,8 @@ class CustomExpansionTile extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: 10),
           child: Column(
-            children: job.jobDescription.skills
-                .map((item) => Text(item.value, style: fontSize_18))
+            children: job.skills
+                .map((item) => Text(item.title, style: fontSize_18))
                 .toList(),
           ),
         ),
@@ -64,8 +65,8 @@ class CustomExpansionTile extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: 10),
           child: Column(
-            children: job.jobDescription.languages
-                .map((item) => Text(item.value, style: fontSize_18))
+            children: job.languages
+                .map((item) => Text(item.title, style: fontSize_18))
                 .toList(),
           ),
         ),

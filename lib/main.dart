@@ -22,13 +22,13 @@ void main() async {
   await Firebase.initializeApp();
   await FirebaseAuth.instance.signOut();
   init();
-  runApp(const MyApp2());
-  // runApp(
-  //   ChangeNotifierProvider(
-  //     create: (_)=>UpdateActionBarActions(),
-  //     child: MyApp(),
-  //   ),
-  // );
+  // runApp(const MyApp2());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_)=>UpdateActionBarActions(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

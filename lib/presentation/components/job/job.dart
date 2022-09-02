@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:untitled/domain/entities/job/evaluated_job.dart';
 import 'package:untitled/provider/theme.dart';
 import '../../../domain/entities/entities.dart';
 import 'package:readmore/readmore.dart';
@@ -10,7 +11,7 @@ import 'costum_expansion_tile.dart';
 class JobWidget extends StatelessWidget {
   const JobWidget({Key? key, required this.job}) : super(key: key);
 
-  final Job job;
+  final EvaluatedJob job;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +54,7 @@ class JobWidget extends StatelessWidget {
             padding: const EdgeInsets.all(10),
             child: MyElevatedButton(
               press: () {},
-              text: job.jobDescription.title,
+              text: job.title,
               w: 1,
               color: Theme.of(context).primaryColor.withAlpha(100),
             ),
@@ -61,7 +62,7 @@ class JobWidget extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(10),
             child: ReadMoreText(
-              job.jobDescription.summary,
+              job.summary,
               trimMode: TrimMode.Line,
               trimLines: 3,
               style: const TextStyle(fontSize: 16),

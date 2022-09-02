@@ -19,13 +19,13 @@ class JobNavigator extends StatelessWidget {
     Widget child;
     switch (tabItem) {
       case 'Recommended':
-        child = Recommended(job: createJob());
+        child = const Recommended();
         break;
       case 'Unavailable':
-        child = Unavailable(job: createJob());
+        child = const Unavailable();
         break;
       case 'Applied':
-        child = Applied(job: createJob());
+        child = const Applied();
         break;
       default:
         child = const ErrorPage();
