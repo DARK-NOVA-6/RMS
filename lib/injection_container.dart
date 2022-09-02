@@ -1,15 +1,28 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
+import 'data/datasources/remote/autocomplete_substring_api.dart';
 import 'data/datasources/remote/evaluator_api.dart';
 import 'data/datasources/remote/firebase_authentication.dart';
 import 'data/repositories/authentication_repo.dart';
 import 'data/repositories/job/recommended_repo_imp.dart';
 import 'data/repositories/job/unavailable_repo_imp.dart';
+import 'data/repositories/keywords/keywords_degree_edu_repo_substring.dart';
+import 'data/repositories/keywords/keywords_field_edu_repo_substring.dart';
+import 'data/repositories/keywords/keywords_job_titles_repo_substring.dart';
+import 'data/repositories/keywords/keywords_languages_repo_substring.dart';
+import 'data/repositories/keywords/keywords_skills_repo_substring.dart';
+import 'data/repositories/keywords/keywords_universities_repo_substring.dart';
 import 'data/repositories/user_info_repo_imp.dart';
 import 'domain/repositories/authentication_repo.dart';
 import 'domain/repositories/job/recommended_repo.dart';
 import 'domain/repositories/job/unavailable_repo.dart';
+import 'domain/repositories/keywords/keywords_degree_edu_repo.dart';
+import 'domain/repositories/keywords/keywords_field_edu_repo.dart';
+import 'domain/repositories/keywords/keywords_job_titles_repo.dart';
+import 'domain/repositories/keywords/keywords_languages_repo.dart';
+import 'domain/repositories/keywords/keywords_skills_repo.dart';
+import 'domain/repositories/keywords/keywords_universities_repo.dart';
 import 'domain/repositories/user_info_repo.dart';
 import 'domain/usecases/authentication/get_connected_user.dart';
 import 'domain/usecases/authentication/log_out.dart';
@@ -36,6 +49,9 @@ void initData() {
   sl.registerLazySingleton<AuthenticationRemote>(
     () => FirebaseAuthentication(firebaseAuth: FirebaseAuth.instance),
   );
+  sl.registerLazySingleton<AutocompleteSubstringApi>(
+    () => AutocompleteSubstringApiImp(),
+  );
   // repositories
   sl.registerLazySingleton<AuthenticationRepo>(
     () => AuthenticationUsingTwoSteps(authenticationRemote: sl()),
@@ -61,6 +77,24 @@ void initData() {
       userId: 'KNvVSQq2xSUaxUNsEbHCu5VvHWv2',
       // userId: GetConnectedUser(sl()).userId!,
     ),
+  );
+  sl.registerFactory<KeywordsSkillsRepo>(
+    () => KeywordsSkillsRepoSubstring(),
+  );
+  sl.registerFactory<KeywordsLanguagesRepo>(
+    () => KeywordsLanguagesRepoSubstring(),
+  );
+  sl.registerFactory<KeywordsFieldEduRepo>(
+    () => KeywordsFieldEduRepoSubstring(),
+  );
+  sl.registerFactory<KeywordsDegreeEduRepo>(
+    () => KeywordsDegreeEduRepoSubstring(),
+  );
+  sl.registerFactory<KeywordsJobTitlesRepo>(
+    () => KeywordsJobTitlesRepoSubstring(),
+  );
+  sl.registerFactory<KeywordsUniversitiesRepo>(
+    () => KeywordsUniversitiesRepoSubstring(),
   );
 }
 

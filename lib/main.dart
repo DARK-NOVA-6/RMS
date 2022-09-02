@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:untitled/data/models/user_model.dart';
 import 'package:untitled/presentation/blocs/authentication/auth_bloc.dart';
 import 'package:untitled/provider/update_action_bar_actions_notification.dart';
+import 'package:untitled/temp_back.dart';
 import 'domain/entities/user.dart' as user_ent;
 import 'data/datasources/remote/firebase_authentication.dart';
 import 'data/repositories/authentication_repo.dart';
@@ -21,13 +22,13 @@ void main() async {
   await Firebase.initializeApp();
   await FirebaseAuth.instance.signOut();
   init();
-  // runApp(const MyApp2());
-  runApp(
-    ChangeNotifierProvider(
-      create: (_)=>UpdateActionBarActions(),
-      child: MyApp(),
-    ),
-  );
+  runApp(const MyApp2());
+  // runApp(
+  //   ChangeNotifierProvider(
+  //     create: (_)=>UpdateActionBarActions(),
+  //     child: MyApp(),
+  //   ),
+  // );
 }
 
 class MyApp extends StatelessWidget {

@@ -1,6 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:untitled/domain/usecases/autocomplete/autocomplete_field_edu.dart';
+import 'package:untitled/domain/usecases/autocomplete/autocomplete_job_titles.dart';
+import 'package:untitled/domain/usecases/autocomplete/autocomplete_languages.dart';
+import 'package:untitled/domain/usecases/autocomplete/autocomplete_skills.dart';
+import 'package:untitled/domain/usecases/autocomplete/autocomplete_universities.dart';
 import 'package:untitled/domain/usecases/job/unavailable/fetch_more.dart';
+import 'domain/usecases/autocomplete/autocomplete_degrees.dart';
 import 'domain/usecases/job/recommended/fetch_more.dart';
 import 'domain/usecases/user/get_profile_user.dart';
 import 'domain/entities/user/user_info.dart' as user_info;
@@ -95,38 +101,142 @@ class _MyApp2State extends State<MyApp2> {
     FetchMoreRecommended fetchMoreRecommended = FetchMoreRecommended(sl());
     FetchMoreUnavailable fetchMoreUnavailable = FetchMoreUnavailable(sl());
     GetProfileUser getProfileUser = GetProfileUser(userInfoRepo: sl());
+
+    String? curr = 'sk';
+    String word = 'java';
     return MaterialApp(
-      home: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          TextButton(
-            child: const Text('fetch more recommended'),
-            onPressed: () async {
-              print(await fetchMoreRecommended(limit: 1));
-            },
+      home: Scaffold(
+        body: Center(
+          child: Container(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  TextButton(
+                    child: const Text('fetch more recommended'),
+                    onPressed: () async {
+                      print(await fetchMoreRecommended(limit: 1));
+                    },
+                  ),
+                  TextButton(
+                    child: const Text('refresh recommended'),
+                    onPressed: () => fetchMoreRecommended.refresh(),
+                  ),
+                  TextButton(
+                    child: const Text('fetch more unavailable'),
+                    onPressed: () async {
+                      print(await fetchMoreUnavailable(limit: 1));
+                    },
+                  ),
+                  TextButton(
+                    child: const Text('refresh unavailable'),
+                    onPressed: () => fetchMoreUnavailable.refresh(),
+                  ),
+                  TextButton(
+                    child: const Text('get profile info'),
+                    onPressed: () async {
+                      print(await getProfileUser(
+                          userId: 'KWKKUrBFSAPT7sqtP24nqa2gduN2'));
+                    },
+                  ),
+                  Material(
+                    child: DropdownButtonFormField(
+                      items: const [
+                        DropdownMenuItem<String>(
+                          value: 'skill',
+                          child: Text('skill'),
+                        ),
+                        DropdownMenuItem<String>(
+                          value: 'language',
+                          child: Text('language'),
+                        ),
+                        DropdownMenuItem<String>(
+                          value: 'degree',
+                          child: Text('degree'),
+                        ),
+                        DropdownMenuItem<String>(
+                          value: 'job-title',
+                          child: Text('job-title'),
+                        ),
+                        DropdownMenuItem<String>(
+                          value: 'university',
+                          child: Text('university'),
+                        ),
+                        DropdownMenuItem<String>(
+                          value: 'Bachelor',
+                          child: Text('Bachelor'),
+                        ),
+                        DropdownMenuItem<String>(
+                          value: 'Master',
+                          child: Text('Master'),
+                        ),
+                      ],
+                      onChanged: (val) {
+                        curr = val.toString();
+                      },
+                    ),
+                  ),
+                  TextButton(
+                    child: const Text('get complement'),
+                    onPressed: () async {
+                      if (curr == 'skill') {
+                        print(
+                          await AutocompleteSkills(keywordsSkillsRepo: sl())(
+                              word: word),
+                        );
+                      }
+                      if (curr == 'language') {
+                        print(
+                          await AutocompleteLanguages(
+                              keywordsLanguagesRepo: sl())(word: word),
+                        );
+                      }
+                      if (curr == 'degree') {
+                        print(
+                          await AutocompleteDegrees(
+                              keywordsDegreeEduRepo: sl())(word: word),
+                        );
+                      }
+                      if (curr == 'job-title') {
+                        print(
+                          await AutocompleteJobTitles(
+                              keywordsJobTitlesRepo: sl())(word: word),
+                        );
+                      }
+                      if (curr == 'university') {
+                        print(
+                          await AutocompleteUniversities(
+                              keywordsUniversitiesRepo: sl())(word: word),
+                        );
+                      }
+
+                      if (curr == 'Bachelor') {
+                        print(
+                          await AutocompleteFieldEdu(
+                                  keywordsFieldEduRepo: sl())(
+                              degree: 'Bachelor', word: word),
+                        );
+                      }
+                      if (curr == 'Master') {
+                        print(
+                          await AutocompleteFieldEdu(
+                                  keywordsFieldEduRepo: sl())(
+                              degree: 'Master', word: word),
+                        );
+                      }
+                    },
+                  ),
+                  Material(
+                    child: TextFormField(
+                      onChanged: (val) {
+                        word = val.toString();
+                      },
+                    ),
+                  )
+                ],
+              ),
+            ),
           ),
-          TextButton(
-            child: const Text('refresh recommended'),
-            onPressed: () => fetchMoreRecommended.refresh(),
-          ),
-          TextButton(
-            child: const Text('fetch more unavailable'),
-            onPressed: () async {
-              print(await fetchMoreUnavailable(limit: 1));
-            },
-          ),
-          TextButton(
-            child: const Text('refresh unavailable'),
-            onPressed: () => fetchMoreUnavailable.refresh(),
-          ),
-          TextButton(
-            child: const Text('get profile info'),
-            onPressed: () async {
-              print(
-                  await getProfileUser(userId: 'KWKKUrBFSAPT7sqtP24nqa2gduN2'));
-            },
-          ),
-        ],
+        ),
       ),
     );
   }
