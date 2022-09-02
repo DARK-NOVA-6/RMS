@@ -9,7 +9,16 @@ class KeywordsRepoSubstring {
     required this.type,
   });
 
-  Future<List<String>> getSimilar({required String word}) async {
-    return autocompleteSubstringApi.getSimilar(type: type, word: word);
+  Future<List<String>> getSimilar({
+    required String word,
+    int? limit,
+    bool ?exact,
+  }) async {
+    return autocompleteSubstringApi.getSimilar(
+      type: type,
+      word: word,
+      limit: limit,
+      exact: exact,
+    );
   }
 }

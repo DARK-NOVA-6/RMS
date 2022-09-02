@@ -6,7 +6,15 @@ class AutocompleteUniversities {
 
   AutocompleteUniversities() : keywordsUniversitiesRepo = sl();
 
-  Future<List<String>> call({required String word, int? limit}) {
-    return keywordsUniversitiesRepo.getSimilar(word: word);
+  Future<List<String>> call({
+    required String word,
+    int? limit,
+    bool? exact,
+  }) {
+    return keywordsUniversitiesRepo.getSimilar(
+      word: word,
+      limit: limit,
+      exact: exact,
+    );
   }
 }

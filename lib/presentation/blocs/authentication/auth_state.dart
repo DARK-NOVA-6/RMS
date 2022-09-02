@@ -20,14 +20,10 @@ class PendingConfCodeState extends AuthState {
 }
 
 class SignedUpState extends AuthState {
-  final User user;
-
   @override
-  List<Object> get props => [user];
+  List<Object> get props => [];
 
-  const SignedUpState({
-    required this.user,
-  });
+  const SignedUpState();
 }
 
 class SigningInState extends AuthState {
@@ -36,14 +32,10 @@ class SigningInState extends AuthState {
 }
 
 class SignedInState extends AuthState {
-  final User user;
-
   @override
   List<Object> get props => [];
 
-  const SignedInState({
-    required this.user,
-  });
+  const SignedInState();
 }
 
 class SignInErrorState extends AuthState {

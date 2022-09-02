@@ -1,4 +1,5 @@
-import '../../../domain/entities/user/past_job.dart';
+
+import '../../../domain/entities/user/user_info.dart';
 
 class PastJobModel extends PastJob {
   const PastJobModel({

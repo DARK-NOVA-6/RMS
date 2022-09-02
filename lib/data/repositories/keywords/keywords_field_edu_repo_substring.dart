@@ -10,6 +10,7 @@ class KeywordsFieldEduRepoSubstring implements KeywordsFieldEduRepo {
     required String degree,
     required String word,
     int? limit,
+    bool? exact,
   }) {
     if (rep[degree] == null) {
       rep[degree] = KeywordsRepoSubstring(
@@ -17,6 +18,10 @@ class KeywordsFieldEduRepoSubstring implements KeywordsFieldEduRepo {
         type: 'field-edu-$degree',
       );
     }
-    return rep[degree]!.getSimilar(word: word);
+    return rep[degree]!.getSimilar(
+      word: word,
+      limit: limit,
+      exact: exact,
+    );
   }
 }

@@ -1,10 +1,9 @@
-
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:string_validator/string_validator.dart';
 
 import '../../../core/errors/failures/authentication_failures.dart';
-import '../../../domain/entities/user.dart';
+import '../../../domain/entities/user/user_info.dart';
 import '../../../domain/usecases/authentication/log_out.dart';
 import '../../../domain/usecases/authentication/sign_in_email_password.dart';
 import '../../../domain/usecases/authentication/sign_up_email_password.dart';
@@ -57,7 +56,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           email: event.email, password: event.password);
       result.fold(
         (failure) => emit(SignUpErrorState(message: failure.message)),
-        (user) => emit(SignedUpState(user: user)),
+        (user) => emit(const SignedUpState()),
       );
     }
   }
@@ -70,7 +69,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           email: event.email, password: event.password);
       result.fold(
         (failure) => emit(SignInErrorState(message: failure.message)),
-        (user) => emit(SignedInState(user: user)),
+        (user) => emit(const SignedInState()),
       );
     }
   }

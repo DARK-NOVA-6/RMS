@@ -3,7 +3,7 @@ import '../../core/errors/exceptions/authentication_exceptions.dart';
 import '../../core/errors/failures/failure.dart';
 import '../../domain/repositories/authentication_repo.dart';
 import '../datasources/remote/firebase_authentication.dart';
-import '../../domain/entities/user.dart' as user_ent;
+import '../../domain/entities/user/user_info.dart' as user_ent;
 
 class AuthenticationUsingTwoSteps extends AuthenticationRepo {
   final AuthenticationRemote authenticationRemote;
@@ -23,7 +23,7 @@ class AuthenticationUsingTwoSteps extends AuthenticationRepo {
   }
 
   @override
-  Future<Either<Failure, user_ent.User>> signInEmailAndPassword(
+  Future<Either<Failure, void>> signInEmailAndPassword(
       {required String email, required String password}) {
     return _signInUp(
       email: email,
@@ -33,7 +33,7 @@ class AuthenticationUsingTwoSteps extends AuthenticationRepo {
   }
 
   @override
-  Future<Either<Failure, user_ent.User>> signUpEmailAndPassword(
+  Future<Either<Failure, void>> signUpEmailAndPassword(
       {required String email, required String password}) {
     return _signInUp(
       email: email,
@@ -42,26 +42,26 @@ class AuthenticationUsingTwoSteps extends AuthenticationRepo {
     );
   }
 
-  Future<Either<Failure, user_ent.User>> _signInUp({
+  Future<Either<Failure, void>> _signInUp({
     required String email,
     required String password,
     required Function function,
   }) async {
     Failure failure;
     try {
-      final user = function(email: email, password: password);
-      return Future<Either<Failure, user_ent.User>>.value(Right(await user));
+      function(email: email, password: password);
+      return Future<Either<Failure, void>>.value(const Right(null));
     } on AuthenticationException catch (e) {
       failure = e.failure;
     } on Exception {
       failure = const Unexpected();
     }
-    return Future<Either<Failure, user_ent.User>>.value(Left(failure));
+    return Future<Either<Failure, void>>.value(Left(failure));
   }
 
   @override
-  Stream<user_ent.User> get connectedUser => authenticationRemote.connectedUser;
+  String? get userId => authenticationRemote.userId;
 
   @override
-  String? get userId => authenticationRemote.userId;
+  user_ent.UserInfo? get connectedUser => authenticationRemote.connectedUser;
 }

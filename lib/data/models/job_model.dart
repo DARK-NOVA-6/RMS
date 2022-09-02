@@ -1,6 +1,5 @@
-import 'package:untitled/data/models/job_description_model.dart';
-
 import '../../domain/entities/job/job.dart';
+import 'job_description_model.dart';
 
 class JobModel extends Job {
   const JobModel({
@@ -33,4 +32,3 @@ class JobModel extends Job {
     };
   }
 }
-

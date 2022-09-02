@@ -1,5 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:equatable/equatable.dart';
+part of 'user_info.dart';
 
 class PastJob extends Equatable {
   final String title;

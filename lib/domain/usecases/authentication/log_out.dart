@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:untitled/domain/repositories/authentication_repo.dart';
 
 import '../../../core/errors/failures/failure.dart';
+import '../../repositories/authentication_repo.dart';
 
 class LogOut {
   final AuthenticationRepo authenticationRepo;

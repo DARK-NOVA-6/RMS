@@ -8,8 +8,6 @@ import 'bloc_builder_widget.dart';
 import 'blocs/authentication/auth_bloc.dart';
 import 'controllers/controllers.dart';
 
-import '../domain/entities/user.dart' as user_ent;
-
 class Wrapper extends StatelessWidget {
   const Wrapper({
     Key? key,
@@ -23,8 +21,6 @@ class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AuthState init = AuthInitial();
-
-    print(Provider.of<user_ent.User>(context));
     return BlocProvider.value(
       value: authBloc,
       child: ChangeNotifierProvider(

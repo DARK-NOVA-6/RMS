@@ -1,20 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
-import 'package:untitled/data/models/user/user_info_model.dart';
 
 import '../../core/errors/failures/failure.dart';
 import '../../domain/entities/user/user_info.dart';
 import '../../domain/repositories/authentication_repo.dart';
 import '../../domain/repositories/user_info_repo.dart';
+import '../models/user/user_info_model.dart';
 
 class UserInfoRepoImp implements UserInfoRepo {
   final FirebaseFirestore firebaseFirestore;
   final CollectionReference<Map<String, dynamic>> collection;
-  final AuthenticationRepo authenticationRepo;
 
   UserInfoRepoImp({
     required this.firebaseFirestore,
-    required this.authenticationRepo,
   }) : collection = firebaseFirestore.collection('user-info');
 
   @override
