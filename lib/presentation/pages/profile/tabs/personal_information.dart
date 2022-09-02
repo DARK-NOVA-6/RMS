@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:untitled/presentation/controllers/personal_controllers.dart';
-import '../../../../domain/usecases/user/get_profile_user.dart';
-import '../../../controllers/user_controller.dart';
 import 'profile_item_builder/profile_item_builder.dart';
 
 class PersonalInformation extends StatefulWidget {
@@ -69,7 +67,6 @@ class _PersonalInformationState extends State<PersonalInformation> {
 
   @override
   Widget build(BuildContext context) {
-    final mq = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
     return SingleChildScrollView(
       child: Container(
         padding: const EdgeInsets.all(10),

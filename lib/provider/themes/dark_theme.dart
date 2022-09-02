@@ -8,6 +8,8 @@ darkThemeData() => ThemeData(
       primaryColorLight: Colors.white,
       colorScheme: const ColorScheme.dark().copyWith(
         secondary: CustomeTheme.c2.withBlue(200).withGreen(200),
+        primaryContainer: CustomeTheme.c1.withAlpha(100),
+        onPrimaryContainer: Colors.white,
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(

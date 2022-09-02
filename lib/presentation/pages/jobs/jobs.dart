@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../../domain/entities/entities.dart';
 import '../../components/components.dart';
 import 'job_navigator.dart';
 
@@ -38,8 +37,6 @@ class _JobsState extends State<Jobs> {
     Icon(Icons.event_available_outlined),
   ];
 
-  Job job = createJob();
-
   List<Widget> actions = [
     Padding(
       padding: const EdgeInsets.only(right: 10),
@@ -55,8 +52,10 @@ class _JobsState extends State<Jobs> {
 
   void selectTab(int index) {
     if (widget.currentPage == widget.pagesKeys[index]) {
-      widget.navigatorState[index]?.currentState
-          ?.popUntil((route) => route.isFirst);
+      widget.navigatorState[widget.currentPage]!.currentState
+          !.popUntil((route) {
+            return route.isFirst;
+      });
     } else {
       setState(() {
         widget.currentPage = widget.pagesKeys[index];
@@ -67,20 +66,34 @@ class _JobsState extends State<Jobs> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBody: true,
-      bottomNavigationBar: BottomNavBar(
-        index: widget.currentIndex,
-        changeIndex: selectTab,
-        icons: icons,
-      ),
-      appBar: CustomeAppBar(
-        label: widget.pagesKeys[widget.currentIndex],
-        actions: actions,
-      ),
-      body: Stack(
-        children:
-            widget.pagesKeys.map((e) => buildOffstageNavigator(e)).toList(),
+    return WillPopScope(
+      onWillPop: () async {
+        final bool first = !await widget
+            .navigatorState[widget.currentIndex]!.currentState!
+            .maybePop();
+        if (first) {
+          if (widget.currentPage == 'Recommended') {
+            selectTab(0);
+            return false;
+          }
+        }
+        return first;
+      },
+      child: Scaffold(
+        extendBody: true,
+        bottomNavigationBar: BottomNavBar(
+          index: widget.currentIndex,
+          changeIndex: selectTab,
+          icons: icons,
+        ),
+        appBar: CustomeAppBar(
+          label: widget.pagesKeys[widget.currentIndex],
+          actions: actions,
+        ),
+        body: Stack(
+          children:
+              widget.pagesKeys.map((e) => buildOffstageNavigator(e)).toList(),
+        ),
       ),
     );
   }

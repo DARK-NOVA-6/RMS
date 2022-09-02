@@ -67,7 +67,6 @@ class TransformerUserController {
     return list.map((e) {
       SkillsControllers sk = SkillsControllers();
       sk.title.text = e;
-      print(e);
       return sk;
     }).toList();
   }

@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/domain/usecases/user/update_profile_user.dart';
 import 'package:untitled/injection_container.dart';
@@ -118,6 +122,17 @@ class _ProfileState extends State<Profile> {
     }
   }
 
+  Future<File> saveFileLocal(PlatformFile file) async {
+    final appStorage = await getApplicationDocumentsDirectory();
+    final newFile = File('${appStorage.path}/${file.name}');
+    return File(file.path!).copy(newFile.path);
+  }
+
+  Future showToast (String msg) async {
+    await Fluttertoast.cancel();
+    Fluttertoast.showToast(msg: msg,fontSize: 18);
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -159,7 +174,18 @@ class _ProfileState extends State<Profile> {
                       type: FileType.custom,
                       allowedExtensions: ['pdf'],
                     );
-                  },
+                    if (result == null) return;
+                    final file = result.files.first;
+                    showToast('File Uploaded Successfully');
+                    print('Name :${file.name}');
+                    print('Path :${file.path}');
+                    print('Size :${file.size}');
+                    print('Extension :${file.extension}');
+                    final File newfile = await saveFileLocal(file);
+                    print('From: ${file.path}');
+                    print('To: ${newfile.path}');
+                    showToast('File Saved Successfully');
+                    },
                   label: 'Add a CV',
                   labelStyle: const TextStyle(
                     fontSize: 20,

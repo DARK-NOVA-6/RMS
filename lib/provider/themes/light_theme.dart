@@ -5,6 +5,8 @@ lightThemeData() => ThemeData(
       brightness: Brightness.light,
       colorScheme: const ColorScheme.light().copyWith(
         secondary: CustomeTheme.c1.withGreen(50).withBlue(250).withRed(0),
+        primaryContainer: CustomeTheme.c2.withAlpha(100),
+        onPrimaryContainer: Colors.white,
       ),
       primaryColorDark: CustomeTheme.c1..withAlpha(220),
       primaryColorLight: CustomeTheme.c2,

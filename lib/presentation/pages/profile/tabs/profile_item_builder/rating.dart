@@ -7,6 +7,7 @@ class Rating extends StatelessWidget {
   }) : super(key: key);
 
   final double rating;
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -17,6 +18,9 @@ class Rating extends StatelessWidget {
           margin: const EdgeInsets.only(bottom: 2),
           child: const Icon(
             Icons.star,
+            shadows: [
+              Shadow(color: Colors.black, offset: Offset(0, 0),blurRadius: 12),
+            ],
             color: Colors.yellow,
             size: 35,
           ),
@@ -26,11 +30,14 @@ class Rating extends StatelessWidget {
           rating.toString(),
           style: const TextStyle(
             fontSize: 24,
+            fontWeight: FontWeight.bold,
             color: Colors.yellow,
+            shadows: [
+              Shadow(color: Colors.black, offset: Offset(0, 0),blurRadius: 8),
+            ],
           ),
         ),
       ],
     );
   }
 }
-

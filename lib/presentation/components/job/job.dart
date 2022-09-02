@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:untitled/domain/entities/job/evaluated_job.dart';
 import 'package:untitled/provider/theme.dart';
-import '../../../domain/entities/entities.dart';
 import 'package:readmore/readmore.dart';
 import 'package:intl/intl.dart';
 
+import '../../pages/jobs/job_details.dart';
 import '../my_elevated_button.dart';
 import 'costum_expansion_tile.dart';
 
@@ -53,7 +53,11 @@ class JobWidget extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(10),
             child: MyElevatedButton(
-              press: () {},
+              press: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => JobDetails(eJob: job)),
+                );
+              },
               text: job.title,
               w: 1,
               color: Theme.of(context).primaryColor.withAlpha(100),

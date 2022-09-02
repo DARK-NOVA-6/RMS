@@ -3,7 +3,6 @@ import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:untitled/domain/entities/job/evaluated_job.dart';
 import 'package:untitled/domain/usecases/job/recommended/fetch_more.dart';
 
-import '../../../../injection_container.dart';
 import '../../../components/job/job.dart';
 import '../common/common.dart';
 import '../pages.dart';
