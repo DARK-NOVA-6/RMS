@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import '../../../core/utils/custom_converter.dart';
+import '../../../core/utils/encode_uri.dart';
 
 abstract class AutocompleteSubstringApi {
   Future<List<String>> getSimilar({
@@ -34,7 +35,8 @@ class AutocompleteSubstringApiImp implements AutocompleteSubstringApi {
         (query1.isNotEmpty ? query1 : '') +
         (query1.isNotEmpty && query2.isNotEmpty ? '&' : '') +
         (query2.isNotEmpty ? query2 : '');
-    final response = await http.get(Uri.parse('$uriApi/$type/$word$query'));
+    final response =
+        await http.get(EncodeUri.encode('$uriApi/$type/$word$query'));
     return Future<List<String>>.value(
       CustomConverter().toListString(list: jsonDecode(response.body)),
     );

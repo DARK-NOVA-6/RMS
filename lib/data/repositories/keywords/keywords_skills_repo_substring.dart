@@ -9,7 +9,7 @@ class KeywordsSkillsRepoSubstring implements KeywordsSkillsRepo {
   Future<List<String>> getSimilar({
     required String word,
     int? limit,
-    bool? exact ,
+    bool? exact,
   }) {
     return keywordsRepoSubstring.getSimilar(
       word: word,
