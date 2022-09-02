@@ -3,8 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/provider/update_action_bar_actions_notification.dart';
 
-import '../../../../domain/usecases/user/get_profile_user.dart';
-import '../../../../injection_container.dart';
+import '../../../../domain/usecases/autocomplete/autocomplete_job_titles.dart';
 import '../../../../provider/theme.dart';
 import '../../../components/components.dart';
 import '../../../controllers/controllers.dart';
@@ -207,7 +206,7 @@ class _PastExperienceItemState extends State<PastExperienceItem> {
             children: [
               CustomeAutoComplete(
                 controller: widget.expController.title,
-                list: widget.titles,
+                autoApi: AutocompleteJobTitles(),
                 label: 'Title',
                 enabled: widget.enabled,
                 w: 0.8,

@@ -6,6 +6,9 @@ import 'package:untitled/presentation/controllers/edu_controllers.dart';
 import 'package:untitled/provider/theme.dart';
 import 'package:untitled/provider/update_action_bar_actions_notification.dart';
 
+import '../../../../domain/usecases/autocomplete/autocomplete_degrees.dart';
+import '../../../../domain/usecases/autocomplete/autocomplete_field_edu.dart';
+import '../../../../domain/usecases/autocomplete/autocomplete_universities.dart';
 import '../../../components/my_elevated_button.dart';
 import '../../../components/rounded_text_field.dart';
 
@@ -13,9 +16,9 @@ import '../../../components/rounded_text_field.dart';
 class EducationalQualifications extends StatefulWidget {
   EducationalQualifications({
     Key? key,
-    this.eduControllers = const[],
+    this.eduControllers = const [],
   }) : super(key: key);
-  List<EduControllers> eduControllers ;
+  List<EduControllers> eduControllers;
 
   @override
   State<EducationalQualifications> createState() =>
@@ -211,9 +214,9 @@ class _EduQualificationItemState extends State<EduQualificationItem> {
           padding: const EdgeInsets.symmetric(vertical: 15),
           child: Column(
             children: [
-              RoundedTextField(
-                color: Theme.of(context).primaryColor,
+              CustomeAutoComplete(
                 controller: widget.eduControllers.university,
+                autoApi: AutocompleteUniversities(),
                 label: 'University',
                 enabled: widget.enabled,
                 w: 0.8,
@@ -221,15 +224,16 @@ class _EduQualificationItemState extends State<EduQualificationItem> {
               const SizedBox(height: 10),
               CustomeAutoComplete(
                 controller: widget.eduControllers.certificateName,
-                list: widget.certificateNames,
+                autoEduApi: AutocompleteFieldEdu(),
                 label: 'Certificate Name',
                 enabled: widget.enabled,
+                degreeController: widget.eduControllers.degree,
                 w: 0.8,
               ),
               const SizedBox(height: 10),
               CustomeAutoComplete(
                 controller: widget.eduControllers.degree,
-                list: widget.degrees,
+                autoApi: AutocompleteDegrees(),
                 label: 'Degree',
                 enabled: widget.enabled,
                 w: 0.8,
@@ -284,18 +288,33 @@ class _EduQualificationItemState extends State<EduQualificationItem> {
 class CustomeAutoComplete extends StatefulWidget {
   const CustomeAutoComplete({
     Key? key,
-    required this.list,
+    this.autoApi,
+    this.degreeController,
+    this.autoEduApi,
     required this.enabled,
     this.label = '',
     this.w = .7,
     required this.controller,
   }) : super(key: key);
 
-  final List<String> list;
+  final Future<List<String>> Function({
+    required String word,
+    int? limit,
+    bool? exact,
+  })? autoApi;
+
+  final Future<List<String>> Function({
+    required String word,
+    int? limit,
+    bool? exact,
+    required String degree,
+  })? autoEduApi;
+
   final bool enabled;
   final String label;
   final double w;
   final TextEditingController controller;
+  final TextEditingController? degreeController;
 
   @override
   State<CustomeAutoComplete> createState() => _CustomeAutoCompleteState();
@@ -303,11 +322,35 @@ class CustomeAutoComplete extends StatefulWidget {
 
 class _CustomeAutoCompleteState extends State<CustomeAutoComplete> {
   late TextEditingController tmpController;
+  List<String> list = [];
+  bool isLoading = false;
 
   @override
   void initState() {
     super.initState();
     tmpController = widget.controller;
+  }
+
+  fetchList() async {
+    print('dasdsadsda');
+    List<String> newList = [];
+    if (widget.autoApi != null) {
+      newList = await widget.autoApi!(word: tmpController.text);
+    }
+    if (widget.autoEduApi != null) {
+      newList = await widget.autoEduApi!(
+        word: tmpController.text,
+        degree: widget.degreeController!.text,
+      );
+    }
+
+    print(newList);
+    setState(() {
+      setState(() {
+        isLoading = false;
+        list = newList;
+      });
+    });
   }
 
   @override
@@ -319,7 +362,7 @@ class _CustomeAutoCompleteState extends State<CustomeAutoComplete> {
         return ListView.builder(
           padding: const EdgeInsets.symmetric(horizontal: 0),
           itemBuilder: (context, index) {
-            String option = options.elementAt(index);
+            String option = list[index];
             return Material(
               child: ListTile(
                 tileColor: Colors.white,
@@ -341,16 +384,10 @@ class _CustomeAutoCompleteState extends State<CustomeAutoComplete> {
               ),
             );
           },
-          itemCount: options.length,
+          itemCount: list.length,
         );
       },
-      optionsBuilder: (TextEditingValue textEditingValue) {
-        if (textEditingValue.text.isEmpty) {
-          return const Iterable<String>.empty();
-        } else {
-          return widget.list;
-        }
-      },
+      optionsBuilder: (TextEditingValue textEditingValue) => list,
       initialValue: widget.controller.value,
       onSelected: (selectedString) {
         widget.controller.text = tmpController.text;
@@ -359,6 +396,13 @@ class _CustomeAutoCompleteState extends State<CustomeAutoComplete> {
           (context, textEditingController, focusNode, onFieldSubmitted) {
         tmpController = textEditingController;
         return RoundedTextFieldWithAutoComplete(
+          fetchData: fetchList,
+          callFather: () {
+            setState(() {
+              print(isLoading);
+              isLoading = true;
+            });
+          },
           w: widget.w,
           label: widget.label,
           widget: widget,
@@ -371,7 +415,7 @@ class _CustomeAutoCompleteState extends State<CustomeAutoComplete> {
   }
 }
 
-class RoundedTextFieldWithAutoComplete extends StatelessWidget {
+class RoundedTextFieldWithAutoComplete extends StatefulWidget {
   const RoundedTextFieldWithAutoComplete({
     Key? key,
     required this.widget,
@@ -380,14 +424,36 @@ class RoundedTextFieldWithAutoComplete extends StatelessWidget {
     required this.onFieldSubmitted,
     this.label = '',
     this.w = .7,
+    required this.fetchData,
+    required this.callFather,
   }) : super(key: key);
 
   final TextEditingController textEditingController;
+  final Function fetchData, callFather;
   final FocusNode focusNode;
   final Function() onFieldSubmitted;
   final CustomeAutoComplete widget;
   final String label;
   final double w;
+
+  @override
+  State<RoundedTextFieldWithAutoComplete> createState() =>
+      _RoundedTextFieldWithAutoCompleteState();
+}
+
+class _RoundedTextFieldWithAutoCompleteState
+    extends State<RoundedTextFieldWithAutoComplete> {
+  var subscription;
+
+  waitBeforeSending() {
+    widget.callFather();
+    if (subscription != null) subscription.cancel();
+    var future = Future.delayed(const Duration(milliseconds: 500));
+
+    subscription = future.asStream().listen((any) {
+      widget.fetchData();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -397,7 +463,7 @@ class RoundedTextFieldWithAutoComplete extends StatelessWidget {
         borderRadius: const BorderRadius.all(Radius.circular(20)),
       ),
       padding: const EdgeInsets.only(left: 15),
-      width: MediaQuery.of(context).size.width * w,
+      width: MediaQuery.of(context).size.width * widget.w,
       height: MediaQuery.of(context).size.height * .06,
       child: Material(
         elevation: 20.0,
@@ -405,12 +471,15 @@ class RoundedTextFieldWithAutoComplete extends StatelessWidget {
         shadowColor: Theme.of(context).primaryColor,
         borderRadius: const BorderRadius.all(Radius.circular(20)),
         child: TextField(
+          onChanged: (val) {
+            waitBeforeSending();
+          },
           style: const TextStyle(
             color: Colors.black,
           ),
-          controller: textEditingController,
-          focusNode: focusNode,
-          onEditingComplete: onFieldSubmitted,
+          controller: widget.textEditingController,
+          focusNode: widget.focusNode,
+          onEditingComplete: widget.onFieldSubmitted,
           decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20),
@@ -425,10 +494,10 @@ class RoundedTextFieldWithAutoComplete extends StatelessWidget {
                 width: 3.0,
               ),
             ),
-            enabled: widget.enabled,
+            enabled: widget.widget.enabled,
             label: Padding(
               padding: const EdgeInsets.all(5),
-              child: Text(label),
+              child: Text(widget.label),
             ),
             floatingLabelStyle: const TextStyle(
               fontSize: 22,

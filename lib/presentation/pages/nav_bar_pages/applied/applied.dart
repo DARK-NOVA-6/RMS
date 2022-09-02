@@ -19,6 +19,7 @@ class Applied extends StatefulWidget implements Pages {
 }
 
 class _AppliedState extends State<Applied> {
+  bool loading = false, allLoaded = false;
   ScrollController scrollController = ScrollController();
   final GlobalKey<LiquidPullToRefreshState> _refreshIndicatorKey = GlobalKey();
   final FetchMoreUnavailable fetchMoreUnavailable = FetchMoreUnavailable();
@@ -49,6 +50,7 @@ class _AppliedState extends State<Applied> {
     });
   }
 
+
   @override
   initState() {
     super.initState();
@@ -69,7 +71,6 @@ class _AppliedState extends State<Applied> {
   }
 
   List<JobWidget> jobs = [];
-  bool loading = false, allLoaded = false;
 
   @override
   Widget build(BuildContext context) {

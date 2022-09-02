@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/provider/update_action_bar_actions_notification.dart';
 
+import '../../../../domain/usecases/autocomplete/autocomplete_languages.dart';
 import '../../../../provider/theme.dart';
 import '../../../components/components.dart';
 import '../../../controllers/controllers.dart';
@@ -170,7 +171,7 @@ class _LanguageItemState extends State<LanguageItem> {
             children: [
               CustomeAutoComplete(
                 controller: widget.languagesController.title,
-                list: widget.titles,
+                autoApi: AutocompleteLanguages(),
                 label: 'Title',
                 enabled: widget.enabled,
                 w: widget.enabled ? 0.7 : 0.8,
