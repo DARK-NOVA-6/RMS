@@ -13,19 +13,25 @@ import 'domain/usecases/authentication/get_connected_user.dart';
 import 'domain/usecases/authentication/log_out.dart';
 import 'domain/usecases/authentication/sign_in_email_password.dart';
 import 'domain/usecases/authentication/sign_up_email_password.dart';
+import 'domain/usecases/user/get_profile_user.dart';
 import 'presentation/wrapper.dart';
 import 'presentation/controllers/controllers.dart';
 import 'injection_container.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await FirebaseAuth.instance.signOut();
   init();
+  final GetProfileUser getProfileUser = GetProfileUser();
+  globalUserInfo =
+      (await getProfileUser(userId: 'KNvVSQq2xSUaxUNsEbHCu5VvHWv2'))!;
   // runApp(const MyApp2());
+  print(globalUserInfo);
   runApp(
     ChangeNotifierProvider(
-      create: (_)=>UpdateActionBarActions(),
+      create: (_) => UpdateActionBarActions(),
       child: MyApp(),
     ),
   );

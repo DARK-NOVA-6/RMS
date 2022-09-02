@@ -34,8 +34,11 @@ import 'domain/usecases/job/unavailable/fetch_more.dart';
 import 'domain/usecases/job/unavailable/get_detailed.dart';
 import 'domain/usecases/user/get_profile_user.dart';
 import 'domain/usecases/user/update_profile_user.dart';
+import 'domain/entities/user/user_info.dart' as user_info;
 
 final sl = GetIt.instance;
+
+user_info.UserInfo? globalUserInfo;
 
 void init() {
   initData();

@@ -9,10 +9,13 @@ import 'package:untitled/provider/update_action_bar_actions_notification.dart';
 import '../../../components/my_elevated_button.dart';
 import '../../../components/rounded_text_field.dart';
 
+// ignore: must_be_immutable
 class EducationalQualifications extends StatefulWidget {
-  const EducationalQualifications({
+  EducationalQualifications({
     Key? key,
+    this.eduControllers = const[],
   }) : super(key: key);
+  List<EduControllers> eduControllers ;
 
   @override
   State<EducationalQualifications> createState() =>
@@ -25,7 +28,6 @@ class _EducationalQualificationsState extends State<EducationalQualifications> {
   late List<String> degrees;
   late List<DateTime?> dates;
   late bool enabled;
-  List<EduControllers> eduControllers = [];
 
   Future fetchData() async {
     setState(() {
@@ -63,85 +65,79 @@ class _EducationalQualificationsState extends State<EducationalQualifications> {
 
   @override
   Widget build(BuildContext context) {
-    final mq = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
     enabled = Provider.of<UpdateActionBarActions>(context).edit;
     return SingleChildScrollView(
       keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-      child: ConstrainedBox(
-        constraints: BoxConstraints.tightFor(
-          height: mq.size.height,
-        ),
-        child: Container(
-          width: MediaQuery.of(context).size.width * 0.5,
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            border: Border.symmetric(
-              horizontal: BorderSide(
-                color: Theme.of(context).primaryColor,
-                width: 1,
-              ),
+      child: Container(
+        height: MediaQuery.of(context).size.height,
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          border: Border.symmetric(
+            horizontal: BorderSide(
+              color: Theme.of(context).primaryColor,
+              width: 1,
             ),
           ),
-          child: ListView(
-            children: [
-              if (enabled) ...[
-                MyElevatedButton(
-                  text: 'Add a Certificate',
-                  press: () {
+        ),
+        child: ListView(
+          children: [
+            if (enabled) ...[
+              MyElevatedButton(
+                text: 'Add a Certificate',
+                press: () {
+                  setState(() {
+                    widget.eduControllers.insert(
+                      widget.eduControllers.length,
+                      EduControllers(),
+                    );
+                  });
+                },
+              ),
+              const SizedBox(height: 20),
+            ],
+            if (widget.eduControllers.isNotEmpty) ...[
+              ListView.separated(
+                separatorBuilder: ((context, index) =>
+                    const SizedBox(height: 30)),
+                itemBuilder: (context, index) => EduQualificationItem(
+                  eduControllers: widget.eduControllers[index],
+                  enabled: enabled,
+                  certificateNames: certificateNames,
+                  degrees: degrees,
+                  index: index,
+                  delete: (idx) {
                     setState(() {
-                      eduControllers.insert(
-                        eduControllers.length,
-                        EduControllers(),
-                      );
+                      widget.eduControllers.removeAt(idx);
                     });
                   },
                 ),
-                const SizedBox(height: 20),
-              ],
-              if (eduControllers.isNotEmpty) ...[
-                ListView.separated(
-                  separatorBuilder: ((context, index) =>
-                      const SizedBox(height: 30)),
-                  itemBuilder: (context, index) => EduQualificationItem(
-                    eduControllers: eduControllers[index],
-                    enabled: enabled,
-                    certificateNames: certificateNames,
-                    degrees: degrees,
-                    index: index,
-                    delete: (idx) {
-                      setState(() {
-                        eduControllers.removeAt(idx);
-                      });
-                    },
-                  ),
-                  itemCount: eduControllers.length,
-                  shrinkWrap: true,
-                  primary: false,
-                ),
-                const SizedBox(height: 120),
-              ],
-              if (eduControllers.isEmpty) ...[
-                const SizedBox(height: 100),
-                Image.asset('assets/png/Asset 2.png', height: 200),
-                const SizedBox(height: 50),
-                const Center(
-                  child: ListTile(
-                    title: Text(
-                      'No Educational Certificate',
-                      style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    subtitle: Text(
-                      'please add some Certificate to show them',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ),
-                )
-              ],
+                itemCount: widget.eduControllers.length,
+                shrinkWrap: true,
+                primary: false,
+              ),
+              const SizedBox(height: 120),
             ],
-          ),
+            if (widget.eduControllers.isEmpty) ...[
+              const SizedBox(height: 100),
+              Image.asset('assets/png/Asset 2.png', height: 200),
+              const SizedBox(height: 50),
+              const Center(
+                child: ListTile(
+                  title: Text(
+                    'No Educational Certificate',
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  subtitle: Text(
+                    'please add some Certificate to show them',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ),
+              )
+            ],
+          ],
         ),
       ),
     );
@@ -264,7 +260,7 @@ class _EduQualificationItemState extends State<EduQualificationItem> {
                           firstDate: DateTime(2015),
                           lastDate: DateTime(2050),
                         ).then(
-                              (value) => setState(() {
+                          (value) => setState(() {
                             if (value != null && value != gDate) {
                               gDate = value;
                               widget.eduControllers.graduation.text =

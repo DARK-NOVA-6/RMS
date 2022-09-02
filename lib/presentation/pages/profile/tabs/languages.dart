@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/provider/update_action_bar_actions_notification.dart';
+import '../../../../domain/usecases/user/get_profile_user.dart';
 
+import '../../../../injection_container.dart';
 import '../../../../provider/theme.dart';
 import '../../../components/components.dart';
 import '../../../controllers/controllers.dart';
 import 'educational_qualifications.dart';
 
+// ignore: must_be_immutable
 class Languages extends StatefulWidget {
-  const Languages({
-    Key? key,
-  }) : super(key: key);
+  Languages({Key? key, this.languagesControllers = const []}) : super(key: key);
+  List<LanguagesControllers> languagesControllers = [];
 
   @override
   State<Languages> createState() => _LanguagesState();
@@ -20,7 +22,6 @@ class _LanguagesState extends State<Languages> {
   late bool isLoading;
   late List<String> titles;
   late bool enabled;
-  List<LanguagesControllers> languagesControllers = [];
 
   Future fetchData() async {
     setState(() {
@@ -75,8 +76,8 @@ class _LanguagesState extends State<Languages> {
                   text: 'Add a Language',
                   press: () {
                     setState(() {
-                      languagesControllers.insert(
-                        languagesControllers.length,
+                      widget.languagesControllers.insert(
+                        widget.languagesControllers.length,
                         LanguagesControllers(),
                       );
                     });
@@ -84,28 +85,28 @@ class _LanguagesState extends State<Languages> {
                 ),
                 const SizedBox(height: 20),
               ],
-              if (languagesControllers.isNotEmpty) ...[
+              if (widget.languagesControllers.isNotEmpty) ...[
                 ListView.separated(
                   separatorBuilder: ((context, index) =>
-                  const SizedBox(height: 15)),
+                      const SizedBox(height: 15)),
                   itemBuilder: (context, index) => LanguageItem(
-                    languagesController: languagesControllers[index],
+                    languagesController: widget.languagesControllers[index],
                     enabled: enabled,
                     titles: titles,
                     index: index,
                     delete: (idx) {
                       setState(() {
-                        languagesControllers.removeAt(idx);
+                        widget.languagesControllers.removeAt(idx);
                       });
                     },
                   ),
-                  itemCount: languagesControllers.length,
+                  itemCount: widget.languagesControllers.length,
                   shrinkWrap: true,
                   primary: false,
                 ),
                 const SizedBox(height: 120),
               ],
-              if (languagesControllers.isEmpty) ...[
+              if (widget.languagesControllers.isEmpty) ...[
                 const SizedBox(height: 100),
                 Image.asset('assets/png/Asset 2.png', height: 200),
                 const SizedBox(height: 50),

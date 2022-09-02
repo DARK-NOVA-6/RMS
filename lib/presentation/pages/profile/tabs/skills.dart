@@ -2,15 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/provider/update_action_bar_actions_notification.dart';
 
+import '../../../../domain/usecases/user/get_profile_user.dart';
+import '../../../../injection_container.dart';
 import '../../../../provider/theme.dart';
 import '../../../components/components.dart';
 import '../../../controllers/controllers.dart';
 import 'educational_qualifications.dart';
 
+// ignore: must_be_immutable
 class Skills extends StatefulWidget {
-  const Skills({
+  Skills({
     Key? key,
+    this.skillsControllers  = const [],
   }) : super(key: key);
+  List<SkillsControllers> skillsControllers = [];
 
   @override
   State<Skills> createState() => _SkillsState();
@@ -20,7 +25,6 @@ class _SkillsState extends State<Skills> {
   late bool isLoading;
   late List<String> titles;
   late bool enabled;
-  List<SkillsControllers> skillsControllers = [];
 
   Future fetchData() async {
     setState(() {
@@ -75,8 +79,8 @@ class _SkillsState extends State<Skills> {
                   text: 'Add a Skill',
                   press: () {
                     setState(() {
-                      skillsControllers.insert(
-                        skillsControllers.length,
+                      widget.skillsControllers.insert(
+                        widget.skillsControllers.length,
                         SkillsControllers(),
                       );
                     });
@@ -84,28 +88,28 @@ class _SkillsState extends State<Skills> {
                 ),
                 const SizedBox(height: 20),
               ],
-              if (skillsControllers.isNotEmpty) ...[
+              if (widget.skillsControllers.isNotEmpty) ...[
                 ListView.separated(
                   separatorBuilder: ((context, index) =>
                       const SizedBox(height: 15)),
                   itemBuilder: (context, index) => SkillItem(
-                    skillsController: skillsControllers[index],
+                    skillsController: widget.skillsControllers[index],
                     enabled: enabled,
                     titles: titles,
                     index: index,
                     delete: (idx) {
                       setState(() {
-                        skillsControllers.removeAt(idx);
+                        widget.skillsControllers.removeAt(idx);
                       });
                     },
                   ),
-                  itemCount: skillsControllers.length,
+                  itemCount: widget.skillsControllers.length,
                   shrinkWrap: true,
                   primary: false,
                 ),
                 const SizedBox(height: 120),
               ],
-              if (skillsControllers.isEmpty) ...[
+              if (widget.skillsControllers.isEmpty) ...[
                 const SizedBox(height: 100),
                 Image.asset('assets/png/Asset 2.png', height: 200),
                 const SizedBox(height: 50),

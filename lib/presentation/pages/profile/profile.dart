@@ -1,8 +1,14 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:provider/provider.dart';
+import 'package:untitled/domain/usecases/user/update_profile_user.dart';
+import 'package:untitled/injection_container.dart';
+import 'package:untitled/presentation/controllers/controllers.dart';
 import 'package:untitled/presentation/pages/profile/profile_navigator.dart';
 import 'package:untitled/provider/update_action_bar_actions_notification.dart';
 
+import '../../../domain/entities/user/user_info.dart';
 import '../../components/components.dart';
 
 class Profile extends StatefulWidget {
@@ -15,6 +21,9 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   int currentIndex = 0;
   String currentPage = 'personal';
+  late bool isLoading;
+  UserController userController =
+      TransformerUserController.fromUserInfo(globalUserInfo);
   List<String> pagesKeys = ['personal', 'edu', 'exp', 'skills', 'lang'];
   Map<String, GlobalKey<NavigatorState>> navigatorState = {
     'personal': GlobalKey<NavigatorState>(),
@@ -35,10 +44,39 @@ class _ProfileState extends State<Profile> {
   ];
   late List<Widget> actions1;
   late List<Widget> actions2;
+  UpdateProfileUser updateProfileUser = UpdateProfileUser();
+
+  saveChanges() async {
+    setState(() {
+      isLoading = true;
+    });
+    UserInfo userInfo =
+        TransformerUserController.fromUserController(userController);
+
+    print(userInfo);
+    bool saved = await updateProfileUser(newUserInfo: userInfo);
+    if (saved) {
+      // UserInfo newUserInfo = GetProfileUser()();
+      // userController = TransformerUserController.fromUserInfo(newUserInfo);
+
+    } else {
+      userController = TransformerUserController.fromUserInfo(globalUserInfo);
+    }
+    // result = await save(
+    //     TransformerUserController.fromUserController(userController));
+
+    setState(() {
+      isLoading = false;
+    });
+    // ignore: use_build_context_synchronously
+    Provider.of<UpdateActionBarActions>(context, listen: false)
+        .changeEditMode(false);
+  }
 
   @override
   void initState() {
     super.initState();
+    isLoading = false;
     actions2 = [
       Padding(
         padding: const EdgeInsets.only(right: 10),
@@ -62,10 +100,7 @@ class _ProfileState extends State<Profile> {
             Icons.published_with_changes_outlined,
             size: 30,
           ),
-          onPressed: () {
-            Provider.of<UpdateActionBarActions>(context, listen: false)
-                .changeEditMode(false);
-          },
+          onPressed: saveChanges,
         ),
       ),
     ];
@@ -101,6 +136,43 @@ class _ProfileState extends State<Profile> {
             return isFirstRouteInCurrentTab;
           },
           child: Scaffold(
+            floatingActionButton: SpeedDial(
+              backgroundColor: Theme.of(context).primaryColor,
+              spacing: 20,
+              childPadding: const EdgeInsets.symmetric(vertical: 10),
+              buttonSize: const Size.square(70),
+              childrenButtonSize: const Size.square(70),
+              children: [
+                SpeedDialChild(
+                    child: const Icon(Icons.download),
+                    onTap: (){},
+                    label: 'Download an existing CV',
+                    labelStyle: const TextStyle(
+                      fontSize: 20,
+                    )),
+                SpeedDialChild(
+                  child: const Icon(Icons.add),
+                  onTap: () async{
+                    final result = await FilePicker.platform.pickFiles(
+                      allowMultiple: false,
+                      type: FileType.custom,
+                      allowedExtensions: ['pdf'],
+                    );
+                  },
+                  label: 'Add a CV',
+                  labelStyle: const TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+              ],
+              child: const Text(
+                'CV',
+                style: TextStyle(
+                    fontSize: 24,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
             appBar: CustomeAppBar(
               label: 'Profile',
               actions1: actions1,
@@ -122,13 +194,20 @@ class _ProfileState extends State<Profile> {
                 onTap: (value) => selectTab(value),
                 tabs: texts,
               ),
-              body: Stack(
-                children: pagesKeys
-                    .map(
-                      (e) => buildOffstageNavigator(e),
+              body: (isLoading)
+                  ? Center(
+                      child: CircularProgressIndicator(
+                          backgroundColor: Colors.white,
+                          color: Theme.of(context).primaryColor,
+                          strokeWidth: 8),
                     )
-                    .toList(),
-              ),
+                  : Stack(
+                      children: pagesKeys
+                          .map(
+                            (e) => buildOffstageNavigator(e),
+                          )
+                          .toList(),
+                    ),
             ),
           ),
         ),
@@ -140,6 +219,7 @@ class _ProfileState extends State<Profile> {
     return Offstage(
       offstage: currentPage != tabItem,
       child: ProfileNavigator(
+        userController: userController,
         navigatorState: navigatorState[tabItem]!,
         tabItem: tabItem,
       ),

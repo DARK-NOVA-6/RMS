@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:untitled/presentation/controllers/controllers.dart';
 
 import 'tabs/tabs.dart';
 
 class ProfileNavigator extends StatelessWidget {
   final GlobalKey<NavigatorState> navigatorState;
   final String tabItem;
+  final UserController userController;
 
   const ProfileNavigator({
     Key? key,
+    required this.userController,
     required this.navigatorState,
     required this.tabItem,
   }) : super(key: key);
@@ -17,19 +20,29 @@ class ProfileNavigator extends StatelessWidget {
     Widget child;
     switch (tabItem) {
       case 'personal':
-        child = const PersonalInformation();
+        child = PersonalInformation(
+          personalControllers: userController.personalControllers,
+        );
         break;
       case 'edu':
-        child = const EducationalQualifications();
+        child = EducationalQualifications(
+          eduControllers: userController.eduControllers,
+        );
         break;
       case 'exp':
-        child = const PastExperiences();
+        child = PastExperiences(
+          expControllers: userController.expControllers,
+        );
         break;
       case 'skills':
-        child = const Languages();
+        child = Skills(
+          skillsControllers: userController.skillsControllers,
+        );
         break;
       case 'lang':
-        child = const Languages();
+        child = Languages(
+          languagesControllers: userController.languagesControllers,
+        );
         break;
       default:
         child = const ErrorPage();

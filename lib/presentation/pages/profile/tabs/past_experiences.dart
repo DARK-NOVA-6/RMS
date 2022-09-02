@@ -3,15 +3,20 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/provider/update_action_bar_actions_notification.dart';
 
+import '../../../../domain/usecases/user/get_profile_user.dart';
+import '../../../../injection_container.dart';
 import '../../../../provider/theme.dart';
 import '../../../components/components.dart';
 import '../../../controllers/controllers.dart';
 import 'educational_qualifications.dart';
 
+// ignore: must_be_immutable
 class PastExperiences extends StatefulWidget {
-  const PastExperiences({
+  PastExperiences({
     Key? key,
+    this.expControllers = const [],
   }) : super(key: key);
+  List<ExpControllers> expControllers = [];
 
   @override
   State<PastExperiences> createState() => _PastExperiencesState();
@@ -23,7 +28,6 @@ class _PastExperiencesState extends State<PastExperiences> {
   late List<DateTime?> dates;
   late List<double> durations;
   late bool enabled;
-  List<ExpControllers> expControllers = [];
 
   Future fetchData() async {
     setState(() {
@@ -78,8 +82,8 @@ class _PastExperiencesState extends State<PastExperiences> {
                   text: 'Add an Experience',
                   press: () {
                     setState(() {
-                      expControllers.insert(
-                        expControllers.length,
+                      widget.expControllers.insert(
+                        widget.expControllers.length,
                         ExpControllers(),
                       );
                     });
@@ -87,28 +91,28 @@ class _PastExperiencesState extends State<PastExperiences> {
                 ),
                 const SizedBox(height: 20),
               ],
-              if (expControllers.isNotEmpty) ...[
+              if (widget.expControllers.isNotEmpty) ...[
                 ListView.separated(
                   separatorBuilder: ((context, index) =>
                       const SizedBox(height: 30)),
                   itemBuilder: (context, index) => PastExperienceItem(
-                    expController: expControllers[index],
+                    expController: widget.expControllers[index],
                     enabled: enabled,
                     titles: titles,
                     index: index,
                     delete: (idx) {
                       setState(() {
-                        expControllers.removeAt(idx);
+                        widget.expControllers.removeAt(idx);
                       });
                     },
                   ),
-                  itemCount: expControllers.length,
+                  itemCount: widget.expControllers.length,
                   shrinkWrap: true,
                   primary: false,
                 ),
                 const SizedBox(height: 120),
               ],
-              if (expControllers.isEmpty) ...[
+              if (widget.expControllers.isEmpty) ...[
                 const SizedBox(height: 100),
                 Image.asset('assets/png/Asset 2.png', height: 200),
                 const SizedBox(height: 50),
