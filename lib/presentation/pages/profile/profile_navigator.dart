@@ -26,7 +26,7 @@ class ProfileNavigator extends StatelessWidget {
         child = const PastExperiences();
         break;
       case 'skills':
-        child = const Skills();
+        child = const Languages();
         break;
       case 'lang':
         child = const Languages();

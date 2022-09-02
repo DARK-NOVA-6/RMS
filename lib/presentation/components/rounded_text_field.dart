@@ -8,6 +8,9 @@ class RoundedTextField extends StatelessWidget {
     this.pass = false,
     this.email = false,
     this.code = false,
+    this.numbers = false,
+    this.isDouble = false,
+    this.phone = false,
     this.icon = Icons.ac_unit,
     required this.color,
     this.secColor = Colors.white,
@@ -16,15 +19,17 @@ class RoundedTextField extends StatelessWidget {
     this.enabled = true,
     this.w = 0.7,
     this.h = 0.06,
+    this.multiLines = false,
   }) : super(key: key);
   final TextEditingController controller;
-  final bool pass, email, code;
+  final bool pass, email, code, numbers, isDouble, phone;
   final IconData icon;
   final Color secColor, color;
   final String hintText;
   final double w, h;
   final String label;
   final bool enabled;
+  final bool multiLines;
 
   @override
   Widget build(BuildContext context) {
@@ -36,24 +41,33 @@ class RoundedTextField extends StatelessWidget {
       ),
       padding: const EdgeInsets.only(left: 15),
       width: size.width * w,
-      height: size.height * h,
+      height: (multiLines)?null:size.height * h,
       child: Material(
         elevation: 20.0,
         color: color,
         shadowColor: color,
         borderRadius: const BorderRadius.all(Radius.circular(20)),
         child: TextFormField(
+          maxLines: (multiLines)?null:1,
           keyboardType: (email == true)
               ? TextInputType.emailAddress
-              : (code == true)
+              : (code == true || numbers == true || isDouble == true)
                   ? TextInputType.number
                   : null,
-          inputFormatters: (code == true)
-              ? [
-                  LengthLimitingTextInputFormatter(6),
-                  FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                ]
-              : [],
+          inputFormatters: [
+            if (phone || code || numbers) ...[
+              FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+            ],
+            if (code) ...[
+              LengthLimitingTextInputFormatter(6),
+            ],
+            if (phone) ...[
+              LengthLimitingTextInputFormatter(10),
+            ],
+            if (isDouble) ...[
+              FilteringTextInputFormatter.allow(RegExp(r'(^\d*\.?\d*)'))
+            ]
+          ],
           controller: controller,
           obscureText: pass,
           style: const TextStyle(
@@ -88,7 +102,7 @@ class RoundedTextField extends StatelessWidget {
               color: Colors.black,
               fontSize: 22,
             ),
-            icon: (icon==Icons.ac_unit)?null:Icon(icon, color: secColor),
+            icon: (icon == Icons.ac_unit) ? null : Icon(icon, color: secColor),
             hintText: hintText,
             fillColor: secColor,
             hintStyle: const TextStyle(color: Colors.black),

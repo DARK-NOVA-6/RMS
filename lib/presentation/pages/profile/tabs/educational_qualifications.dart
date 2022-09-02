@@ -264,7 +264,7 @@ class _EduQualificationItemState extends State<EduQualificationItem> {
                           firstDate: DateTime(2015),
                           lastDate: DateTime(2050),
                         ).then(
-                          (value) => setState(() {
+                              (value) => setState(() {
                             if (value != null && value != gDate) {
                               gDate = value;
                               widget.eduControllers.graduation.text =
