@@ -106,13 +106,13 @@ void initUseCases() {
   sl.registerLazySingleton(() => SignUpEmailPassword(sl()));
 
   // job - recommended
-  sl.registerSingleton(FetchMoreRecommended(sl()));
-  sl.registerSingleton(GetDetailedRecommended(sl()));
+  sl.registerSingleton(FetchMoreRecommended());
+  sl.registerSingleton(GetDetailedRecommended());
   // job - unavailable
-  sl.registerSingleton(FetchMoreUnavailable(sl()));
-  sl.registerSingleton(GetDetailedUnavailable(sl()));
+  sl.registerSingleton(FetchMoreUnavailable());
+  sl.registerSingleton(GetDetailedUnavailable());
 
   // user
-  sl.registerSingleton(GetProfileUser(userInfoRepo: sl()));
-  sl.registerSingleton(UpdateProfileUser(userInfoRepo: sl()));
+  sl.registerSingleton(GetProfileUser());
+  sl.registerSingleton(UpdateProfileUser());
 }

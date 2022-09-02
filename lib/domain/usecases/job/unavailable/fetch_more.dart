@@ -1,10 +1,11 @@
+import '../../../../injection_container.dart';
 import '../../../entities/job/evaluated_job.dart';
 import '../../../repositories/job/unavailable_repo.dart';
 
 class FetchMoreUnavailable {
   final UnavailableRepo unavailableRepo;
 
-  FetchMoreUnavailable(this.unavailableRepo);
+  FetchMoreUnavailable() : unavailableRepo = sl();
 
   Future<List<EvaluatedJob>> call({required int limit}) async {
     List<EvaluatedJob> result = [];

@@ -81,7 +81,7 @@ class Temp {
       experiences: [],
       eduQualifications: [],
     );
-    UpdateProfileUser updateProfileUser = UpdateProfileUser(userInfoRepo: sl());
+    UpdateProfileUser updateProfileUser = UpdateProfileUser();
     updateProfileUser(newUserInfo: userInfo);
   }
 }
@@ -98,9 +98,9 @@ class _MyApp2State extends State<MyApp2> {
   Widget build(BuildContext context) {
     Temp().updateUser();
 
-    FetchMoreRecommended fetchMoreRecommended = FetchMoreRecommended(sl());
-    FetchMoreUnavailable fetchMoreUnavailable = FetchMoreUnavailable(sl());
-    GetProfileUser getProfileUser = GetProfileUser(userInfoRepo: sl());
+    FetchMoreRecommended fetchMoreRecommended = FetchMoreRecommended();
+    FetchMoreUnavailable fetchMoreUnavailable = FetchMoreUnavailable();
+    GetProfileUser getProfileUser = GetProfileUser();
 
     String? curr = 'sk';
     String word = 'java';
@@ -180,46 +180,39 @@ class _MyApp2State extends State<MyApp2> {
                     onPressed: () async {
                       if (curr == 'skill') {
                         print(
-                          await AutocompleteSkills(keywordsSkillsRepo: sl())(
-                              word: word),
+                          await AutocompleteSkills()(word: word),
                         );
                       }
                       if (curr == 'language') {
                         print(
-                          await AutocompleteLanguages(
-                              keywordsLanguagesRepo: sl())(word: word),
+                          await AutocompleteLanguages()(word: word),
                         );
                       }
                       if (curr == 'degree') {
                         print(
-                          await AutocompleteDegrees(
-                              keywordsDegreeEduRepo: sl())(word: word),
+                          await AutocompleteDegrees()(word: word),
                         );
                       }
                       if (curr == 'job-title') {
                         print(
-                          await AutocompleteJobTitles(
-                              keywordsJobTitlesRepo: sl())(word: word),
+                          await AutocompleteJobTitles()(word: word),
                         );
                       }
                       if (curr == 'university') {
                         print(
-                          await AutocompleteUniversities(
-                              keywordsUniversitiesRepo: sl())(word: word),
+                          await AutocompleteUniversities()(word: word),
                         );
                       }
 
                       if (curr == 'Bachelor') {
                         print(
-                          await AutocompleteFieldEdu(
-                                  keywordsFieldEduRepo: sl())(
+                          await AutocompleteFieldEdu()(
                               degree: 'Bachelor', word: word),
                         );
                       }
                       if (curr == 'Master') {
                         print(
-                          await AutocompleteFieldEdu(
-                                  keywordsFieldEduRepo: sl())(
+                          await AutocompleteFieldEdu()(
                               degree: 'Master', word: word),
                         );
                       }

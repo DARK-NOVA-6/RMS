@@ -1,10 +1,11 @@
+import '../../../../injection_container.dart';
 import '../../../entities/job/evaluated_job.dart';
 import '../../../repositories/job/recommended_repo.dart';
 
 class FetchMoreRecommended {
   final RecommendedRepo recommendedRepo;
 
-  FetchMoreRecommended(this.recommendedRepo);
+  FetchMoreRecommended() : recommendedRepo = sl();
 
   Future<List<EvaluatedJob>> call({required int limit}) async {
     List<EvaluatedJob> result = [];

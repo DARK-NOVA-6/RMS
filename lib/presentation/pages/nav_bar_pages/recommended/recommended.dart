@@ -21,7 +21,7 @@ class Recommended extends StatefulWidget implements Pages {
 class _RecommendedState extends State<Recommended> {
   ScrollController scrollController = ScrollController();
   final GlobalKey<LiquidPullToRefreshState> _refreshIndicatorKey = GlobalKey();
-  final FetchMoreRecommended fetcherRecommended = FetchMoreRecommended(sl());
+  final FetchMoreRecommended fetcherRecommended = FetchMoreRecommended();
   List<EvaluatedJob> jobList = [];
 
   Future<void> _handleRefresh() async {

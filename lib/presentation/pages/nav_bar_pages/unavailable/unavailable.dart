@@ -21,7 +21,7 @@ class Unavailable extends StatefulWidget implements Pages {
 class _UnavailableState extends State<Unavailable> {
   ScrollController scrollController = ScrollController();
   final GlobalKey<LiquidPullToRefreshState> _refreshIndicatorKey = GlobalKey();
-  final FetchMoreUnavailable fetchMoreUnavailable = FetchMoreUnavailable(sl());
+  final FetchMoreUnavailable fetchMoreUnavailable = FetchMoreUnavailable();
   List<EvaluatedJob> jobList = [];
 
   Future<void> _handleRefresh() async {

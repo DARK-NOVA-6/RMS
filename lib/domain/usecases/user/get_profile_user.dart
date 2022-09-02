@@ -1,10 +1,11 @@
+import '../../../injection_container.dart';
 import '../../entities/user/user_info.dart';
 import '../../repositories/user_info_repo.dart';
 
 class GetProfileUser {
   final UserInfoRepo userInfoRepo;
 
-  const GetProfileUser({required this.userInfoRepo});
+  GetProfileUser() : userInfoRepo = sl();
 
   Future<UserInfo?> call({required String userId}) async {
     // String userId = GetConnectedUser(sl()).userId!;
