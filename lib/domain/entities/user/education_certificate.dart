@@ -4,7 +4,7 @@ class EducationCertificate extends Equatable {
   final String university;
   final String degree;
   final String field;
-  final Timestamp graduationDate;
+  final Timestamp? graduationDate;
 
   const EducationCertificate({
     required this.university,

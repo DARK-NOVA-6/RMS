@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../../domain/entities/user/education_certificate.dart';
-import '../../domain/entities/user/past_job.dart';
 import '../../domain/entities/user/user_info.dart';
 import 'controllers.dart';
 
@@ -39,8 +37,9 @@ class TransformerUserController {
       edu.certificateName.text = e.field;
       edu.degree.text = e.degree;
       edu.university.text = e.university;
-      edu.graduation.text =
-          DateFormat.yMMMd().format(e.graduationDate.toDate());
+      edu.graduation.text = e.graduationDate == null
+          ? ''
+          : DateFormat.yMMMd().format(e.graduationDate!.toDate());
       return edu;
     }).toList();
   }
@@ -49,7 +48,8 @@ class TransformerUserController {
     return list.map((e) {
       ExpControllers exp = ExpControllers();
       exp.title.text = e.title;
-      exp.start.text = DateFormat.yMMMd().format(e.start.toDate());
+      exp.start.text =
+          e.start == null ? '' : DateFormat.yMMMd().format(e.start!.toDate());
       exp.duration.text = '0.01';
       return exp;
     }).toList();
@@ -103,7 +103,7 @@ class TransformerUserController {
             (c) => PastJob(
               title: c.title.text,
               start: (c.start.text == '')
-                  ? Timestamp.now()
+                  ? null
                   : Timestamp.fromDate(DateFormat.yMMMd().parse(c.start.text)),
               end: (c.start.text == '')
                   ? Timestamp.fromDate(DateTime.now())
@@ -122,7 +122,7 @@ class TransformerUserController {
               degree: c.degree.text,
               field: c.certificateName.text,
               graduationDate: (c.graduation.text == '')
-                  ? Timestamp.now()
+                  ? null
                   : Timestamp.fromDate(
                       DateFormat.yMMMd().parse(c.graduation.text),
                     ),

@@ -2,8 +2,8 @@ part of 'user_info.dart';
 
 class PastJob extends Equatable {
   final String title;
-  final Timestamp start;
-  final Timestamp end;
+  final Timestamp? start;
+  final Timestamp? end;
 
   const PastJob({
     required this.title,

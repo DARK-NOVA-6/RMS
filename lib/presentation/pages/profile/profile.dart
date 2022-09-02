@@ -54,12 +54,13 @@ class _ProfileState extends State<Profile> {
         TransformerUserController.fromUserController(userController);
 
     print(userInfo);
-    bool saved = await updateProfileUser(newUserInfo: userInfo);
-    if (saved) {
+    List<String> errors = await updateProfileUser(newUserInfo: userInfo);
+    if (errors.isEmpty) {
       // UserInfo newUserInfo = GetProfileUser()();
       // userController = TransformerUserController.fromUserInfo(newUserInfo);
 
     } else {
+      print(errors);
       userController = TransformerUserController.fromUserInfo(globalUserInfo);
     }
     // result = await save(
@@ -145,14 +146,14 @@ class _ProfileState extends State<Profile> {
               children: [
                 SpeedDialChild(
                     child: const Icon(Icons.download),
-                    onTap: (){},
+                    onTap: () {},
                     label: 'Download an existing CV',
                     labelStyle: const TextStyle(
                       fontSize: 20,
                     )),
                 SpeedDialChild(
                   child: const Icon(Icons.add),
-                  onTap: () async{
+                  onTap: () async {
                     final result = await FilePicker.platform.pickFiles(
                       allowMultiple: false,
                       type: FileType.custom,
