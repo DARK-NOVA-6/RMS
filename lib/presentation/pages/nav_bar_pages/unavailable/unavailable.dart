@@ -22,6 +22,7 @@ class _UnavailableState extends State<Unavailable> {
   final GlobalKey<LiquidPullToRefreshState> _refreshIndicatorKey = GlobalKey();
   final FetchMoreUnavailable fetchMoreUnavailable = FetchMoreUnavailable();
   List<EvaluatedJob> jobList = [];
+
   Future<void> _handleRefresh() async {
     _refreshIndicatorKey.currentState?.show();
     allLoaded = false;
@@ -31,7 +32,7 @@ class _UnavailableState extends State<Unavailable> {
   }
 
   _handleProgress() async {
-    if (allLoaded||loading) {
+    if (allLoaded || loading) {
       return;
     }
     setState(() {
@@ -40,7 +41,12 @@ class _UnavailableState extends State<Unavailable> {
 
     List<EvaluatedJob> tmpJobs = await fetchMoreUnavailable(limit: 3);
     jobList.addAll(tmpJobs);
-    List<Widget> newJobs = tmpJobs.map((e) => JobWidget(job: e)).toList();
+    List<Widget> newJobs = tmpJobs
+        .map((e) => JobWidget(
+              job: e,
+              callParent: () {},
+            ))
+        .toList();
     if (newJobs.isNotEmpty) {
       jobs.addAll(Iterable.castFrom(newJobs));
     }
@@ -83,7 +89,7 @@ class _UnavailableState extends State<Unavailable> {
       springAnimationDurationInMilliseconds: 300,
       child: LayoutBuilder(
         builder: (context, constraints) {
-          if (loading||jobs.isNotEmpty) {
+          if (loading || jobs.isNotEmpty) {
             return Stack(
               children: [
                 ListViewBuilder(

@@ -32,6 +32,10 @@ class _RecommendedState extends State<Recommended> {
     _handleProgress();
   }
 
+  deleteChild(EvaluatedJob e) {
+    _handleRefresh();
+  }
+
   _handleProgress() async {
     if (allLoaded || loading) {
       return;
@@ -42,7 +46,12 @@ class _RecommendedState extends State<Recommended> {
 
     List<EvaluatedJob> tmpJobs = await fetcherRecommended(limit: 3);
     jobList.addAll(tmpJobs);
-    List<Widget> newJobs = tmpJobs.map((e) => JobWidget(job: e)).toList();
+    List<Widget> newJobs = tmpJobs
+        .map((e) => JobWidget(
+              job: e,
+              callParent: deleteChild,
+            ))
+        .toList();
     if (newJobs.isNotEmpty) {
       jobs.addAll(Iterable.castFrom(newJobs));
     }

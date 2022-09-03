@@ -33,7 +33,7 @@ class _AppliedState extends State<Applied> {
   }
 
   _handleProgress() async {
-    if (allLoaded||loading) {
+    if (allLoaded || loading) {
       return;
     }
     setState(() {
@@ -42,7 +42,12 @@ class _AppliedState extends State<Applied> {
 
     List<EvaluatedJob> tmpJobs = await fetchMoreUnavailable(limit: 3);
     jobList.addAll(tmpJobs);
-    List<Widget> newJobs = tmpJobs.map((e) => JobWidget(job: e)).toList();
+    List<Widget> newJobs = tmpJobs
+        .map((e) => JobWidget(
+              job: e,
+              callParent: () {},
+            ))
+        .toList();
     if (newJobs.isNotEmpty) {
       jobs.addAll(Iterable.castFrom(newJobs));
     }
@@ -51,7 +56,6 @@ class _AppliedState extends State<Applied> {
       allLoaded = newJobs.isEmpty;
     });
   }
-
 
   @override
   initState() {

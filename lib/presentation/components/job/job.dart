@@ -8,11 +8,21 @@ import '../../pages/jobs/job_details.dart';
 import '../my_elevated_button.dart';
 import 'costum_expansion_tile.dart';
 
-class JobWidget extends StatelessWidget {
-  const JobWidget({Key? key, required this.job}) : super(key: key);
+class JobWidget extends StatefulWidget {
+  const JobWidget({
+    Key? key,
+    required this.job,
+    required this.callParent,
+  }) : super(key: key);
 
   final EvaluatedJob job;
+  final callParent;
 
+  @override
+  State<JobWidget> createState() => _JobWidgetState();
+}
+
+class _JobWidgetState extends State<JobWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,7 +49,7 @@ class JobWidget extends StatelessWidget {
                 child: TextButton(
                   onPressed: () {},
                   child: Text(
-                    job.companyName,
+                    widget.job.companyName,
                     style: const TextStyle(
                       fontSize: 22,
                       overflow: TextOverflow.ellipsis,
@@ -50,7 +60,7 @@ class JobWidget extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  DateFormat.yMMMEd().format(job.publishedTime.toDate()),
+                  DateFormat.yMMMEd().format(widget.job.publishedTime.toDate()),
                   style: const TextStyle(fontSize: 16),
                 ),
               ),
@@ -60,11 +70,14 @@ class JobWidget extends StatelessWidget {
             padding: const EdgeInsets.all(10),
             child: MyElevatedButton(
               press: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (_) => JobDetails(eJob: job)),
-                );
+                Navigator.of(context)
+                    .push(MaterialPageRoute(
+                        builder: (_) => JobDetails(eJob: widget.job)))
+                    .then((value) {
+                  if (value == true) widget.callParent(widget.job);
+                });
               },
-              text: job.title,
+              text: widget.job.title,
               w: 1,
               color: Theme.of(context).primaryColor.withAlpha(100),
             ),
@@ -72,7 +85,7 @@ class JobWidget extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(10),
             child: ReadMoreText(
-              job.summary,
+              widget.job.summary,
               trimMode: TrimMode.Line,
               trimLines: 3,
               style: const TextStyle(fontSize: 16),
@@ -87,7 +100,7 @@ class JobWidget extends StatelessWidget {
               trimExpandedText: ' show less',
             ),
           ),
-          CustomExpansionTile(job: job),
+          CustomExpansionTile(job: widget.job),
         ],
       ),
     );
