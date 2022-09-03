@@ -4,9 +4,11 @@ import 'past_job_model.dart';
 
 class UserInfoModel extends UserInfo {
   static UserInfo? fromSnapshot(
-      {required Map<String, dynamic>? documentSnapshot}) {
+      {required Map<String, dynamic>? documentSnapshot,
+      required String userId}) {
     if (documentSnapshot == null) return null;
     return UserInfo(
+      id: userId,
       summary: documentSnapshot['summary'],
       email: documentSnapshot['email'],
       firstName: documentSnapshot['first-name'],

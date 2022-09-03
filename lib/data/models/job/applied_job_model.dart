@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:untitled/data/models/job/evaluated_description/evaluated_description_model.dart';
+import 'package:untitled/data/models/job/job_application_states_model.dart';
 import 'package:untitled/domain/entities/job/applied_job.dart';
+import 'package:untitled/domain/entities/job/job_application_states.dart';
 
 import '../../../domain/entities/job/evaluated_job.dart';
+import '../../../domain/entities/user/user_info.dart' as user_ent;
 
 class AppliedJobModel extends AppliedJob {
   const AppliedJobModel({
@@ -52,16 +55,20 @@ class AppliedJobModel extends AppliedJob {
   static Map<String, dynamic> toSnapshot({
     required EvaluatedJob evaluatedJob,
     required Timestamp timestamp,
-    required String? summaryUser,
+    required user_ent.UserInfo userInfo,
   }) {
     return {
       'company-name': evaluatedJob.companyName,
       'job-id': evaluatedJob.id,
+      'job-seeker-id': userInfo.id,
       'applied-time': timestamp,
       'summary-job': evaluatedJob.summary,
-      'summary-job-seeker': summaryUser ?? '',
+      'summary-job-seeker': userInfo.summary ?? '',
+      'full-name-job-seeker':
+          '${userInfo.firstName} ${userInfo.middleName} ${userInfo.lastName}',
       'score': evaluatedJob.score,
-      'state': 'state 1',
+      'state':
+          ApplicationStatesModel.stateToString(ApplicationStates.screening),
       'edu-qualifications': EvEduQualificationDescriptionModel.toSnapshot(
         evaluatedJob.eduQualifications,
       ),
