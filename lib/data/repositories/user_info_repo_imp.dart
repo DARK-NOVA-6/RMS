@@ -3,7 +3,6 @@ import 'package:dartz/dartz.dart';
 
 import '../../core/errors/failures/failure.dart';
 import '../../domain/entities/user/user_info.dart';
-import '../../domain/repositories/authentication_repo.dart';
 import '../../domain/repositories/user_info_repo.dart';
 import '../models/user/user_info_model.dart';
 
@@ -19,8 +18,15 @@ class UserInfoRepoImp implements UserInfoRepo {
   Future<Either<Failure, UserInfo>> getUserInfo(
       {required String userId}) async {
     try {
-      return Future.value(Right(UserInfoModel.fromSnapshot(
-          documentSnapshot: (await collection.doc(userId).get()).data())!));
+      var result = await collection.doc(userId).get();
+      return Future.value(
+        Right(
+          UserInfoModel.fromSnapshot(
+            userId: result.id,
+            documentSnapshot: result.data(),
+          )!,
+        ),
+      );
     } catch (e) {
       print('dasda WTF !!');
       print(e.toString());

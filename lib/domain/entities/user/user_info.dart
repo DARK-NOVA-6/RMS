@@ -6,6 +6,7 @@ part 'education_certificate.dart';
 part 'past_job.dart';
 
 class UserInfo extends Equatable {
+  final String? id;
   final String? email;
   final num rating;
   final List<String> phones;
@@ -24,6 +25,7 @@ class UserInfo extends Equatable {
   final List<String> languages;
 
   const UserInfo({
+    this.id,
     this.email,
     this.rating = 0.0,
     this.firstName,
@@ -44,6 +46,7 @@ class UserInfo extends Equatable {
 
   @override
   List<Object?> get props => [
+        id,
         email,
         rating,
         firstName,

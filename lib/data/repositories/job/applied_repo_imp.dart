@@ -30,7 +30,7 @@ class AppliedRepoImp implements AppliedRepo {
       AppliedJobModel.toSnapshot(
         evaluatedJob: evaluatedJob,
         timestamp: Timestamp.now(),
-        summaryUser: authenticationRepo.connectedUser?.summary,
+        userInfo: authenticationRepo.connectedUser!,
       ),
     );
     return Future.value([]);
