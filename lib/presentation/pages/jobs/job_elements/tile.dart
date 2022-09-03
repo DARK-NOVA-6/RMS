@@ -1,9 +1,8 @@
-
-// ignore: must_be_immutable
 import 'package:flutter/material.dart';
 
 import 'bullet_point.dart';
 
+// ignore: must_be_immutable
 class Tile extends StatelessWidget {
   Tile({
     Key? key,
@@ -47,41 +46,54 @@ class Tile extends StatelessWidget {
         horizontal: (indent)
             ? 40
             : (text2 != '' && text1 != '')
-            ? 20
-            : 8,
+                ? 20
+                : 8,
         vertical: (text1 == '' && text2 == '')
             ? 0
             : (text2 != '' && text1 != '')
-            ? 10
-            : 0,
+                ? 10
+                : 0,
       ),
       child: (text1 == '' && text2 == '')
           ? Divider(
-        color: Theme.of(context).primaryColor,
-        thickness: 1,
-        indent: 25,
-        endIndent: 25,
-      )
+              color: Theme.of(context).primaryColor,
+              thickness: 1,
+              indent: 25,
+              endIndent: 25,
+            )
           : (text2 != '' && text1 != '')
-          ? Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(text1, style: textStyle),
-          Text(text2, style: textStyle2),
-        ],
-      )
-          : ListTile(
-        leading: (bullet) ? const MyBullet() : null,
-        title: Text(
-          textAlign: (text2 == '')
-              ? TextAlign.left
-              : (isLeft)
-              ? TextAlign.left
-              : TextAlign.center,
-          (text1 == '') ? text2 : text1,
-          style: (text1 == '') ? textStyle2 : textStyle,
-        ),
-      ),
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width*0.4,
+                      child: Text(
+                        text1,
+                        style: textStyle,
+                      ),
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width*0.5,
+                      child: Text(
+                        text2,
+                        textAlign: TextAlign.right,
+                        style: textStyle2,
+                      ),
+                    ),
+                  ],
+                )
+              : ListTile(
+                  leading: (bullet) ? const MyBullet() : null,
+                  title: Text(
+                    textAlign: (text2 == '')
+                        ? TextAlign.left
+                        : (isLeft)
+                            ? TextAlign.left
+                            : TextAlign.center,
+                    (text1 == '') ? text2 : text1,
+                    style: (text1 == '') ? textStyle2 : textStyle,
+                  ),
+                ),
     );
   }
 }

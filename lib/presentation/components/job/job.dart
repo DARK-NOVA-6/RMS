@@ -34,11 +34,17 @@ class JobWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              TextButton(
-                onPressed: () {},
-                child: Text(
-                  job.companyName,
-                  style: const TextStyle(fontSize: 22),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.5,
+                child: TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    job.companyName,
+                    style: const TextStyle(
+                      fontSize: 22,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
                 ),
               ),
               Padding(

@@ -13,7 +13,7 @@ class EvaluatedJobRepo {
   late List<String> jobsId = [];
   late Map<String, dynamic>? evaluatedApi;
   int currentIdx = 0;
-
+  bool lazy = false;
   EvaluatedJobRepo({
     required this.firebaseFirestore,
     required this.evaluatedAPiResponse,
@@ -53,7 +53,8 @@ class EvaluatedJobRepo {
 
   Future<Either<Failure, List<EvaluatedJob>>> fetch(
       {required int limit}) async {
-    if (evaluatedApi == null) {
+    if (evaluatedApi == null||lazy==true) {
+      lazy = false;
       jobsId.clear();
       evaluatedApi = await evaluatedAPiResponse;
       jobsId.addAll(evaluatedApi!.keys);
@@ -77,6 +78,7 @@ class EvaluatedJobRepo {
         }
         currentIdx++;
       } catch (e) {
+        currentIdx++;
         print(e.toString());
         // return Future.value(const Left(Unexpected(message: 'un')));
       }
@@ -84,5 +86,5 @@ class EvaluatedJobRepo {
     return Future.value(Right(result));
   }
 
-  void refresh() => evaluatedApi = null;
+  void refresh() => lazy = true;
 }

@@ -27,24 +27,28 @@ class _RecommendedState extends State<Recommended> {
     _refreshIndicatorKey.currentState?.show();
     allLoaded = false;
     jobs.clear();
-    return await Future.delayed(const Duration(seconds: 2));
+    fetcherRecommended.refresh();
+    _handleProgress();
   }
 
   _handleProgress() async {
-    if (allLoaded) {
+    if (allLoaded||loading) {
       return;
     }
     setState(() {
       loading = true;
     });
-    jobList.addAll(await fetcherRecommended(limit: 1));
-    List<Widget> newJobs = jobList.map((e) => JobWidget(job: e)).toList();
+
+    List<EvaluatedJob> tmpJobs = await fetcherRecommended(limit: 3);
+    jobList.addAll(tmpJobs);
+    List<Widget> newJobs = tmpJobs.map((e) => JobWidget(job: e)).toList();
     if (newJobs.isNotEmpty) {
       jobs.addAll(Iterable.castFrom(newJobs));
     }
+
     setState(() {
       loading = false;
-      allLoaded = newJobs.isEmpty;
+      allLoaded = newJobs.length < 3;
     });
   }
 

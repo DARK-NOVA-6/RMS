@@ -3,7 +3,6 @@ import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:untitled/domain/usecases/job/unavailable/fetch_more.dart';
 
 import '../../../../domain/entities/job/evaluated_job.dart';
-import '../../../../injection_container.dart';
 import '../../../components/job/job.dart';
 import '../common/common.dart';
 import '../pages.dart';
@@ -23,29 +22,32 @@ class _UnavailableState extends State<Unavailable> {
   final GlobalKey<LiquidPullToRefreshState> _refreshIndicatorKey = GlobalKey();
   final FetchMoreUnavailable fetchMoreUnavailable = FetchMoreUnavailable();
   List<EvaluatedJob> jobList = [];
-
   Future<void> _handleRefresh() async {
     _refreshIndicatorKey.currentState?.show();
     allLoaded = false;
     jobs.clear();
-    return await Future.delayed(const Duration(seconds: 2));
+    fetchMoreUnavailable.refresh();
+    _handleProgress();
   }
 
   _handleProgress() async {
-    if (allLoaded) {
+    if (allLoaded||loading) {
       return;
     }
     setState(() {
       loading = true;
     });
-    jobList.addAll(await fetchMoreUnavailable(limit: 1));
-    List<Widget> newJobs = jobList.map((e) => JobWidget(job: e)).toList();
+
+    List<EvaluatedJob> tmpJobs = await fetchMoreUnavailable(limit: 3);
+    jobList.addAll(tmpJobs);
+    List<Widget> newJobs = tmpJobs.map((e) => JobWidget(job: e)).toList();
     if (newJobs.isNotEmpty) {
       jobs.addAll(Iterable.castFrom(newJobs));
     }
+
     setState(() {
       loading = false;
-      allLoaded = newJobs.isEmpty;
+      allLoaded = newJobs.length < 3;
     });
   }
 

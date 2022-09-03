@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Loader extends StatelessWidget {
   const Loader({
@@ -13,10 +14,8 @@ class Loader extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Center(
-          child: CircularProgressIndicator(
-            backgroundColor: Colors.white,
+          child: SpinKitFoldingCube(
             color: Theme.of(context).primaryColor,
-            strokeWidth: 8,
           ),
         ),
       ),

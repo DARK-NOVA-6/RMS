@@ -70,11 +70,13 @@ class _JobDetailsState extends State<JobDetails> {
         '',
         element.title,
         indent: true,
+        isSatisfied: element.isSatisfied,
       ));
       text.add(Triple(
         'Period${element.isRequired ? '(required)' : ''} :',
         '',
         indent: true,
+        isSatisfied: element.isSatisfied,
       ));
       text.add(Triple(
         '',
@@ -98,6 +100,7 @@ class _JobDetailsState extends State<JobDetails> {
           '#',
           e.title + (e.isRequired ? '*' : ''),
           indent: true,
+          isSatisfied: e.isSatisfied,
         ),
       ),
     );
@@ -115,6 +118,7 @@ class _JobDetailsState extends State<JobDetails> {
           '#',
           e.title + (e.isRequired ? '*' : ''),
           indent: true,
+          isSatisfied: e.isSatisfied,
         ),
       ),
     );

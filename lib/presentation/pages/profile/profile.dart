@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
@@ -128,9 +129,9 @@ class _ProfileState extends State<Profile> {
     return File(file.path!).copy(newFile.path);
   }
 
-  Future showToast (String msg) async {
+  Future showToast(String msg) async {
     await Fluttertoast.cancel();
-    Fluttertoast.showToast(msg: msg,fontSize: 18);
+    Fluttertoast.showToast(msg: msg, fontSize: 18);
   }
 
   @override
@@ -185,7 +186,7 @@ class _ProfileState extends State<Profile> {
                     print('From: ${file.path}');
                     print('To: ${newfile.path}');
                     showToast('File Saved Successfully');
-                    },
+                  },
                   label: 'Add a CV',
                   labelStyle: const TextStyle(
                     fontSize: 20,
@@ -223,10 +224,9 @@ class _ProfileState extends State<Profile> {
               ),
               body: (isLoading)
                   ? Center(
-                      child: CircularProgressIndicator(
-                          backgroundColor: Colors.white,
-                          color: Theme.of(context).primaryColor,
-                          strokeWidth: 8),
+                      child: SpinKitFoldingCube(
+                        color: Theme.of(context).primaryColor,
+                      ),
                     )
                   : Stack(
                       children: pagesKeys
