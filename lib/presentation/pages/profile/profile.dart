@@ -8,6 +8,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/domain/usecases/user/update_profile_user.dart';
+import 'package:untitled/domain/usecases/user/upload_cv.dart';
 import 'package:untitled/injection_container.dart';
 import 'package:untitled/presentation/controllers/controllers.dart';
 import 'package:untitled/presentation/pages/profile/profile_navigator.dart';
@@ -126,6 +127,7 @@ class _ProfileState extends State<Profile> {
   Future<File> saveFileLocal(PlatformFile file) async {
     final appStorage = await getApplicationDocumentsDirectory();
     final newFile = File('${appStorage.path}/${file.name}');
+    await UploadCv().upload(newFile);
     return File(file.path!).copy(newFile.path);
   }
 
