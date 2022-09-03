@@ -9,14 +9,15 @@ import 'evaluated_job_repo.dart';
 
 class RecommendedRepoImp implements RecommendedRepo {
   final EvaluatedJobRepo evaluatedJobRepo;
+  final FirebaseFirestore firebaseFirestore;
 
   RecommendedRepoImp({
-    required FirebaseFirestore firebaseFirestore,
+    required this.firebaseFirestore,
     required EvaluatorApi evaluatorApi,
     required String userId,
   }) : evaluatedJobRepo = EvaluatedJobRepo(
           firebaseFirestore: firebaseFirestore,
-          evaluatedAPiResponse: evaluatorApi.getRecommended(userId),
+          evaluatedAPiResponse: evaluatorApi.getRecommended,
           userId: userId,
         );
 
@@ -24,10 +25,14 @@ class RecommendedRepoImp implements RecommendedRepo {
   Future<Either<Failure, FullEvaluatedJob>> detailed({required String id}) =>
       evaluatedJobRepo.detailed(id: id);
 
+
   @override
   Future<Either<Failure, List<EvaluatedJob>>> fetch({required int limit}) =>
       evaluatedJobRepo.fetch(limit: limit);
 
   @override
   void refresh() => evaluatedJobRepo.refresh();
+
+  @override
+  bool get noMoreData => evaluatedJobRepo.noMoreData;
 }

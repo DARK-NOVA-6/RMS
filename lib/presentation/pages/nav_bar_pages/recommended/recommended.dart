@@ -3,6 +3,7 @@ import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:untitled/domain/entities/job/evaluated_job.dart';
 import 'package:untitled/domain/usecases/job/recommended/fetch_more.dart';
 
+import '../../../../injection_container.dart';
 import '../../../components/job/job.dart';
 import '../common/common.dart';
 import '../pages.dart';
@@ -20,7 +21,7 @@ class Recommended extends StatefulWidget implements Pages {
 class _RecommendedState extends State<Recommended> {
   ScrollController scrollController = ScrollController();
   final GlobalKey<LiquidPullToRefreshState> _refreshIndicatorKey = GlobalKey();
-  final FetchMoreRecommended fetcherRecommended = FetchMoreRecommended();
+  final FetchMoreRecommended fetcherRecommended = sl();
   List<EvaluatedJob> jobList = [];
 
   Future<void> _handleRefresh() async {
@@ -32,7 +33,7 @@ class _RecommendedState extends State<Recommended> {
   }
 
   _handleProgress() async {
-    if (allLoaded||loading) {
+    if (allLoaded || loading) {
       return;
     }
     setState(() {

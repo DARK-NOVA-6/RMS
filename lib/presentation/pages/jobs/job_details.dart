@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:untitled/domain/usecases/job/recommended/apply_job.dart';
 
 import '../../../domain/entities/job/evaluated_job.dart';
 import 'job_elements/tile.dart';
@@ -134,7 +135,9 @@ class _JobDetailsState extends State<JobDetails> {
         ),
         actions: [
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              ApplyJob()(evaluatedJob: ejob);
+            },
             child: Row(
               children: const [
                 Text(

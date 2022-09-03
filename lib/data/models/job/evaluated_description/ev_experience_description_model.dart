@@ -39,4 +39,45 @@ class EvExperienceDescriptionModel extends EvExperienceDescription {
       period: documentSnapshot['period'],
     );
   }
+
+  static List<EvExperienceDescription>? fromSnapshot({
+    required List<dynamic>? documentSnapshot,
+  }) {
+    try {
+      return documentSnapshot!
+          .map((e) => _fromSnapshot(documentSnapshot: e))
+          .toList();
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  static EvExperienceDescription _fromSnapshot({
+    required Map<String, dynamic> documentSnapshot,
+  }) {
+    return EvExperienceDescription(
+      title: documentSnapshot['title'],
+      period: documentSnapshot['period'],
+      isSatisfied: documentSnapshot['is-satisfied'],
+      isRequired: documentSnapshot['is-required'],
+    );
+  }
+
+  static List<Map<String, dynamic>> toSnapshot(
+    List<EvExperienceDescription> evExperienceDescriptions,
+  ) {
+    return evExperienceDescriptions.map((e) => _toSnapshot(e)).toList();
+  }
+
+  static Map<String, dynamic> _toSnapshot(
+    EvExperienceDescription evExperienceDescription,
+  ) {
+    return {
+      'title': evExperienceDescription.title,
+      'period': evExperienceDescription.period,
+      'is-satisfied': evExperienceDescription.isSatisfied,
+      'is-required': evExperienceDescription.isRequired,
+    };
+  }
 }

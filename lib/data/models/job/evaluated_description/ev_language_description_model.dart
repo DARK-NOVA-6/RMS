@@ -37,4 +37,43 @@ class EvLanguageDescriptionModel extends EvLanguageDescription {
       isRequired: documentSnapshot['is-required'],
     );
   }
+
+  static List<EvLanguageDescription>? fromSnapshot({
+    required List<dynamic>? documentSnapshot,
+  }) {
+    try {
+      return documentSnapshot!
+          .map((e) => _fromSnapshot(documentSnapshot: e))
+          .toList();
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  static EvLanguageDescription _fromSnapshot({
+    required Map<String, dynamic> documentSnapshot,
+  }) {
+    return EvLanguageDescription(
+      title: documentSnapshot['title'],
+      isSatisfied: documentSnapshot['is-satisfied'],
+      isRequired: documentSnapshot['is-required'],
+    );
+  }
+
+  static List<Map<String, dynamic>> toSnapshot(
+      List<EvLanguageDescription> evLanguageDescriptions,
+      ) {
+    return evLanguageDescriptions.map((e) => _toSnapshot(e)).toList();
+  }
+
+  static Map<String, dynamic> _toSnapshot(
+      EvLanguageDescription evLanguageDescription,
+      ) {
+    return {
+      'title': evLanguageDescription.title,
+      'is-satisfied': evLanguageDescription.isSatisfied,
+      'is-required': evLanguageDescription.isRequired,
+    };
+  }
 }

@@ -37,4 +37,43 @@ class EvSkillDescriptionModel extends EvSkillDescription {
       isRequired: documentSnapshot['is-required'],
     );
   }
+
+  static List<EvSkillDescription>? fromSnapshot({
+    required List<dynamic>? documentSnapshot,
+  }) {
+    try {
+      return documentSnapshot!
+          .map((e) => _fromSnapshot(documentSnapshot: e))
+          .toList();
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  static EvSkillDescription _fromSnapshot({
+    required Map<String, dynamic> documentSnapshot,
+  }) {
+    return EvSkillDescription(
+      title: documentSnapshot['title'],
+      isSatisfied: documentSnapshot['is-satisfied'],
+      isRequired: documentSnapshot['is-required'],
+    );
+  }
+
+  static List<Map<String, dynamic>> toSnapshot(
+    List<EvSkillDescription> evSkillDescriptions,
+  ) {
+    return evSkillDescriptions.map((e) => _toSnapshot(e)).toList();
+  }
+
+  static Map<String, dynamic> _toSnapshot(
+    EvSkillDescription evSkillDescription,
+  ) {
+    return {
+      'title': evSkillDescription.title,
+      'is-satisfied': evSkillDescription.isSatisfied,
+      'is-required': evSkillDescription.isRequired,
+    };
+  }
 }

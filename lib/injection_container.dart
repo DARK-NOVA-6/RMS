@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
+import 'package:untitled/data/repositories/job/applied_repo_imp.dart';
+import 'package:untitled/domain/repositories/job/applied_repo.dart';
 import 'data/datasources/remote/autocomplete_substring_api.dart';
 import 'data/datasources/remote/evaluator_api.dart';
 import 'data/datasources/remote/firebase_authentication.dart';
@@ -75,6 +77,12 @@ void initData() {
       evaluatorApi: sl(),
       userId: 'KNvVSQq2xSUaxUNsEbHCu5VvHWv2',
       // userId: GetConnectedUser(sl()).userId!,
+    ),
+  );
+  sl.registerFactory<AppliedRepo>(
+    () => AppliedRepoImp(
+      firebaseFirestore: sl(),
+      authenticationRepo: sl(),
     ),
   );
   sl.registerFactory<UnavailableRepo>(

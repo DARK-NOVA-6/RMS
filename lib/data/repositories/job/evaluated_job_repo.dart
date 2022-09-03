@@ -9,26 +9,30 @@ import '../../models/job/evaluated_job_model.dart';
 class EvaluatedJobRepo {
   final FirebaseFirestore firebaseFirestore;
   final CollectionReference<Map<String, dynamic>> collection;
-  final Future<Map<String, dynamic>> evaluatedAPiResponse;
+  final Query query;
+  final String userId;
+  final Future<Map<String, dynamic>> Function(String userId)
+      evaluatedAPiResponse;
   late List<String> jobsId = [];
   late Map<String, dynamic>? evaluatedApi;
+
+  bool lazy = true;
+  bool _noMoreData = false;
   int currentIdx = 0;
-  bool lazy = false;
+
   EvaluatedJobRepo({
     required this.firebaseFirestore,
     required this.evaluatedAPiResponse,
-    required String userId,
+    required this.userId,
   })  : collection = firebaseFirestore.collection('jobs'),
+        query = firebaseFirestore
+            .collection('jobs')
+            .where('status', isEqualTo: 'running'),
         evaluatedApi = null;
 
   Future<Either<Failure, FullEvaluatedJob>> detailed(
       {required String id}) async {
-    if (evaluatedApi == null) {
-      jobsId.clear();
-      evaluatedApi = await evaluatedAPiResponse;
-      jobsId.addAll(evaluatedApi!.keys);
-      currentIdx = 0;
-    }
+    _clearIfRefreshed();
     try {
       var tempData = await collection.doc(id).get();
       if (tempData.exists) {
@@ -53,13 +57,7 @@ class EvaluatedJobRepo {
 
   Future<Either<Failure, List<EvaluatedJob>>> fetch(
       {required int limit}) async {
-    if (evaluatedApi == null||lazy==true) {
-      lazy = false;
-      jobsId.clear();
-      evaluatedApi = await evaluatedAPiResponse;
-      jobsId.addAll(evaluatedApi!.keys);
-      currentIdx = 0;
-    }
+    _clearIfRefreshed();
     print(currentIdx);
     print(jobsId);
     List<EvaluatedJob> result = [];
@@ -83,8 +81,23 @@ class EvaluatedJobRepo {
         // return Future.value(const Left(Unexpected(message: 'un')));
       }
     }
+    if (result.length < limit) _noMoreData = true;
     return Future.value(Right(result));
   }
 
   void refresh() => lazy = true;
+
+  bool get noMoreData => _noMoreData;
+
+  void _clearIfRefreshed() {
+    if (evaluatedApi == null || lazy == true) _clear();
+  }
+
+  void _clear() async {
+    lazy = false;
+    jobsId.clear();
+    evaluatedApi = await evaluatedAPiResponse(userId);
+    jobsId.addAll(evaluatedApi!.keys);
+    currentIdx = 0;
+  }
 }

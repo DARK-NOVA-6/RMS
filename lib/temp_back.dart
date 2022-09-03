@@ -116,7 +116,7 @@ class _MyApp2State extends State<MyApp2> {
                   TextButton(
                     child: const Text('fetch more recommended'),
                     onPressed: () async {
-                      print(await fetchMoreRecommended(limit: 1));
+                      print(await fetchMoreRecommended(limit: 3));
                     },
                   ),
                   TextButton(

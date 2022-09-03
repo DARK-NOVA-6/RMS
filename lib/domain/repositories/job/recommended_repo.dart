@@ -9,5 +9,8 @@ abstract class RecommendedRepo {
 
   Future<Either<Failure, FullEvaluatedJob>> detailed({required String id});
 
+
   void refresh();
+
+  bool get noMoreData;
 }

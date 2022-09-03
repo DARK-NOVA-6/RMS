@@ -25,6 +25,7 @@ void main() async {
   globalUserInfo =
       (await getProfileUser(userId: 'KNvVSQq2xSUaxUNsEbHCu5VvHWv2'))!;
   // runApp(const MyApp2());
+
   print(globalUserInfo);
   runApp(
     ChangeNotifierProvider(

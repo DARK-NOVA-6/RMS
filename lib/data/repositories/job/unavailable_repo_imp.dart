@@ -16,7 +16,7 @@ class UnavailableRepoImp implements UnavailableRepo {
     required String userId,
   }) : evaluatedJobRepo = EvaluatedJobRepo(
           firebaseFirestore: firebaseFirestore,
-          evaluatedAPiResponse: evaluatorApi.getUnavailable(userId),
+          evaluatedAPiResponse: evaluatorApi.getUnavailable,
           userId: userId,
         );
 
@@ -30,4 +30,7 @@ class UnavailableRepoImp implements UnavailableRepo {
 
   @override
   void refresh() => evaluatedJobRepo.refresh();
+
+  @override
+  bool get noMoreData => evaluatedJobRepo.noMoreData;
 }

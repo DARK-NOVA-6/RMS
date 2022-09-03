@@ -9,4 +9,6 @@ abstract class UnavailableRepo {
   Future<Either<Failure, FullEvaluatedJob>> detailed({required String id});
 
   void refresh();
+
+  bool get noMoreData;
 }
