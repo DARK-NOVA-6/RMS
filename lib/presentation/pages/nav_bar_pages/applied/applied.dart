@@ -5,7 +5,6 @@ import 'package:untitled/presentation/components/job/applied_job.dart';
 
 import '../../../../domain/entities/job/applied_job.dart';
 import '../../../../injection_container.dart';
-import '../../../components/job/job.dart';
 import '../common/common.dart';
 import '../pages.dart';
 

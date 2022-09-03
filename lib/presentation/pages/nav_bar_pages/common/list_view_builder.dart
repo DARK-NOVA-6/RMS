@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:untitled/presentation/components/job/applied_job.dart';
 import '../../../components/job/job.dart';
 import 'refresh_box.dart';
 
+// ignore: must_be_immutable
 class ListViewBuilder extends StatelessWidget {
   ListViewBuilder({
     Key? key,
     required this.scrollController,
-    this.jobsNotApplied = null,
-    this.jobsApplied = null,
+    this.jobsNotApplied,
+    this.jobsApplied,
     required this.allLoaded,
     required this.onRefresh,
   }) : super(key: key);

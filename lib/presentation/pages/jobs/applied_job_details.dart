@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:untitled/domain/entities/job/applied_job.dart';
 
-import 'job_elements/tile.dart';
-import 'job_elements/triple.dart';
+import 'job_elements/job_elements.dart';
+
 
 class AppliedJobDetails extends StatefulWidget {
   const AppliedJobDetails({Key? key, required this.eJob}) : super(key: key);

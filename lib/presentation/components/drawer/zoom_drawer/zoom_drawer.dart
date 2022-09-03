@@ -7,6 +7,9 @@ import '../../../pages/profile/profile.dart';
 import 'menu_page.dart';
 import 'menu_items.dart' as mi;
 
+export 'menu_items.dart';
+export 'menu_items.dart';
+
 class CustomeZoomDrawer extends StatefulWidget {
   const CustomeZoomDrawer({Key? key}) : super(key: key);
 

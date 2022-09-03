@@ -3,8 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:untitled/domain/usecases/job/recommended/apply_job.dart';
 
 import '../../../domain/entities/job/evaluated_job.dart';
-import 'job_elements/tile.dart';
-import 'job_elements/triple.dart';
+import 'job_elements/job_elements.dart';
 
 class JobDetails extends StatefulWidget {
   const JobDetails({Key? key, required this.eJob}) : super(key: key);

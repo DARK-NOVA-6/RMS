@@ -6,7 +6,11 @@ import 'package:intl/intl.dart';
 
 import '../../pages/jobs/job_details.dart';
 import '../my_elevated_button.dart';
-import 'costum_expansion_tile.dart';
+import 'costume_expansion_tile.dart';
+
+export 'applied_job.dart';
+export 'costume_expansion_tile.dart';
+export 'custome_expansion_tile_applied.dart';
 
 class JobWidget extends StatefulWidget {
   const JobWidget({
