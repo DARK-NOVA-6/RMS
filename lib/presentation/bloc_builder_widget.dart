@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:untitled/presentation/components/components.dart';
 
 import 'Pages/Authentication/authenticate.dart';
@@ -68,7 +69,14 @@ class BlocBuilderWidget extends StatelessWidget {
             // popupWidget: Popup(),
           );
         } else if (state is Loading) {
-          return const Text('Wait for it!!');
+          return Scaffold(
+            body: Center(
+              child: SpinKitFoldingCube(
+                color: Theme.of(context).primaryColor,
+                size: 120,
+              ),
+            ),
+          );
         } else {
           return const Text('unexpected state!');
         }
