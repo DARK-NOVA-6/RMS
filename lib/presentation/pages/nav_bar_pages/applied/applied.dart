@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import 'package:untitled/domain/usecases/job/applied/fetch_more.dart';
+import 'package:untitled/presentation/components/job/applied_job.dart';
 
-import '../../../../domain/entities/job/evaluated_job.dart';
-import '../../../../domain/usecases/job/unavailable/fetch_more.dart';
+import '../../../../domain/entities/job/applied_job.dart';
+import '../../../../injection_container.dart';
 import '../../../components/job/job.dart';
 import '../common/common.dart';
 import '../pages.dart';
@@ -21,14 +23,14 @@ class _AppliedState extends State<Applied> {
   bool loading = false, allLoaded = false;
   ScrollController scrollController = ScrollController();
   final GlobalKey<LiquidPullToRefreshState> _refreshIndicatorKey = GlobalKey();
-  final FetchMoreUnavailable fetchMoreUnavailable = FetchMoreUnavailable();
-  List<EvaluatedJob> jobList = [];
+  final FetchMoreApplied fetchMoreApplied = sl();
+  List<AppliedJob> jobList = [];
 
   Future<void> _handleRefresh() async {
     _refreshIndicatorKey.currentState?.show();
     allLoaded = false;
     jobs.clear();
-    fetchMoreUnavailable.refresh();
+    fetchMoreApplied.refresh();
     _handleProgress();
   }
 
@@ -40,10 +42,10 @@ class _AppliedState extends State<Applied> {
       loading = true;
     });
 
-    List<EvaluatedJob> tmpJobs = await fetchMoreUnavailable(limit: 3);
+    List<AppliedJob> tmpJobs = await fetchMoreApplied(limit: 3);
     jobList.addAll(tmpJobs);
     List<Widget> newJobs = tmpJobs
-        .map((e) => JobWidget(
+        .map((e) => AppliedJobWidget(
               job: e,
               callParent: () {},
             ))
@@ -52,8 +54,8 @@ class _AppliedState extends State<Applied> {
       jobs.addAll(Iterable.castFrom(newJobs));
     }
     setState(() {
+      allLoaded = newJobs.length < 3;
       loading = false;
-      allLoaded = newJobs.isEmpty;
     });
   }
 
@@ -76,7 +78,7 @@ class _AppliedState extends State<Applied> {
     scrollController.dispose();
   }
 
-  List<JobWidget> jobs = [];
+  List<AppliedJobWidget> jobs = [];
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +96,7 @@ class _AppliedState extends State<Applied> {
                 ListViewBuilder(
                   onRefresh: _handleRefresh,
                   scrollController: scrollController,
-                  jobs: jobs,
+                  jobsApplied: jobs,
                   allLoaded: allLoaded,
                 ),
                 if (loading) ...[

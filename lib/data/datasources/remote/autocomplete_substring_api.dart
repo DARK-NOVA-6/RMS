@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 
@@ -16,10 +17,15 @@ abstract class AutocompleteSubstringApi {
 
 class AutocompleteSubstringApiImp implements AutocompleteSubstringApi {
   // static String get uriApi => 'http://192.168.98.250:5000/api';
-  // static String get uriApi => 'http://192.168.137.223:5000/api';
+  static String get uriApi => 'http://192.168.137.223:5000/api';
 
-  static String get uriApi => 'http://192.168.102.208:5000/api';
+  // static String get uriApi => 'http://192.168.102.208:5000/api';
   // static String get uriApi => 'http://192.168.12.120:5000/api';
+  static Map<String, String> headers = {
+    HttpHeaders.contentTypeHeader: "application/json",
+    "Connection": "Keep-Alive",
+    "Keep-Alive": "timeout=5, max=100"
+  };
 
   @override
   Future<List<String>> getSimilar({
@@ -34,8 +40,10 @@ class AutocompleteSubstringApiImp implements AutocompleteSubstringApi {
         (query1.isNotEmpty ? query1 : '') +
         (query1.isNotEmpty && query2.isNotEmpty ? '&' : '') +
         (query2.isNotEmpty ? query2 : '');
-    final response =
-        await http.get(EncodeUri.encode('$uriApi/$type/$word$query'));
+    final response = await http.get(
+      EncodeUri.encode('$uriApi/$type/$word$query'),
+      headers: AutocompleteSubstringApiImp.headers,
+    );
     return Future<List<String>>.value(
       CustomConverter().toListString(list: jsonDecode(response.body)),
     );

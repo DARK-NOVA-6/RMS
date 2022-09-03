@@ -9,6 +9,7 @@ import '../../../domain/entities/user/user_info.dart' as user_ent;
 
 class AppliedJobModel extends AppliedJob {
   const AppliedJobModel({
+    required super.title,
     required super.appliedId,
     required super.companyName,
     required super.appliedTime,
@@ -28,7 +29,8 @@ class AppliedJobModel extends AppliedJob {
     try {
       return AppliedJob(
         appliedId: id,
-        companyName: documentSnapshot!['company-name'],
+        title: documentSnapshot!['title'],
+        companyName: documentSnapshot['company-name'],
         appliedTime: documentSnapshot['applied-time'],
         summary: documentSnapshot['summary-job'],
         score: documentSnapshot['score'],
@@ -59,6 +61,7 @@ class AppliedJobModel extends AppliedJob {
   }) {
     return {
       'company-name': evaluatedJob.companyName,
+      'title': evaluatedJob.title,
       'job-id': evaluatedJob.id,
       'job-seeker-id': userInfo.id,
       'applied-time': timestamp,

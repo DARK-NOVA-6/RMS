@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:untitled/domain/entities/job/evaluated_description/evaluated_description.dart';
 
 class AppliedJob extends Equatable {
+  final String title;
   final String companyName;
   final String appliedId;
   final String summary;
@@ -15,6 +16,7 @@ class AppliedJob extends Equatable {
   final num score;
 
   const AppliedJob({
+    required this.title,
     required this.appliedId,
     required this.companyName,
     required this.appliedTime,
@@ -29,6 +31,7 @@ class AppliedJob extends Equatable {
 
   @override
   List<Object?> get props => [
+        title,
         appliedId,
         companyName,
         appliedTime,

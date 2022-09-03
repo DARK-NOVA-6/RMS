@@ -19,13 +19,12 @@ import 'injection_container.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await FirebaseAuth.instance.signOut();
   init();
   final GetProfileUser getProfileUser = GetProfileUser();
   globalUserInfo =
       (await getProfileUser(userId: 'KNvVSQq2xSUaxUNsEbHCu5VvHWv2'))!;
   // runApp(const MyApp2());
-
+  //
   print(globalUserInfo);
   runApp(
     ChangeNotifierProvider(

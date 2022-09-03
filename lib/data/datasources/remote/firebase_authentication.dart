@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:untitled/injection_container.dart';
 
 import '../../../core/errors/exceptions/authentication_exceptions.dart';
 import '../../../domain/repositories/user_info_repo.dart';
@@ -96,10 +97,11 @@ class FirebaseAuthentication extends AuthenticationRemote {
 
   @override
   String? get userId {
+    return 'KNvVSQq2xSUaxUNsEbHCu5VvHWv2';
     if (firebaseAuth.currentUser == null) return null;
     return firebaseAuth.currentUser!.uid;
   }
 
   @override
-  user_ent.UserInfo? get connectedUser => _userInfo;
+  user_ent.UserInfo? get connectedUser => globalUserInfo;
 }

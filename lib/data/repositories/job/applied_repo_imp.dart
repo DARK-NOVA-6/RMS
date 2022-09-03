@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:untitled/data/models/job/applied_job_model.dart';
@@ -55,11 +57,11 @@ class AppliedRepoImp implements AppliedRepo {
 
   @override
   Future<Either<Failure, List<AppliedJob>>> fetch({required int limit}) async {
-    if (noMoreData == true) return Future.value(const Right([]));
     if (lazy == true) {
       last = null;
       _noMoreData = false;
     }
+    if (noMoreData == true) return Future.value(const Right([]));
     lazy = false;
     print(last?.id);
     try {
@@ -92,7 +94,7 @@ class AppliedRepoImp implements AppliedRepo {
   @override
   Future<Either<Failure, void>> cancel({required String id}) {
     try {
-      collection.doc(id).delete();
+      collection.doc(id).update({'state': 'canceled'});
       return Future<Either<Failure, void>>.value(const Right(null));
     } catch (e) {
       return Future<Either<Failure, void>>.value(

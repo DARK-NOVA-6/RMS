@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:untitled/data/repositories/job/applied_repo_imp.dart';
 import 'package:untitled/domain/repositories/job/applied_repo.dart';
+import 'package:untitled/domain/usecases/job/applied/fetch_more.dart';
 import 'data/datasources/remote/autocomplete_substring_api.dart';
 import 'data/datasources/remote/evaluator_api.dart';
 import 'data/datasources/remote/firebase_authentication.dart';
@@ -126,6 +127,10 @@ void initUseCases() {
   // job - unavailable
   sl.registerSingleton(FetchMoreUnavailable());
   sl.registerSingleton(GetDetailedUnavailable());
+
+  // job - applied
+  sl.registerSingleton(FetchMoreApplied(sl()));
+
 
   // user
   sl.registerSingleton(GetProfileUser());

@@ -100,7 +100,7 @@ class _RecommendedState extends State<Recommended> {
                 ListViewBuilder(
                   onRefresh: _handleRefresh,
                   scrollController: scrollController,
-                  jobs: jobs,
+                  jobsNotApplied: jobs,
                   allLoaded: allLoaded,
                 ),
                 if (loading) ...[

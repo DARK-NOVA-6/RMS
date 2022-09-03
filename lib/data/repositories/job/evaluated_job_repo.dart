@@ -32,7 +32,7 @@ class EvaluatedJobRepo {
 
   Future<Either<Failure, FullEvaluatedJob>> detailed(
       {required String id}) async {
-    _clearIfRefreshed();
+    await _clearIfRefreshed();
     try {
       var tempData = await collection.doc(id).get();
       if (tempData.exists) {
@@ -57,16 +57,14 @@ class EvaluatedJobRepo {
 
   Future<Either<Failure, List<EvaluatedJob>>> fetch(
       {required int limit}) async {
-    _clearIfRefreshed();
+    await _clearIfRefreshed();
     print(currentIdx);
-    print(jobsId);
+    print(jobsId.length);
     List<EvaluatedJob> result = [];
     while (result.length < limit && currentIdx < jobsId.length) {
       try {
         var tempData = await collection.doc(jobsId[currentIdx]).get();
         if (tempData.exists) {
-          // print('testing..');
-          // print(tempData.data());
           var data = EvaluatedJobModel.fromJsonAndSnapshot(
             jsonData: evaluatedApi![jobsId[currentIdx]],
             documentSnapshot: tempData.data(),
@@ -78,7 +76,6 @@ class EvaluatedJobRepo {
       } catch (e) {
         currentIdx++;
         print(e.toString());
-        // return Future.value(const Left(Unexpected(message: 'un')));
       }
     }
     if (result.length < limit) _noMoreData = true;
@@ -89,11 +86,11 @@ class EvaluatedJobRepo {
 
   bool get noMoreData => _noMoreData;
 
-  void _clearIfRefreshed() {
-    if (evaluatedApi == null || lazy == true) _clear();
+  Future<void> _clearIfRefreshed() async {
+    if (evaluatedApi == null || lazy == true) await _clear();
   }
 
-  void _clear() async {
+  Future<void> _clear() async {
     lazy = false;
     jobsId.clear();
     evaluatedApi = await evaluatedAPiResponse(userId);

@@ -95,7 +95,7 @@ class _UnavailableState extends State<Unavailable> {
                 ListViewBuilder(
                   onRefresh: _handleRefresh,
                   scrollController: scrollController,
-                  jobs: jobs,
+                  jobsNotApplied: jobs,
                   allLoaded: allLoaded,
                 ),
                 if (loading) ...[
