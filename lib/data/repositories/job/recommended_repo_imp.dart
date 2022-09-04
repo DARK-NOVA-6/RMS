@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+
 import '../../../core/errors/failures/failure.dart';
 import '../../../domain/entities/job/evaluated_job.dart';
 import '../../../domain/entities/job/full_evaluated_job.dart';
@@ -24,7 +25,6 @@ class RecommendedRepoImp implements RecommendedRepo {
   @override
   Future<Either<Failure, FullEvaluatedJob>> detailed({required String id}) =>
       evaluatedJobRepo.detailed(id: id);
-
 
   @override
   Future<Either<Failure, List<EvaluatedJob>>> fetch({required int limit}) =>

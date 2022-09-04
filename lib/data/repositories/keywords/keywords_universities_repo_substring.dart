@@ -1,6 +1,6 @@
 import '../../../domain/repositories/keywords/keywords_universities_repo.dart';
-import 'keywords_repo_substring.dart';
 import '../../../injection_container.dart';
+import 'keywords_repo_substring.dart';
 
 class KeywordsUniversitiesRepoSubstring implements KeywordsUniversitiesRepo {
   final KeywordsRepoSubstring keywordsRepoSubstring;
@@ -9,7 +9,7 @@ class KeywordsUniversitiesRepoSubstring implements KeywordsUniversitiesRepo {
   Future<List<String>> getSimilar({
     required String word,
     int? limit,
-    bool ?exact,
+    bool? exact,
   }) {
     return keywordsRepoSubstring.getSimilar(
       word: word,

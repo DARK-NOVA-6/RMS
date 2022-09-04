@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -26,21 +27,21 @@ class Photo extends StatelessWidget {
               backgroundColor: Theme.of(context).primaryColor,
               child: (image == null)
                   ? const Text(
-                'No Image',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 24,
-                ),
-              )
+                      'No Image',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24,
+                      ),
+                    )
                   : ClipOval(
-                child: Image.file(
-                  image!,
-                  height: 210,
-                  width: 210,
-                  fit: BoxFit.fill,
-                ),
-              ),
+                      child: Image.file(
+                        image!,
+                        height: 210,
+                        width: 210,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
             ),
           ),
           if (Provider.of<UpdateActionBarActions>(context).edit) ...[

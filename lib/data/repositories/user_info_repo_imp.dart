@@ -28,8 +28,6 @@ class UserInfoRepoImp implements UserInfoRepo {
         ),
       );
     } catch (e) {
-      print('dasda WTF !!');
-      print(e.toString());
       return Future.value(const Left(Unexpected(message: 'unexpected')));
     }
   }
@@ -42,7 +40,6 @@ class UserInfoRepoImp implements UserInfoRepo {
       collection.doc(userId).update(UserInfoModel.toSnapshot(newUserInfo));
       return Future.value(const Right(true));
     } catch (e) {
-      print(e.toString());
       return Future.value(const Right(false));
     }
   }

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../../../domain/usecases/autocomplete/autocomplete_skills.dart';

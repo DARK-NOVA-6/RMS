@@ -5,13 +5,13 @@ import '../../../data/repositories/keywords/keywords_field_edu_repo_substring.da
 import '../../../data/repositories/keywords/keywords_job_titles_repo_substring.dart';
 import '../../../data/repositories/keywords/keywords_languages_repo_substring.dart';
 import '../../../data/repositories/keywords/keywords_skills_repo_substring.dart';
+import '../../../domain/entities/user/user_info.dart';
 import '../../../domain/repositories/keywords/keywords_degree_edu_repo.dart';
 import '../../../domain/repositories/keywords/keywords_field_edu_repo.dart';
 import '../../../domain/repositories/keywords/keywords_job_titles_repo.dart';
 import '../../../domain/repositories/keywords/keywords_languages_repo.dart';
 import '../../../domain/repositories/keywords/keywords_skills_repo.dart';
 import '../../errors/failures/user_info_failures.dart';
-import '../../../domain/entities/user/user_info.dart';
 
 class UserInfoValidator {
   static Future<List<UserInfoFailure>> validate(UserInfo userInfo) async {

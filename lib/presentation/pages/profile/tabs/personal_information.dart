@@ -2,8 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:untitled/presentation/controllers/personal_controllers.dart';
+
 import 'profile_item_builder/profile_item_builder.dart';
 
 class PersonalInformation extends StatefulWidget {
@@ -33,8 +35,9 @@ class _PersonalInformationState extends State<PersonalInformation> {
       if (image == null) return;
       final imageTemp = File(image.path);
       setState(() => this.image = imageTemp);
-    } on PlatformException catch (e) {
-      print('failed to pick image $e');
+    } on PlatformException {
+      Fluttertoast.cancel();
+      Fluttertoast.showToast(msg: 'failed to pick image');
     }
   }
 
@@ -91,8 +94,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
             Rating(rating: rating),
             const SizedBox(height: 15),
             FirstNameBuilder(personalControllers: widget.personalControllers),
-            MiddleNameBuilder(
-                personalControllers: widget.personalControllers),
+            MiddleNameBuilder(personalControllers: widget.personalControllers),
             LastNameBuilder(personalControllers: widget.personalControllers),
             EmailBuilder(personalControllers: widget.personalControllers),
             PhoneList(phones: phones, add: addPhone, remove: removePhone),

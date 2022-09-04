@@ -49,7 +49,6 @@ class AutocompleteSubstringApiImp implements AutocompleteSubstringApi {
         CustomConverter().toListString(list: jsonDecode(response.body)),
       );
     } catch (e) {
-      print(e);
       if (e is FormatException) return [];
       return getSimilar(type: type, word: word, limit: limit, exact: exact);
     }

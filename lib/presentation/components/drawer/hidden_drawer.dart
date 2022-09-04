@@ -1,6 +1,7 @@
 // not used
 import 'package:flutter/material.dart';
 import 'package:hidden_drawer_menu/hidden_drawer_menu.dart';
+
 import '../../pages/jobs/jobs.dart';
 import '../../pages/profile/profile.dart';
 
@@ -12,13 +13,12 @@ class HiddenDrawer extends StatefulWidget {
 }
 
 class _HiddenDrawerState extends State<HiddenDrawer> {
-  List <ScreenHiddenDrawer> _pages = [];
+  List<ScreenHiddenDrawer> _pages = [];
 
   TextStyle textStyle = const TextStyle(
-      color: Colors.white,
-      fontSize: 22,
+    color: Colors.white,
+    fontSize: 22,
   );
-
 
   @override
   void initState() {
@@ -40,7 +40,7 @@ class _HiddenDrawerState extends State<HiddenDrawer> {
           selectedStyle: textStyle,
           colorLineSelected: Colors.redAccent,
         ),
-        Profile(),
+        const Profile(),
       ),
       ScreenHiddenDrawer(
         ItemHiddenMenu(
@@ -49,7 +49,7 @@ class _HiddenDrawerState extends State<HiddenDrawer> {
           selectedStyle: textStyle,
           colorLineSelected: Colors.redAccent,
         ),
-        Profile(),
+        const Profile(),
       ),
       ScreenHiddenDrawer(
         ItemHiddenMenu(
@@ -58,7 +58,7 @@ class _HiddenDrawerState extends State<HiddenDrawer> {
           selectedStyle: textStyle,
           colorLineSelected: Colors.redAccent,
         ),
-        Profile(),
+        const Profile(),
       ),
       ScreenHiddenDrawer(
         ItemHiddenMenu(
@@ -67,7 +67,7 @@ class _HiddenDrawerState extends State<HiddenDrawer> {
           selectedStyle: textStyle,
           colorLineSelected: Colors.redAccent,
         ),
-        Profile(),
+        const Profile(),
       ),
       ScreenHiddenDrawer(
         ItemHiddenMenu(
@@ -76,7 +76,7 @@ class _HiddenDrawerState extends State<HiddenDrawer> {
           selectedStyle: textStyle,
           colorLineSelected: Colors.redAccent,
         ),
-        Profile(),
+        const Profile(),
       ),
     ];
   }
@@ -92,5 +92,4 @@ class _HiddenDrawerState extends State<HiddenDrawer> {
       initPositionSelected: 0,
     );
   }
-
 }

@@ -18,8 +18,6 @@ class EducationCertificateModel extends EducationCertificate {
         graduationDate: documentSnapshot['graduation-date'],
       );
     } catch (e) {
-      print('dasdsd sds');
-      print(e.toString());
       return null;
     }
   }

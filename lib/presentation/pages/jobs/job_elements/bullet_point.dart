@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../../../../provider/theme_notifier.dart';
 
 class MyBullet extends StatelessWidget {
@@ -11,7 +12,9 @@ class MyBullet extends StatelessWidget {
       height: 12.0,
       width: 12.0,
       decoration: BoxDecoration(
-        color: Provider.of<ThemeNotifier>(context).darkTheme?Colors.white:Colors.black,
+        color: Provider.of<ThemeNotifier>(context).darkTheme
+            ? Colors.white
+            : Colors.black,
         shape: BoxShape.circle,
       ),
     );

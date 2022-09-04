@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'phone.dart';
 import '../../../../../provider/update_action_bar_actions_notification.dart';
-
+import 'phone.dart';
 
 class PhoneList extends StatelessWidget {
   const PhoneList({
@@ -33,18 +32,18 @@ class PhoneList extends StatelessWidget {
           ),
           trailing: (Provider.of<UpdateActionBarActions>(context).edit)
               ? Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(40),
-              color: Theme.of(context).primaryColor,
-            ),
-            child: IconButton(
-              icon: const Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
-              onPressed: add,
-            ),
-          )
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(40),
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  child: IconButton(
+                    icon: const Icon(
+                      Icons.add,
+                      color: Colors.white,
+                    ),
+                    onPressed: add,
+                  ),
+                )
               : null,
         ),
       ),

@@ -7,7 +7,6 @@ import '../../../domain/usecases/autocomplete/autocomplete_universities.dart';
 import '../../../provider/theme.dart';
 import '../../controllers/controllers.dart';
 import '../components.dart';
-import '../custome_auto_complete.dart';
 
 class EduQualificationItem extends StatefulWidget {
   const EduQualificationItem({

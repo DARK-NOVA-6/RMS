@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:untitled/presentation/components/components.dart';
 
 import 'Pages/Authentication/authenticate.dart';
@@ -24,15 +25,17 @@ class BlocBuilderWidget extends StatelessWidget {
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is SignUpErrorState) {
-          print(state.message);
+          Fluttertoast.cancel();
+          Fluttertoast.showToast(msg: state.message);
         } else if (state is SignInErrorState) {
-          print(state.message);
+          Fluttertoast.cancel();
+          Fluttertoast.showToast(msg: state.message);
         } else if (state is SignedUpState) {
-          print('new account has been registered ');
+          Fluttertoast.cancel();
+          Fluttertoast.showToast(msg: 'new account has been registered');
         } else if (state is SignedUpState) {
-          print('welcome ');
-        } else if (state is AuthInitial) {
-          print('initial');
+          Fluttertoast.cancel();
+          Fluttertoast.showToast(msg: 'welcome');
         }
       },
       builder: (context, state) {

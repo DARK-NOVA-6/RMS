@@ -1,4 +1,3 @@
-
 import '../../../domain/entities/job/job_application_states.dart';
 
 class ApplicationStatesModel {

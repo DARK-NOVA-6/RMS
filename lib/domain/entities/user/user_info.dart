@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
 part 'education_certificate.dart';
-
 part 'past_job.dart';
 
 class UserInfo extends Equatable {

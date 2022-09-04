@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:untitled/injection_container.dart';
 
 import '../../../core/errors/exceptions/authentication_exceptions.dart';
-import '../../../domain/repositories/user_info_repo.dart';
 import '../../../domain/entities/user/user_info.dart' as user_ent;
+import '../../../domain/repositories/user_info_repo.dart';
 
 abstract class AuthenticationRemote {
   Future<void> signInEmailPassword({
@@ -26,6 +26,8 @@ abstract class AuthenticationRemote {
 class FirebaseAuthentication extends AuthenticationRemote {
   final FirebaseAuth firebaseAuth;
   final UserInfoRepo userInfoRepo;
+
+  // ignore: unused_field
   static user_ent.UserInfo? _userInfo;
   static bool _initiated = false;
 
@@ -80,7 +82,6 @@ class FirebaseAuthentication extends AuthenticationRemote {
           email: email, password: password);
       return Future<void>.value(null);
     } on FirebaseAuthException catch (e) {
-      print(e.message);
       if (e.code == 'weak-password') {
         throw WeakPasswordException();
       } else if (e.code == 'invalid-email') {
@@ -98,8 +99,8 @@ class FirebaseAuthentication extends AuthenticationRemote {
   @override
   String? get userId {
     return 'KNvVSQq2xSUaxUNsEbHCu5VvHWv2';
-    if (firebaseAuth.currentUser == null) return null;
-    return firebaseAuth.currentUser!.uid;
+    // if (firebaseAuth.currentUser == null) return null;
+    // return firebaseAuth.currentUser!.uid;
   }
 
   @override

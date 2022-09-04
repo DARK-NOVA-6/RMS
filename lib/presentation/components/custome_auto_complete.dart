@@ -1,9 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:substring_highlight/substring_highlight.dart';
 
 import 'rounded_text_field_with_auto_complete.dart';
-
 
 class CustomeAutoComplete extends StatefulWidget {
   const CustomeAutoComplete({
@@ -18,16 +16,16 @@ class CustomeAutoComplete extends StatefulWidget {
   }) : super(key: key);
 
   final Future<List<String>> Function({
-  required String word,
-  int? limit,
-  bool? exact,
+    required String word,
+    int? limit,
+    bool? exact,
   })? autoApi;
 
   final Future<List<String>> Function({
-  required String word,
-  int? limit,
-  bool? exact,
-  required String degree,
+    required String word,
+    int? limit,
+    bool? exact,
+    required String degree,
   })? autoEduApi;
 
   final bool enabled;

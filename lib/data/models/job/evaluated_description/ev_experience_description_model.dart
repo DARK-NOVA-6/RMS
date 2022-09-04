@@ -48,7 +48,6 @@ class EvExperienceDescriptionModel extends EvExperienceDescription {
           .map((e) => _fromSnapshot(documentSnapshot: e))
           .toList();
     } catch (e) {
-      print(e);
       return null;
     }
   }

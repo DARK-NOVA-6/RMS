@@ -136,7 +136,7 @@ class _JobDetailsState extends State<JobDetails> {
           TextButton(
             onPressed: () {
               ApplyJob()(evaluatedJob: ejob);
-              Navigator.pop(context,true);
+              Navigator.pop(context, true);
             },
             child: Row(
               children: const [

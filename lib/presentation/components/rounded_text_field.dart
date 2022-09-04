@@ -41,14 +41,14 @@ class RoundedTextField extends StatelessWidget {
       ),
       padding: const EdgeInsets.only(left: 15),
       width: size.width * w,
-      height: (multiLines)?null:size.height * h,
+      height: (multiLines) ? null : size.height * h,
       child: Material(
         elevation: 20.0,
         color: color,
         shadowColor: color,
         borderRadius: const BorderRadius.all(Radius.circular(20)),
         child: TextFormField(
-          maxLines: (multiLines)?null:1,
+          maxLines: (multiLines) ? null : 1,
           keyboardType: (email == true)
               ? TextInputType.emailAddress
               : (code == true || numbers == true || isDouble == true)

@@ -4,7 +4,6 @@ import 'package:untitled/domain/entities/job/applied_job.dart';
 
 import 'job_elements/job_elements.dart';
 
-
 class AppliedJobDetails extends StatefulWidget {
   const AppliedJobDetails({Key? key, required this.eJob}) : super(key: key);
 
@@ -96,7 +95,7 @@ class _AppliedJobDetailsState extends State<AppliedJobDetails> {
     }
     text.addAll(
       ejob.skills.map(
-            (e) => Triple(
+        (e) => Triple(
           '#',
           e.title + (e.isRequired ? '*' : ''),
           indent: true,

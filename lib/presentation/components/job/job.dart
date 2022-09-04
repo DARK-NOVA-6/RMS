@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:readmore/readmore.dart';
 import 'package:untitled/domain/entities/job/evaluated_job.dart';
 import 'package:untitled/provider/theme.dart';
-import 'package:readmore/readmore.dart';
-import 'package:intl/intl.dart';
 
 import '../../pages/jobs/job_details.dart';
 import '../my_elevated_button.dart';
@@ -19,7 +19,7 @@ class JobWidget extends StatefulWidget {
   }) : super(key: key);
 
   final EvaluatedJob job;
-  final callParent;
+  final Function(EvaluatedJob)? callParent;
 
   @override
   State<JobWidget> createState() => _JobWidgetState();
@@ -77,7 +77,7 @@ class _JobWidgetState extends State<JobWidget> {
                     .push(MaterialPageRoute(
                         builder: (_) => JobDetails(eJob: widget.job)))
                     .then((value) {
-                  if (value == true) widget.callParent(widget.job);
+                  if (value == true) widget.callParent!(widget.job);
                 });
               },
               text: widget.job.title,

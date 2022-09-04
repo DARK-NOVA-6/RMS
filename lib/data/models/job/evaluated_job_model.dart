@@ -47,7 +47,6 @@ class EvaluatedJobModel extends EvaluatedJob {
         score: jsonData['score'],
       );
     } catch (e) {
-      print(e.toString());
       return null;
     }
   }

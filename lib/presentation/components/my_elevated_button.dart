@@ -15,7 +15,7 @@ class MyElevatedButton extends StatelessWidget {
   }) : super(key: key);
 
   final String text;
-  final press;
+  final Function()? press;
   final Color color;
   Color newColor = CustomeTheme.c2;
   final Color textColor;

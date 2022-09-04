@@ -46,7 +46,7 @@ class _AppliedState extends State<Applied> {
     List<Widget> newJobs = tmpJobs
         .map((e) => AppliedJobWidget(
               job: e,
-              callParent: () {},
+              callParent: (_) {},
             ))
         .toList();
     if (newJobs.isNotEmpty) {

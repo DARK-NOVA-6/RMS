@@ -10,7 +10,7 @@ class FetchMoreUnavailable {
   Future<List<EvaluatedJob>> call({required int limit}) async {
     List<EvaluatedJob> result = [];
     (await unavailableRepo.fetch(limit: limit)).fold(
-      (failure) => print(failure.message),
+      (failure) => result = [],
       (data) => result = data,
     );
     return result;

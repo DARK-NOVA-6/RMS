@@ -49,9 +49,7 @@ class AppliedJobModel extends AppliedJob {
         )!,
       );
     } catch (e) {
-      print(e);
       return null;
-
     }
   }
 

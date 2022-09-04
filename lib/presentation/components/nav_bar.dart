@@ -1,4 +1,3 @@
-
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -24,8 +23,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
     return Theme(
       data: ThemeData(
           iconTheme: const IconThemeData(
-            color: Colors.white,
-          )),
+        color: Colors.white,
+      )),
       child: CurvedNavigationBar(
         height: 50,
         onTap: widget.changeIndex,

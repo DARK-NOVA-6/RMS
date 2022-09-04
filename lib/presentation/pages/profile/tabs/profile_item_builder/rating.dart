@@ -19,7 +19,7 @@ class Rating extends StatelessWidget {
           child: const Icon(
             Icons.star,
             shadows: [
-              Shadow(color: Colors.black, offset: Offset(0, 0),blurRadius: 12),
+              Shadow(color: Colors.black, offset: Offset(0, 0), blurRadius: 12),
             ],
             color: Colors.yellow,
             size: 35,
@@ -33,7 +33,7 @@ class Rating extends StatelessWidget {
             fontWeight: FontWeight.bold,
             color: Colors.yellow,
             shadows: [
-              Shadow(color: Colors.black, offset: Offset(0, 0),blurRadius: 8),
+              Shadow(color: Colors.black, offset: Offset(0, 0), blurRadius: 8),
             ],
           ),
         ),

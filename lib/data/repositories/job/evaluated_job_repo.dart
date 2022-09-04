@@ -58,7 +58,6 @@ class EvaluatedJobRepo {
         return Future.value(const Left(Unexpected(message: 'no job!')));
       }
     } catch (e) {
-      print(e.toString());
       working = false;
       return Future.value(const Left(Unexpected(message: 'un')));
     }
@@ -69,9 +68,6 @@ class EvaluatedJobRepo {
     if (working) Future.value(const Right([]));
     working = true;
     await _clearIfRefreshed();
-    print('_____');
-    print(_currentIdx);
-    print(jobsId.length);
     List<EvaluatedJob> result = [];
     while (result.length < limit && _currentIdx < jobsId.length) {
       try {
@@ -87,7 +83,6 @@ class EvaluatedJobRepo {
         _currentIdx++;
       } catch (e) {
         _currentIdx++;
-        print(e.toString());
       }
     }
     if (result.length < limit) {

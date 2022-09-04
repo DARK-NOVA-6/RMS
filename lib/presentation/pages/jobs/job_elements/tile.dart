@@ -66,14 +66,14 @@ class Tile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     SizedBox(
-                      width: MediaQuery.of(context).size.width*0.4,
+                      width: MediaQuery.of(context).size.width * 0.4,
                       child: Text(
                         text1,
                         style: textStyle,
                       ),
                     ),
                     SizedBox(
-                      width: MediaQuery.of(context).size.width*0.5,
+                      width: MediaQuery.of(context).size.width * 0.5,
                       child: Text(
                         text2,
                         textAlign: TextAlign.right,

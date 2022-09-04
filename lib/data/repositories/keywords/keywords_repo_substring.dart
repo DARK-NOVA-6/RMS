@@ -12,7 +12,7 @@ class KeywordsRepoSubstring {
   Future<List<String>> getSimilar({
     required String word,
     int? limit,
-    bool ?exact,
+    bool? exact,
   }) async {
     return autocompleteSubstringApi.getSimilar(
       type: type,

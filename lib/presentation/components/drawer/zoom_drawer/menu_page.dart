@@ -86,8 +86,7 @@ class _MenuPageState extends State<MenuPage> {
                       ...mi.MenuItems.group2.map(buildMenuItem).toList(),
                       const Spacer(flex: 3),
                       Consumer(
-                        builder:
-                            (context, ThemeNotifier themeNotifier, child) {
+                        builder: (context, ThemeNotifier themeNotifier, child) {
                           val = themeNotifier.darkTheme;
                           return Center(
                             child: Transform.scale(

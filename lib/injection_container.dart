@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:untitled/data/repositories/job/applied_repo_imp.dart';
 import 'package:untitled/domain/repositories/job/applied_repo.dart';
 import 'package:untitled/domain/usecases/job/applied/fetch_more.dart';
+
 import 'data/datasources/remote/autocomplete_substring_api.dart';
 import 'data/datasources/remote/evaluator_api.dart';
 import 'data/datasources/remote/firebase_authentication.dart';
@@ -17,6 +18,7 @@ import 'data/repositories/keywords/keywords_languages_repo_substring.dart';
 import 'data/repositories/keywords/keywords_skills_repo_substring.dart';
 import 'data/repositories/keywords/keywords_universities_repo_substring.dart';
 import 'data/repositories/user_info_repo_imp.dart';
+import 'domain/entities/user/user_info.dart' as user_info;
 import 'domain/repositories/authentication_repo.dart';
 import 'domain/repositories/job/recommended_repo.dart';
 import 'domain/repositories/job/unavailable_repo.dart';
@@ -37,7 +39,6 @@ import 'domain/usecases/job/unavailable/fetch_more.dart';
 import 'domain/usecases/job/unavailable/get_detailed.dart';
 import 'domain/usecases/user/get_profile_user.dart';
 import 'domain/usecases/user/update_profile_user.dart';
-import 'domain/entities/user/user_info.dart' as user_info;
 
 final sl = GetIt.instance;
 

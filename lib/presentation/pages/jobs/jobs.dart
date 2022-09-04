@@ -52,9 +52,9 @@ class _JobsState extends State<Jobs> {
 
   void selectTab(int index) {
     if (widget.currentPage == widget.pagesKeys[index]) {
-      widget.navigatorState[widget.currentPage]!.currentState
-          !.popUntil((route) {
-            return route.isFirst;
+      widget.navigatorState[widget.currentPage]!.currentState!
+          .popUntil((route) {
+        return route.isFirst;
       });
     } else {
       setState(() {

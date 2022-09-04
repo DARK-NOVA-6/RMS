@@ -46,7 +46,6 @@ class EvLanguageDescriptionModel extends EvLanguageDescription {
           .map((e) => _fromSnapshot(documentSnapshot: e))
           .toList();
     } catch (e) {
-      print(e);
       return null;
     }
   }
@@ -62,14 +61,14 @@ class EvLanguageDescriptionModel extends EvLanguageDescription {
   }
 
   static List<Map<String, dynamic>> toSnapshot(
-      List<EvLanguageDescription> evLanguageDescriptions,
-      ) {
+    List<EvLanguageDescription> evLanguageDescriptions,
+  ) {
     return evLanguageDescriptions.map((e) => _toSnapshot(e)).toList();
   }
 
   static Map<String, dynamic> _toSnapshot(
-      EvLanguageDescription evLanguageDescription,
-      ) {
+    EvLanguageDescription evLanguageDescription,
+  ) {
     return {
       'title': evLanguageDescription.title,
       'is-satisfied': evLanguageDescription.isSatisfied,

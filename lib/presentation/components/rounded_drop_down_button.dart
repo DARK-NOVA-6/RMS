@@ -56,9 +56,11 @@ class RoundedDropdownButton extends StatelessWidget {
           dropdownColor: Colors.white,
           items: newList,
           icon: const Icon(Icons.keyboard_arrow_down_outlined),
-          onChanged: (enabled)?(String? val) {
-            valueChanged(val);
-          }:null,
+          onChanged: (enabled)
+              ? (String? val) {
+                  valueChanged(val);
+                }
+              : null,
           autofocus: false,
           style: const TextStyle(
             color: Colors.black,

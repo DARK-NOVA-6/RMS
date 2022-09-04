@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:untitled/data/models/job/applied_job_model.dart';
+
 import '../../../core/errors/failures/failure.dart';
 import '../../../domain/entities/job/applied_job.dart';
 import '../../../domain/entities/job/evaluated_job.dart';
@@ -42,7 +43,6 @@ class AppliedRepoImp implements AppliedRepo {
     return Future.value([]);
   }
 
-
   @override
   Future<Either<Failure, AppliedJob>> detailed({required String id}) async {
     try {
@@ -55,7 +55,6 @@ class AppliedRepoImp implements AppliedRepo {
         ),
       );
     } catch (e) {
-      print(e);
       return Future.value(const Left(Unexpected(message: 'un')));
     }
   }
@@ -91,5 +90,4 @@ class AppliedRepoImp implements AppliedRepo {
 
   @override
   void refresh() => paginaterFirestore.refresh();
-
 }

@@ -4,17 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/presentation/blocs/authentication/auth_bloc.dart';
 import 'package:untitled/provider/update_action_bar_actions_notification.dart';
-import 'package:untitled/temp_back.dart';
-import 'data/datasources/remote/firebase_authentication.dart';
+
 import 'data/repositories/authentication_repo.dart';
 import 'domain/usecases/authentication/get_connected_user.dart';
 import 'domain/usecases/authentication/log_out.dart';
 import 'domain/usecases/authentication/sign_in_email_password.dart';
 import 'domain/usecases/authentication/sign_up_email_password.dart';
 import 'domain/usecases/user/get_profile_user.dart';
-import 'presentation/wrapper.dart';
-import 'presentation/controllers/controllers.dart';
 import 'injection_container.dart';
+import 'presentation/controllers/controllers.dart';
+import 'presentation/wrapper.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,9 +23,8 @@ void main() async {
   globalUserInfo =
       (await getProfileUser(userId: 'KNvVSQq2xSUaxUNsEbHCu5VvHWv2'))!;
   // runApp(const MyApp2());
-  //
-  print(globalUserInfo);
   runApp(
+
     ChangeNotifierProvider(
       create: (_) => UpdateActionBarActions(),
       child: MyApp(),
@@ -41,6 +39,7 @@ class MyApp extends StatelessWidget {
   final Controllers controllers = Controllers();
 
   MyApp({Key? key}) : super(key: key) {
+
     authenticationUsingTwoSteps =
         AuthenticationUsingTwoSteps(authenticationRemote: sl());
 

@@ -10,7 +10,7 @@ class GetDetailedRecommended {
   Future<FullEvaluatedJob> call({required String id}) async {
     FullEvaluatedJob? result;
     (await recommendedRepo.detailed(id: id)).fold(
-      (failure) => print(failure.message),
+      (failure) => result = null,
       (data) => result = data,
     );
     return result!;

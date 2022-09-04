@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:readmore/readmore.dart';
 import 'package:untitled/presentation/components/job/custome_expansion_tile_applied.dart';
 import 'package:untitled/presentation/pages/jobs/applied_job_details.dart';
 import 'package:untitled/provider/theme.dart';
-import 'package:readmore/readmore.dart';
-import 'package:intl/intl.dart';
 
 import '../../../domain/entities/job/applied_job.dart';
 import '../my_elevated_button.dart';
@@ -16,7 +16,7 @@ class AppliedJobWidget extends StatefulWidget {
   }) : super(key: key);
 
   final AppliedJob job;
-  final callParent;
+  final Function(AppliedJob)? callParent;
 
   @override
   State<AppliedJobWidget> createState() => _AppliedJobWidgetState();
@@ -72,9 +72,9 @@ class _AppliedJobWidgetState extends State<AppliedJobWidget> {
               press: () {
                 Navigator.of(context)
                     .push(MaterialPageRoute(
-                    builder: (_) => AppliedJobDetails(eJob: widget.job)))
+                        builder: (_) => AppliedJobDetails(eJob: widget.job)))
                     .then((value) {
-                  if (value == true) widget.callParent(widget.job);
+                  if (value == true) widget.callParent!(widget.job);
                 });
               },
               text: widget.job.title,

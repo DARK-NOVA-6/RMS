@@ -9,7 +9,7 @@ import '../../../controllers/controllers.dart';
 class Skills extends StatefulWidget {
   Skills({
     Key? key,
-    this.skillsControllers  = const [],
+    this.skillsControllers = const [],
   }) : super(key: key);
   List<SkillsControllers> skillsControllers = [];
 

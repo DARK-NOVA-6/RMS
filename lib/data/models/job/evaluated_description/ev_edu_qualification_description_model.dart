@@ -48,7 +48,6 @@ class EvEduQualificationDescriptionModel extends EvEduQualificationDescription {
           .map((e) => _fromSnapshot(documentSnapshot: e))
           .toList();
     } catch (e) {
-      print(e);
       return null;
     }
   }

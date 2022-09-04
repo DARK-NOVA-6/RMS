@@ -3,9 +3,8 @@ import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 
 import '../../../pages/jobs/jobs.dart';
 import '../../../pages/profile/profile.dart';
-
-import 'menu_page.dart';
 import 'menu_items.dart' as mi;
+import 'menu_page.dart';
 
 export 'menu_items.dart';
 export 'menu_items.dart';
@@ -62,5 +61,3 @@ class _CustomeZoomDrawerState extends State<CustomeZoomDrawer> {
     }
   }
 }
-
-

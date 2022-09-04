@@ -11,7 +11,7 @@ class GetProfileUser {
     // String userId = GetConnectedUser(sl()).userId!;
     UserInfo? result;
     (await userInfoRepo.getUserInfo(userId: userId)).fold(
-      (failure) => print(failure.message),
+      (failure) => result = null,
       (data) => result = data,
     );
     return result;

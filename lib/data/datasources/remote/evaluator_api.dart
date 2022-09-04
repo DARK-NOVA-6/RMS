@@ -33,7 +33,6 @@ class EvaluatorApiImp implements EvaluatorApi {
       );
       return Future.value(jsonDecode(response.body));
     } catch (e) {
-      print(e);
       return getRecommended(userId);
     }
   }
@@ -47,7 +46,6 @@ class EvaluatorApiImp implements EvaluatorApi {
       );
       return Future.value(jsonDecode(response.body));
     } catch (e) {
-      print(e);
       return getUnavailable(userId);
     }
   }

@@ -28,6 +28,7 @@ class Wrapper extends StatelessWidget {
         child: Consumer<ThemeNotifier>(
           builder: (context, ThemeNotifier themeNotifier, child) {
             return MaterialApp(
+              debugShowCheckedModeBanner: false,
               title: 'RMS Demo pla....',
               theme: themeNotifier.darkTheme
                   ? CustomeTheme.dark

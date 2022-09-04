@@ -60,14 +60,12 @@ class _ProfileState extends State<Profile> {
     UserInfo userInfo =
         TransformerUserController.fromUserController(userController);
 
-    print(userInfo);
     List<String> errors = await updateProfileUser(newUserInfo: userInfo);
     if (errors.isEmpty) {
       // UserInfo newUserInfo = GetProfileUser()();
       // userController = TransformerUserController.fromUserInfo(newUserInfo);
 
     } else {
-      print(errors);
       userController = TransformerUserController.fromUserInfo(globalUserInfo);
     }
     // result = await save(
@@ -127,7 +125,6 @@ class _ProfileState extends State<Profile> {
 
   Future<File> saveFileLocal(PlatformFile file) async {
     final appStorage = await getApplicationDocumentsDirectory();
-    print(appStorage.path);
     final newFile = File('${appStorage.path}/${file.name}');
     return File(file.path!).copy(newFile.path);
   }
@@ -181,17 +178,16 @@ class _ProfileState extends State<Profile> {
                     if (result == null) return;
                     final file = result.files.first;
                     showToast('File Uploaded Successfully');
-                    print('Name :${file.name}');
-                    print('Path :${file.path}');
-                    print('Size :${file.size}');
-                    print('Extension :${file.extension}');
-                    final File newfile = await saveFileLocal(file);
+                    // print('Name :${file.name}');
+                    // print('Path :${file.path}');
+                    // print('Size :${file.size}');
+                    // print('Extension :${file.extension}');
+                    final File newFile = await saveFileLocal(file);
                     await UploadCv(
                         cvParserApi: CvParserApiImp(),
-                        authenticationRepo: sl())(cvPdf: newfile);
-
-                    print('From: ${file.path}');
-                    print('To: ${newfile.path}');
+                        authenticationRepo: sl())(cvPdf: newFile);
+                    // print('From: ${file.path}');
+                    // print('To: ${newFile.path}');
                     showToast('File Saved Successfully');
                   },
                   label: 'Add a CV',

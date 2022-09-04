@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../components/components.dart';
 
-
 class Confirmation extends StatefulWidget {
-  const Confirmation({Key? key,required this.tec}) : super(key: key);
+  const Confirmation({Key? key, required this.tec}) : super(key: key);
   final String title = 'Confirm Email';
   final TextEditingController tec;
 
@@ -15,6 +14,7 @@ class Confirmation extends StatefulWidget {
 class _ConfirmationState extends State<Confirmation> {
   late TextEditingController tecEmailSignUp;
   TextEditingController tecCCode = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -43,7 +43,7 @@ class _ConfirmationState extends State<Confirmation> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
-              padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 20),
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
               child: const Text(
                 'We send a 6-digits Verification Code to your Email:',
                 textAlign: TextAlign.center,
@@ -57,14 +57,13 @@ class _ConfirmationState extends State<Confirmation> {
               child: Text(
                 tecEmailSignUp.text,
                 style: const TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.red
-                ),
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.red),
               ),
             ),
             SizedBox(
-              height: size.height*0.04,
+              height: size.height * 0.04,
             ),
             RoundedTextField(
               controller: tecCCode,
@@ -75,19 +74,19 @@ class _ConfirmationState extends State<Confirmation> {
               hintText: 'Verification Code',
             ),
             SizedBox(
-              height: size.height*0.04,
+              height: size.height * 0.04,
             ),
             MyElevatedButton(
-              text:'Submit',
-              press:(){},
+              text: 'Submit',
+              press: () {},
               w: 0.35,
             ),
             SizedBox(
-              height: size.height*0.01,
+              height: size.height * 0.01,
             ),
             MyElevatedButton(
-              text:'Resend',
-              press:(){},
+              text: 'Resend',
+              press: () {},
               w: 0.20,
             ),
           ],
@@ -96,4 +95,3 @@ class _ConfirmationState extends State<Confirmation> {
     );
   }
 }
-

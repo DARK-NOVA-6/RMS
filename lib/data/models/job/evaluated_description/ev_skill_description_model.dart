@@ -46,7 +46,6 @@ class EvSkillDescriptionModel extends EvSkillDescription {
           .map((e) => _fromSnapshot(documentSnapshot: e))
           .toList();
     } catch (e) {
-      print(e);
       return null;
     }
   }
