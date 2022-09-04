@@ -13,16 +13,16 @@ class EduQualificationItem extends StatefulWidget {
   const EduQualificationItem({
     Key? key,
     required this.enabled,
-    required this.certificateNames,
-    required this.degrees,
+    this.certificateNames,
+    this.degrees,
     required this.index,
     required this.eduControllers,
     required this.delete,
   }) : super(key: key);
 
   final bool enabled;
-  final List<String> certificateNames;
-  final List<String> degrees;
+  final List<String>? certificateNames;
+  final List<String>? degrees;
   final int index;
   final EduControllers eduControllers;
   final Function(int) delete;

@@ -82,8 +82,6 @@ class _EducationalQualificationsState extends State<EducationalQualifications> {
                 itemBuilder: (context, index) => EduQualificationItem(
                   eduControllers: widget.eduControllers[index],
                   enabled: enabled,
-                  certificateNames: certificateNames,
-                  degrees: degrees,
                   index: index,
                   delete: (idx) {
                     setState(() {
