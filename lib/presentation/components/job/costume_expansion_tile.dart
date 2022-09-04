@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:untitled/domain/entities/job/evaluated_job.dart';
 import 'package:untitled/provider/theme.dart';
-import '../../../domain/entities/entities.dart';
 
 // ignore: must_be_immutable
 class CustomExpansionTile extends StatelessWidget {
