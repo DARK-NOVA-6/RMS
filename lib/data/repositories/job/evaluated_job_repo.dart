@@ -9,6 +9,7 @@ import '../../models/job/evaluated_job_model.dart';
 class EvaluatedJobRepo {
   final FirebaseFirestore firebaseFirestore;
   final CollectionReference<Map<String, dynamic>> collection;
+  final CollectionReference<Map<String, dynamic>> collection2;
   final Query query;
   final String userId;
   final Future<Map<String, dynamic>> Function(String userId)
@@ -16,15 +17,17 @@ class EvaluatedJobRepo {
   late List<String> jobsId = [];
   late Map<String, dynamic>? evaluatedApi;
 
-  bool lazy = true;
+  bool _lazy = true;
   bool _noMoreData = false;
-  int currentIdx = 0;
+  int _currentIdx = 0;
+  bool working = false;
 
   EvaluatedJobRepo({
     required this.firebaseFirestore,
     required this.evaluatedAPiResponse,
     required this.userId,
   })  : collection = firebaseFirestore.collection('jobs'),
+        collection2 = firebaseFirestore.collection('jobs-applications'),
         query = firebaseFirestore
             .collection('jobs')
             .where('status', isEqualTo: 'running'),
@@ -32,6 +35,8 @@ class EvaluatedJobRepo {
 
   Future<Either<Failure, FullEvaluatedJob>> detailed(
       {required String id}) async {
+    if (working) Future.value(const Left(Unexpected(message: 'bad network')));
+    working = true;
     await _clearIfRefreshed();
     try {
       var tempData = await collection.doc(id).get();
@@ -42,59 +47,77 @@ class EvaluatedJobRepo {
           id: id,
         );
         if (data != null) {
+          working = false;
           return Future.value(Right(FullEvaluatedJob(evaluatedJob: data)));
         } else {
+          working = false;
           return Future.value(const Left(Unexpected(message: 'wrong format')));
         }
       } else {
+        working = false;
         return Future.value(const Left(Unexpected(message: 'no job!')));
       }
     } catch (e) {
       print(e.toString());
+      working = false;
       return Future.value(const Left(Unexpected(message: 'un')));
     }
   }
 
   Future<Either<Failure, List<EvaluatedJob>>> fetch(
       {required int limit}) async {
+    if (working) Future.value(const Right([]));
+    working = true;
     await _clearIfRefreshed();
-    print(currentIdx);
+    print('_____');
+    print(_currentIdx);
     print(jobsId.length);
     List<EvaluatedJob> result = [];
-    while (result.length < limit && currentIdx < jobsId.length) {
+    while (result.length < limit && _currentIdx < jobsId.length) {
       try {
-        var tempData = await collection.doc(jobsId[currentIdx]).get();
+        var tempData = await collection.doc(jobsId[_currentIdx]).get();
         if (tempData.exists) {
           var data = EvaluatedJobModel.fromJsonAndSnapshot(
-            jsonData: evaluatedApi![jobsId[currentIdx]],
+            jsonData: evaluatedApi![jobsId[_currentIdx]],
             documentSnapshot: tempData.data(),
-            id: jobsId[currentIdx],
+            id: jobsId[_currentIdx],
           );
-          if (data != null) result.add(data);
+          if (data != null && (await _check(data.id))) result.add(data);
         }
-        currentIdx++;
+        _currentIdx++;
       } catch (e) {
-        currentIdx++;
+        _currentIdx++;
         print(e.toString());
       }
     }
-    if (result.length < limit) _noMoreData = true;
+    if (result.length < limit) {
+      _noMoreData = true;
+    }
+    working = false;
     return Future.value(Right(result));
   }
 
-  void refresh() => lazy = true;
+  void refresh() => _lazy = true;
 
   bool get noMoreData => _noMoreData;
 
   Future<void> _clearIfRefreshed() async {
-    if (evaluatedApi == null || lazy == true) await _clear();
+    if (evaluatedApi == null || _lazy == true) await _clear();
   }
 
   Future<void> _clear() async {
-    lazy = false;
+    _lazy = false;
     jobsId.clear();
     evaluatedApi = await evaluatedAPiResponse(userId);
     jobsId.addAll(evaluatedApi!.keys);
-    currentIdx = 0;
+    _currentIdx = 0;
+  }
+
+  Future<bool> _check(String jobId) async {
+    var result = await collection2
+        .where('job-seeker-id', isEqualTo: userId)
+        .where('job-id', isEqualTo: jobId)
+        .get();
+    return result.docs.isEmpty;
   }
 }

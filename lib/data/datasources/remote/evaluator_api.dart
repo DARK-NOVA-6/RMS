@@ -21,26 +21,34 @@ class EvaluatorApiImp implements EvaluatorApi {
   static Map<String, String> headers = {
     HttpHeaders.contentTypeHeader: "application/json",
     "Connection": "Keep-Alive",
-    "Keep-Alive": "timeout=5, max=100"
+    "Keep-Alive": "timeout=20, max=100"
   };
 
   @override
   Future<Map<String, dynamic>> getRecommended(userId) async {
-    final response = await http.get(
-      EncodeUri.encode('$uriApi/recommended/$userId'),
-      headers: headers,
-    );
-
-    return jsonDecode(response.body);
+    try {
+      final response = await http.get(
+        EncodeUri.encode('$uriApi/recommended/$userId'),
+        headers: headers,
+      );
+      return Future.value(jsonDecode(response.body));
+    } catch (e) {
+      print(e);
+      return getRecommended(userId);
+    }
   }
 
   @override
   Future<Map<String, dynamic>> getUnavailable(userId) async {
-    final response = await http.get(
-      EncodeUri.encode('$uriApi/unavailable/$userId'),
-      headers: headers,
-    );
-
-    return jsonDecode(response.body);
+    try {
+      final response = await http.get(
+        EncodeUri.encode('$uriApi/unavailable/$userId'),
+        headers: headers,
+      );
+      return Future.value(jsonDecode(response.body));
+    } catch (e) {
+      print(e);
+      return getUnavailable(userId);
+    }
   }
 }

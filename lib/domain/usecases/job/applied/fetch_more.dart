@@ -6,11 +6,10 @@ import '../../../repositories/job/applied_repo.dart';
 class FetchMoreApplied {
   final AppliedRepo appliedRepo;
 
-  FetchMoreApplied({required String jobId})
+  FetchMoreApplied()
       : appliedRepo = AppliedRepoImp(
           firebaseFirestore: sl(),
           authenticationRepo: sl(),
-          jobId: jobId,
         );
 
   Future<List<AppliedJob>> call({required int limit}) async {

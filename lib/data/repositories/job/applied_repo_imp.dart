@@ -1,13 +1,9 @@
-import 'dart:ui';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:untitled/data/models/job/applied_job_model.dart';
-import 'package:untitled/data/models/job/job_application_states_model.dart';
 import '../../../core/errors/failures/failure.dart';
 import '../../../domain/entities/job/applied_job.dart';
 import '../../../domain/entities/job/evaluated_job.dart';
-import '../../../domain/entities/job/job_application_states.dart';
 import '../../../domain/repositories/authentication_repo.dart';
 import '../../../domain/repositories/job/applied_repo.dart';
 import '../paginater_firestore.dart';
@@ -22,7 +18,6 @@ class AppliedRepoImp implements AppliedRepo {
   AppliedRepoImp({
     required this.firebaseFirestore,
     required this.authenticationRepo,
-    required String jobId,
   })  : collection = firebaseFirestore.collection('jobs-applications'),
         query = firebaseFirestore
             .collection('jobs-applications')
@@ -46,6 +41,7 @@ class AppliedRepoImp implements AppliedRepo {
     );
     return Future.value([]);
   }
+
 
   @override
   Future<Either<Failure, AppliedJob>> detailed({required String id}) async {
@@ -95,4 +91,5 @@ class AppliedRepoImp implements AppliedRepo {
 
   @override
   void refresh() => paginaterFirestore.refresh();
+
 }

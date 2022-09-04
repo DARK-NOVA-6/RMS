@@ -24,7 +24,7 @@ class AutocompleteSubstringApiImp implements AutocompleteSubstringApi {
   static Map<String, String> headers = {
     HttpHeaders.contentTypeHeader: "application/json",
     "Connection": "Keep-Alive",
-    "Keep-Alive": "timeout=5, max=100"
+    "Keep-Alive": "timeout=10, max=100"
   };
 
   @override
@@ -34,18 +34,24 @@ class AutocompleteSubstringApiImp implements AutocompleteSubstringApi {
     int? limit,
     bool? exact,
   }) async {
-    final query1 = exact != null && exact == true ? 'exact=true' : '';
-    final query2 = limit != null ? 'limit=$limit' : '';
-    final query = (query1.isNotEmpty || query2.isNotEmpty ? '?' : '') +
-        (query1.isNotEmpty ? query1 : '') +
-        (query1.isNotEmpty && query2.isNotEmpty ? '&' : '') +
-        (query2.isNotEmpty ? query2 : '');
-    final response = await http.get(
-      EncodeUri.encode('$uriApi/$type/$word$query'),
-      headers: AutocompleteSubstringApiImp.headers,
-    );
-    return Future<List<String>>.value(
-      CustomConverter().toListString(list: jsonDecode(response.body)),
-    );
+    try {
+      final query1 = exact != null && exact == true ? 'exact=true' : '';
+      final query2 = limit != null ? 'limit=$limit' : '';
+      final query = (query1.isNotEmpty || query2.isNotEmpty ? '?' : '') +
+          (query1.isNotEmpty ? query1 : '') +
+          (query1.isNotEmpty && query2.isNotEmpty ? '&' : '') +
+          (query2.isNotEmpty ? query2 : '');
+      final response = await http.get(
+        EncodeUri.encode('$uriApi/$type/$word$query'),
+        headers: AutocompleteSubstringApiImp.headers,
+      );
+      return Future<List<String>>.value(
+        CustomConverter().toListString(list: jsonDecode(response.body)),
+      );
+    } catch (e) {
+      print(e);
+      if (e is FormatException) return [];
+      return getSimilar(type: type, word: word, limit: limit, exact: exact);
+    }
   }
 }

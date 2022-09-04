@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
+import 'package:untitled/data/repositories/job/applied_repo_imp.dart';
+import 'package:untitled/domain/repositories/job/applied_repo.dart';
+import 'package:untitled/domain/usecases/job/applied/fetch_more.dart';
 import 'data/datasources/remote/autocomplete_substring_api.dart';
 import 'data/datasources/remote/evaluator_api.dart';
 import 'data/datasources/remote/firebase_authentication.dart';
@@ -69,7 +72,7 @@ void initData() {
       firebaseFirestore: sl(),
     ),
   );
-  sl.registerFactory<RecommendedRepo>(
+  sl.registerLazySingleton<RecommendedRepo>(
     () => RecommendedRepoImp(
       firebaseFirestore: sl(),
       evaluatorApi: sl(),
@@ -77,12 +80,18 @@ void initData() {
       // userId: GetConnectedUser(sl()).userId!,
     ),
   );
-  sl.registerFactory<UnavailableRepo>(
+  sl.registerLazySingleton<UnavailableRepo>(
     () => UnavailableRepoImp(
       firebaseFirestore: sl(),
       evaluatorApi: sl(),
       userId: 'KNvVSQq2xSUaxUNsEbHCu5VvHWv2',
       // userId: GetConnectedUser(sl()).userId!,
+    ),
+  );
+  sl.registerLazySingleton<AppliedRepo>(
+    () => AppliedRepoImp(
+      firebaseFirestore: sl(),
+      authenticationRepo: sl(),
     ),
   );
   sl.registerFactory<KeywordsSkillsRepo>(
@@ -118,6 +127,8 @@ void initUseCases() {
   // job - unavailable
   sl.registerSingleton(FetchMoreUnavailable());
   sl.registerSingleton(GetDetailedUnavailable());
+  // job - unavailable
+  sl.registerSingleton(FetchMoreApplied());
 
   // user
   sl.registerSingleton(GetProfileUser());

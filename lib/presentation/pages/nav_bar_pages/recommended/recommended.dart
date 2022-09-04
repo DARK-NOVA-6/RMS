@@ -44,7 +44,7 @@ class _RecommendedState extends State<Recommended> {
       loading = true;
     });
 
-    List<EvaluatedJob> tmpJobs = await fetcherRecommended(limit: 3);
+    List<EvaluatedJob> tmpJobs = await fetcherRecommended(limit: 6);
     jobList.addAll(tmpJobs);
     List<Widget> newJobs = tmpJobs
         .map((e) => JobWidget(
@@ -58,7 +58,7 @@ class _RecommendedState extends State<Recommended> {
 
     setState(() {
       loading = false;
-      allLoaded = newJobs.length < 3;
+      allLoaded = newJobs.length < 6;
     });
   }
 

@@ -17,49 +17,53 @@ class Temp {
   void getJob({required String id}) async {
     print('test mod..');
     final fireStore = FirebaseFirestore.instance.collection('jobs');
-    await fireStore.add({
-      'company-name': 'Facebook',
-      'summary': 'summary 2',
-      'title': 'title 2',
-      'published-time': Timestamp.now(),
-      'edu-qualifications': [
-        {
-          'degree': 'Master',
-          'field': 'Software Engineer',
-          'is-required': false,
-        },
-        {
-          'degree': 'Bachelor',
-          'field': 'Software Engineer',
-          'is-required': true,
-        },
-      ],
-      'experiences': [],
-      'languages': [
-        {
-          'title': 'English',
-          'is-required': true,
-        },
-        {
-          'title': 'Arabic',
-          'is-required': false,
-        },
-      ],
-      'skills': [
-        {
-          'title': 'data migration',
-          'is-required': false,
-        },
-        {
-          'title': 'asp',
-          'is-required': true,
-        },
-        {
-          'title': 'php',
-          'is-required': true,
-        }
-      ],
-    });
+    for (var idx = 1; idx <= 20; idx += 1) {
+      await fireStore.add({
+        'company-name': 'Facebook',
+        'summary': 'summary $idx',
+        'title': 'title $idx',
+        'status': 'running',
+
+        'published-time': Timestamp.now(),
+        'edu-qualifications': [
+          {
+            'degree': 'Master',
+            'field': 'Software Engineer',
+            'is-required': false,
+          },
+          {
+            'degree': 'Bachelor',
+            'field': 'Software Engineer',
+            'is-required': false,
+          },
+        ],
+        'experiences': [],
+        'languages': [
+          {
+            'title': 'English',
+            'is-required': false,
+          },
+          {
+            'title': 'Arabic',
+            'is-required': false,
+          },
+        ],
+        'skills': [
+          {
+            'title': 'data migration',
+            'is-required': false,
+          },
+          {
+            'title': 'asp',
+            'is-required': true,
+          },
+          {
+            'title': 'php',
+            'is-required': true,
+          }
+        ],
+      });
+    }
   }
 
   void updateUser() {
@@ -96,7 +100,7 @@ class MyApp2 extends StatefulWidget {
 class _MyApp2State extends State<MyApp2> {
   @override
   Widget build(BuildContext context) {
-    Temp().updateUser();
+    Temp().getJob(id: 'id');
 
     FetchMoreRecommended fetchMoreRecommended = sl();
     FetchMoreUnavailable fetchMoreUnavailable = sl();
