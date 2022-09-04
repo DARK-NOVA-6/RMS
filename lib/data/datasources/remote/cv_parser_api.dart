@@ -15,7 +15,9 @@ class CvParserApiImp implements CvParserApi {
   @override
   Future<void> upload({required File cvPdf, required String userId}) async {
     var stream = http.ByteStream(Stream.castFrom(cvPdf.openRead()));
+
     var length = await cvPdf.length();
+
     var uri = Uri.parse('$uriApi/extract-cv/$userId');
     var request = http.MultipartRequest("POST", uri);
     var multipartFile = http.MultipartFile(

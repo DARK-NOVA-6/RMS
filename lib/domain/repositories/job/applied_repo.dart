@@ -3,6 +3,7 @@ import 'package:untitled/domain/entities/job/evaluated_job.dart';
 
 import '../../../core/errors/failures/failure.dart';
 import '../../entities/job/applied_job.dart';
+import '../../entities/job/job_application_states.dart';
 
 abstract class AppliedRepo {
   Future<Either<Failure, List<AppliedJob>>> fetch({required int limit});

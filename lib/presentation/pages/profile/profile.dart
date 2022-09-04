@@ -7,6 +7,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:untitled/data/datasources/remote/cv_parser_api.dart';
 import 'package:untitled/domain/usecases/user/update_profile_user.dart';
 import 'package:untitled/domain/usecases/user/upload_cv.dart';
 import 'package:untitled/injection_container.dart';
@@ -126,8 +127,8 @@ class _ProfileState extends State<Profile> {
 
   Future<File> saveFileLocal(PlatformFile file) async {
     final appStorage = await getApplicationDocumentsDirectory();
+    print(appStorage.path);
     final newFile = File('${appStorage.path}/${file.name}');
-    await UploadCv().upload(newFile);
     return File(file.path!).copy(newFile.path);
   }
 
@@ -185,6 +186,10 @@ class _ProfileState extends State<Profile> {
                     print('Size :${file.size}');
                     print('Extension :${file.extension}');
                     final File newfile = await saveFileLocal(file);
+                    await UploadCv(
+                        cvParserApi: CvParserApiImp(),
+                        authenticationRepo: sl())(cvPdf: newfile);
+
                     print('From: ${file.path}');
                     print('To: ${newfile.path}');
                     showToast('File Saved Successfully');

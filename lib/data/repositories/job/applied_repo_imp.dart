@@ -3,28 +3,37 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:untitled/data/models/job/applied_job_model.dart';
+import 'package:untitled/data/models/job/job_application_states_model.dart';
 import '../../../core/errors/failures/failure.dart';
 import '../../../domain/entities/job/applied_job.dart';
 import '../../../domain/entities/job/evaluated_job.dart';
+import '../../../domain/entities/job/job_application_states.dart';
 import '../../../domain/repositories/authentication_repo.dart';
 import '../../../domain/repositories/job/applied_repo.dart';
+import '../paginater_firestore.dart';
 
 class AppliedRepoImp implements AppliedRepo {
   final FirebaseFirestore firebaseFirestore;
   final AuthenticationRepo authenticationRepo;
   final CollectionReference<Map<String, dynamic>> collection;
   final Query query;
-  bool lazy = true;
-  bool _noMoreData = false;
-  QueryDocumentSnapshot? last;
+  final PaginaterFirestore paginaterFirestore;
 
   AppliedRepoImp({
     required this.firebaseFirestore,
     required this.authenticationRepo,
+    required String jobId,
   })  : collection = firebaseFirestore.collection('jobs-applications'),
         query = firebaseFirestore
             .collection('jobs-applications')
-            .where('job-seeker-id', isEqualTo: authenticationRepo.userId);
+            .where('job-seeker-id', isEqualTo: authenticationRepo.userId)
+            .orderBy('applied-time'),
+        paginaterFirestore = PaginaterFirestore(
+          query: firebaseFirestore
+              .collection('jobs-applications')
+              .where('job-seeker-id', isEqualTo: authenticationRepo.userId)
+              .orderBy('applied-time'),
+        );
 
   @override
   Future<List<Failure>> apply({required EvaluatedJob evaluatedJob}) async {
@@ -57,38 +66,17 @@ class AppliedRepoImp implements AppliedRepo {
 
   @override
   Future<Either<Failure, List<AppliedJob>>> fetch({required int limit}) async {
-    if (lazy == true) {
-      last = null;
-      _noMoreData = false;
-    }
-    if (noMoreData == true) return Future.value(const Right([]));
-    lazy = false;
-    print(last?.id);
-    try {
-      Query pagQuery = query.limit(limit);
-      if (last != null) pagQuery = pagQuery.startAfterDocument(last!);
-      var response = await pagQuery.get();
-      var result = Future<Either<Failure, List<AppliedJob>>>.value(
-        Right(
-          response.docs
-              .map((e) => AppliedJobModel.fromSnapshot(
-                    id: e.id,
-                    documentSnapshot: e.data() as Map<String, dynamic>,
-                  )!)
-              .toList(),
-        ),
-      );
-      if (response.docs.length < limit) {
-        _noMoreData = true;
-        last = null;
-      } else {
-        last = response.docs[response.docs.length - 1];
-      }
-      return result;
-    } catch (e) {
-      print(e);
-      return Future.value(const Left(Unexpected()));
-    }
+    var response = await paginaterFirestore.fetch(limit: limit);
+    var result = response!.docs
+        .map(
+          (e) => AppliedJobModel.fromSnapshot(
+            id: e.id,
+            documentSnapshot: e.data() as Map<String, dynamic>,
+          )!,
+        )
+        .toList();
+    paginaterFirestore.commitFetching();
+    return Future.value(Right(result));
   }
 
   @override
@@ -103,8 +91,8 @@ class AppliedRepoImp implements AppliedRepo {
   }
 
   @override
-  bool get noMoreData => _noMoreData;
+  bool get noMoreData => paginaterFirestore.noMoreData;
 
   @override
-  void refresh() => lazy = true;
+  void refresh() => paginaterFirestore.refresh();
 }
