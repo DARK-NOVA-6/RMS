@@ -10,6 +10,7 @@ class UserInfoModel extends UserInfo {
     return UserInfo(
       id: userId,
       summary: documentSnapshot['summary'],
+      companies: documentSnapshot['companies'],
       email: documentSnapshot['email'],
       firstName: documentSnapshot['first-name'],
       middleName: documentSnapshot['middle-name'],
@@ -40,6 +41,7 @@ class UserInfoModel extends UserInfo {
 
   static Map<String, dynamic> toSnapshot(UserInfo userInfo) {
     return {
+      'companies' : userInfo.companies,
       'summary': userInfo.summary,
       'email': userInfo.email,
       'first-name': userInfo.firstName,

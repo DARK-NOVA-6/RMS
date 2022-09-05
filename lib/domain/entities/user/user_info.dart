@@ -8,6 +8,7 @@ class UserInfo extends Equatable {
   final String? id;
   final String? email;
   final num rating;
+  final List<String> companies;
   final List<String> phones;
   final List<String> emails;
   final String? firstName;
@@ -25,6 +26,7 @@ class UserInfo extends Equatable {
 
   const UserInfo({
     this.id,
+    this.companies = const [],
     this.email,
     this.rating = 0.0,
     this.firstName,
@@ -46,6 +48,7 @@ class UserInfo extends Equatable {
   @override
   List<Object?> get props => [
         id,
+        companies,
         email,
         rating,
         firstName,
