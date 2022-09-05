@@ -9,7 +9,7 @@ abstract class AppliedRepo {
 
   Future<Either<Failure, AppliedJob>> detailed({required String id});
 
-  Future<Either<Failure, void>> cancel({required String id});
+  Future<Either<Failure, void>> cancel({required String id, required String jobId});
 
   Future<List<Failure>> apply({required EvaluatedJob evaluatedJob});
 

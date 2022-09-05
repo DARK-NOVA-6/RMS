@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 
 import '../../../core/utils/custom_converter.dart';
+import '../../../core/utils/detect_uri_api.dart';
 import '../../../core/utils/encode_uri.dart';
 
 abstract class AutocompleteSubstringApi {
@@ -16,15 +17,21 @@ abstract class AutocompleteSubstringApi {
 }
 
 class AutocompleteSubstringApiImp implements AutocompleteSubstringApi {
-  // static String get uriApi => 'http://192.168.98.250:5000/api';
-  static String get uriApi => 'http://192.168.137.223:5000/api';
+  static const List<String> _uriApiPossible = [
+    'http://192.168.137.223:5000/',
+    'http://192.168.102.208:5000/'
+  ];
 
-  // static String get uriApi => 'http://192.168.102.208:5000/api';
-  // static String get uriApi => 'http://192.168.12.120:5000/api';
+  static final DetectUriApi _detectUriApi = DetectUriApi(
+    uriApiPossible: _uriApiPossible,
+  );
+
+  static Future<String> get uriApi async => _detectUriApi.uriApi;
+
   static Map<String, String> headers = {
     HttpHeaders.contentTypeHeader: "application/json",
     "Connection": "Keep-Alive",
-    "Keep-Alive": "timeout=10, max=100"
+    "Keep-Alive": "timeout=5, max=10"
   };
 
   @override
@@ -42,15 +49,14 @@ class AutocompleteSubstringApiImp implements AutocompleteSubstringApi {
           (query1.isNotEmpty && query2.isNotEmpty ? '&' : '') +
           (query2.isNotEmpty ? query2 : '');
       final response = await http.get(
-        EncodeUri.encode('$uriApi/$type/$word$query'),
+        EncodeUri.encode('${await uriApi}/$type/$word$query'),
         headers: AutocompleteSubstringApiImp.headers,
       );
       return Future<List<String>>.value(
         CustomConverter().toListString(list: jsonDecode(response.body)),
       );
     } catch (e) {
-      if (e is FormatException) return [];
-      return getSimilar(type: type, word: word, limit: limit, exact: exact);
+      return [];
     }
   }
 }

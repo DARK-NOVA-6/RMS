@@ -16,10 +16,12 @@ class JobWidget extends StatefulWidget {
     Key? key,
     required this.job,
     required this.callParent,
+    required this.isAvailable,
   }) : super(key: key);
 
   final EvaluatedJob job;
   final Function(EvaluatedJob)? callParent;
+  final bool isAvailable;
 
   @override
   State<JobWidget> createState() => _JobWidgetState();
@@ -75,7 +77,10 @@ class _JobWidgetState extends State<JobWidget> {
               press: () {
                 Navigator.of(context)
                     .push(MaterialPageRoute(
-                        builder: (_) => JobDetails(eJob: widget.job)))
+                        builder: (_) => JobDetails(
+                              eJob: widget.job,
+                              isAvailable: widget.isAvailable,
+                            )))
                     .then((value) {
                   if (value == true) widget.callParent!(widget.job);
                 });

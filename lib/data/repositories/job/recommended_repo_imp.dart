@@ -15,11 +15,9 @@ class RecommendedRepoImp implements RecommendedRepo {
   RecommendedRepoImp({
     required this.firebaseFirestore,
     required EvaluatorApi evaluatorApi,
-    required String userId,
   }) : evaluatedJobRepo = EvaluatedJobRepo(
           firebaseFirestore: firebaseFirestore,
           evaluatedAPiResponse: evaluatorApi.getRecommended,
-          userId: userId,
         );
 
   @override

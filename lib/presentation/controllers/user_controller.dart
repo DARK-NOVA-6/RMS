@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:untitled/domain/usecases/authentication/get_connected_user.dart';
 
 import '../../domain/entities/user/user_info.dart';
 import 'controllers.dart';
@@ -23,6 +24,7 @@ class UserController {
 
 class TransformerUserController {
   static UserController fromUserInfo(UserInfo? userInfo) {
+    userInfo = GetConnectedUser().connectedUser;
     return UserController(
       eduControllers: _convertEdu(userInfo!.eduQualifications),
       expControllers: _convertExp(userInfo.experiences),
@@ -88,6 +90,7 @@ class TransformerUserController {
   static UserInfo fromUserController(UserController userController) {
     return UserInfo(
       summary: userController.personalControllers.freeSpace.text,
+      email: GetConnectedUser().connectedUser!.email,
       skills:
           userController.skillsControllers.map((c) => c.title.text).toList(),
       languages:

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:jovial_svg/jovial_svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../provider/theme.dart';
 import '../../../../provider/theme_notifier.dart';
+import '../../../blocs/authentication/auth_bloc.dart';
 import 'menu_items.dart' as mi;
 
 // ignore: must_be_immutable
@@ -85,6 +88,13 @@ class _MenuPageState extends State<MenuPage> {
                       ),
                       ...mi.MenuItems.group2.map(buildMenuItem).toList(),
                       const Spacer(flex: 3),
+                      ElevatedButton(
+                        onPressed: () {
+                          BlocProvider.of<AuthBloc>(context).add(LogOutEvent());
+                          Phoenix.rebirth(context);
+                        },
+                        child: Text('logout'),
+                      ),
                       Consumer(
                         builder: (context, ThemeNotifier themeNotifier, child) {
                           val = themeNotifier.darkTheme;

@@ -6,6 +6,7 @@ class AppliedJob extends Equatable {
   final String title;
   final String companyName;
   final String appliedId;
+  final String jobId;
   final String summary;
   final Timestamp appliedTime;
   final String state;
@@ -18,6 +19,7 @@ class AppliedJob extends Equatable {
   const AppliedJob({
     required this.title,
     required this.appliedId,
+    required this.jobId,
     required this.companyName,
     required this.appliedTime,
     required this.summary,
@@ -30,9 +32,11 @@ class AppliedJob extends Equatable {
   });
 
   @override
-  List<Object?> get props => [
+  List<Object?> get props =>
+      [
         title,
         appliedId,
+        jobId,
         companyName,
         appliedTime,
         summary,

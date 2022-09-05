@@ -14,11 +14,9 @@ class UnavailableRepoImp implements UnavailableRepo {
   UnavailableRepoImp({
     required FirebaseFirestore firebaseFirestore,
     required EvaluatorApi evaluatorApi,
-    required String userId,
   }) : evaluatedJobRepo = EvaluatedJobRepo(
           firebaseFirestore: firebaseFirestore,
           evaluatedAPiResponse: evaluatorApi.getUnavailable,
-          userId: userId,
         );
 
   @override

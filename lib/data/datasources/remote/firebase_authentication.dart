@@ -1,5 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:untitled/injection_container.dart';
 
 import '../../../core/errors/exceptions/authentication_exceptions.dart';
 import '../../../domain/entities/user/user_info.dart' as user_ent;
@@ -42,6 +42,16 @@ class FirebaseAuthentication extends AuthenticationRemote {
         if (element == null) {
           _userInfo = null;
         } else {
+          FirebaseFirestore.instance
+              .collection('user-info')
+              .doc(element.uid)
+              .snapshots()
+              .listen((event) async {
+            (await userInfoRepo.getUserInfo(userId: element.uid)).fold(
+              (failure) => _userInfo = null,
+              (data) => _userInfo = data,
+            );
+          });
           (await userInfoRepo.getUserInfo(userId: element.uid)).fold(
             (failure) => _userInfo = null,
             (data) => _userInfo = data,
@@ -78,8 +88,14 @@ class FirebaseAuthentication extends AuthenticationRemote {
     required String password,
   }) async {
     try {
-      firebaseAuth.createUserWithEmailAndPassword(
+      await firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
+      await userInfoRepo.updateUserInfo(
+        newUserInfo: user_ent.UserInfo(
+          id: userId,
+          email: email,
+        ),
+      );
       return Future<void>.value(null);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -98,11 +114,11 @@ class FirebaseAuthentication extends AuthenticationRemote {
 
   @override
   String? get userId {
-    return 'KNvVSQq2xSUaxUNsEbHCu5VvHWv2';
-    // if (firebaseAuth.currentUser == null) return null;
-    // return firebaseAuth.currentUser!.uid;
+    // return 'KNvVSQq2xSUaxUNsEbHCu5VvHWv2';
+    if (firebaseAuth.currentUser == null) return null;
+    return firebaseAuth.currentUser!.uid;
   }
 
   @override
-  user_ent.UserInfo? get connectedUser => globalUserInfo;
+  user_ent.UserInfo? get connectedUser => _userInfo;
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:untitled/domain/entities/job/applied_job.dart';
 
+import '../../../domain/usecases/job/applied/cancel_application.dart';
 import 'job_elements/job_elements.dart';
 
 class AppliedJobDetails extends StatefulWidget {
@@ -133,11 +134,17 @@ class _AppliedJobDetailsState extends State<AppliedJobDetails> {
         ),
         actions: [
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              CancelApplication()(
+                appliedId: ejob.appliedId,
+                jobId: ejob.jobId,
+              );
+              Navigator.pop(context, true);
+            },
             child: Row(
               children: const [
                 Text(
-                  'Apply',
+                  'Cancel',
                   style: TextStyle(
                     fontSize: 20,
                     color: Colors.white,

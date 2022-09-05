@@ -11,9 +11,7 @@ class EvaluatedJobRepo {
   final CollectionReference<Map<String, dynamic>> collection;
   final CollectionReference<Map<String, dynamic>> collection2;
   final Query query;
-  final String userId;
-  final Future<Map<String, dynamic>> Function(String userId)
-      evaluatedAPiResponse;
+  final Future<Map<String, dynamic>> Function() evaluatedAPiResponse;
   late List<String> jobsId = [];
   late Map<String, dynamic>? evaluatedApi;
 
@@ -25,7 +23,6 @@ class EvaluatedJobRepo {
   EvaluatedJobRepo({
     required this.firebaseFirestore,
     required this.evaluatedAPiResponse,
-    required this.userId,
   })  : collection = firebaseFirestore.collection('jobs'),
         collection2 = firebaseFirestore.collection('jobs-applications'),
         query = firebaseFirestore
@@ -71,14 +68,15 @@ class EvaluatedJobRepo {
     List<EvaluatedJob> result = [];
     while (result.length < limit && _currentIdx < jobsId.length) {
       try {
-        var tempData = await collection.doc(jobsId[_currentIdx]).get();
+        var jobId = jobsId[_currentIdx];
+        var tempData = await collection.doc(jobId).get();
         if (tempData.exists) {
           var data = EvaluatedJobModel.fromJsonAndSnapshot(
-            jsonData: evaluatedApi![jobsId[_currentIdx]],
+            jsonData: evaluatedApi![jobId],
             documentSnapshot: tempData.data(),
-            id: jobsId[_currentIdx],
+            id: jobId,
           );
-          if (data != null && (await _check(data.id))) result.add(data);
+          if (data != null) result.add(data);
         }
         _currentIdx++;
       } catch (e) {
@@ -103,16 +101,17 @@ class EvaluatedJobRepo {
   Future<void> _clear() async {
     _lazy = false;
     jobsId.clear();
-    evaluatedApi = await evaluatedAPiResponse(userId);
+    evaluatedApi = await evaluatedAPiResponse();
     jobsId.addAll(evaluatedApi!.keys);
     _currentIdx = 0;
   }
 
-  Future<bool> _check(String jobId) async {
-    var result = await collection2
-        .where('job-seeker-id', isEqualTo: userId)
-        .where('job-id', isEqualTo: jobId)
-        .get();
-    return result.docs.isEmpty;
-  }
+// Future<bool> _check(String jobId) async {
+//   var result = await collection2
+//       .where('job-seeker-id', isEqualTo: userId)
+//       .where('job-id', isEqualTo: jobId)
+//       .limit(1)
+//       .get();
+//   return result.docs.isEmpty;
+// }
 }

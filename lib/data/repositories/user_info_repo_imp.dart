@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 import '../../core/errors/failures/failure.dart';
 import '../../domain/entities/user/user_info.dart';
 import '../../domain/repositories/user_info_repo.dart';
+import '../../domain/usecases/authentication/get_connected_user.dart';
 import '../models/user/user_info_model.dart';
 
 class UserInfoRepoImp implements UserInfoRepo {
@@ -36,8 +37,8 @@ class UserInfoRepoImp implements UserInfoRepo {
   Future<Either<Failure, bool>> updateUserInfo(
       {required UserInfo newUserInfo}) {
     try {
-      String userId = 'KWKKUrBFSAPT7sqtP24nqa2gduN2';
-      collection.doc(userId).update(UserInfoModel.toSnapshot(newUserInfo));
+      String? userId = GetConnectedUser().userId;
+      collection.doc(userId).set(UserInfoModel.toSnapshot(newUserInfo));
       return Future.value(const Right(true));
     } catch (e) {
       return Future.value(const Right(false));

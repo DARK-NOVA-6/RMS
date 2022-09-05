@@ -45,6 +45,7 @@ class _UnavailableState extends State<Unavailable> {
         .map((e) => JobWidget(
               job: e,
               callParent: (_) {},
+              isAvailable: false,
             ))
         .toList();
     if (newJobs.isNotEmpty) {

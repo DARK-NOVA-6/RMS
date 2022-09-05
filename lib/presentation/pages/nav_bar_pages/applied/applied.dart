@@ -44,10 +44,14 @@ class _AppliedState extends State<Applied> {
     List<AppliedJob> tmpJobs = await fetchMoreApplied(limit: 3);
     jobList.addAll(tmpJobs);
     List<Widget> newJobs = tmpJobs
-        .map((e) => AppliedJobWidget(
-              job: e,
-              callParent: (_) {},
-            ))
+        .map(
+          (e) => AppliedJobWidget(
+            job: e,
+            callParent: (_) {
+              _handleRefresh();
+            },
+          ),
+        )
         .toList();
     if (newJobs.isNotEmpty) {
       jobs.addAll(Iterable.castFrom(newJobs));

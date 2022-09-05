@@ -1,6 +1,7 @@
 // not used
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 
 import '../../Pages/Authentication/authenticate.dart';
 import '../../blocs/authentication/auth_bloc.dart';
@@ -51,6 +52,7 @@ class TheDrawer extends StatelessWidget {
             ),
             onTap: () async {
               BlocProvider.of<AuthBloc>(context).add(LogOutEvent());
+              Phoenix.rebirth(context);
               // Navigator.of(context).popUntil((route) => route is AuthBloc);
               // await Navigator.of(context).push(
               //     MaterialPageRoute(builder: (_) => const Authenticate()));

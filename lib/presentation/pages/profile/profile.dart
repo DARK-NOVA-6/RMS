@@ -8,6 +8,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/data/datasources/remote/cv_parser_api.dart';
+import 'package:untitled/domain/usecases/authentication/get_connected_user.dart';
 import 'package:untitled/domain/usecases/user/update_profile_user.dart';
 import 'package:untitled/domain/usecases/user/upload_cv.dart';
 import 'package:untitled/injection_container.dart';
@@ -30,7 +31,7 @@ class _ProfileState extends State<Profile> {
   String currentPage = 'personal';
   late bool isLoading;
   UserController userController =
-      TransformerUserController.fromUserInfo(globalUserInfo);
+      TransformerUserController.fromUserInfo(GetConnectedUser().connectedUser);
   List<String> pagesKeys = ['personal', 'edu', 'exp', 'skills', 'lang'];
   Map<String, GlobalKey<NavigatorState>> navigatorState = {
     'personal': GlobalKey<NavigatorState>(),
@@ -66,7 +67,9 @@ class _ProfileState extends State<Profile> {
       // userController = TransformerUserController.fromUserInfo(newUserInfo);
 
     } else {
-      userController = TransformerUserController.fromUserInfo(globalUserInfo);
+      userController = TransformerUserController.fromUserInfo(
+        GetConnectedUser().connectedUser,
+      );
     }
     // result = await save(
     //     TransformerUserController.fromUserController(userController));

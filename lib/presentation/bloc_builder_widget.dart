@@ -60,11 +60,7 @@ class BlocBuilderWidget extends StatelessWidget {
             controllers: controllers,
           );
         } else if (state is SignedUpState) {
-          return SignUp(
-            controllers: controllers,
-            // hasPopup: true,
-            // popupWidget: Popup(),
-          );
+          return const CustomeZoomDrawer();
         } else if (state is SignUpErrorState) {
           return SignUp(
             controllers: controllers,

@@ -6,9 +6,11 @@ import '../../../domain/entities/job/evaluated_job.dart';
 import 'job_elements/job_elements.dart';
 
 class JobDetails extends StatefulWidget {
-  const JobDetails({Key? key, required this.eJob}) : super(key: key);
+  const JobDetails({Key? key, required this.eJob, required this.isAvailable})
+      : super(key: key);
 
   final EvaluatedJob eJob;
+  final bool isAvailable;
 
   @override
   State<JobDetails> createState() => _JobDetailsState();
@@ -133,30 +135,34 @@ class _JobDetailsState extends State<JobDetails> {
           color: Colors.white,
         ),
         actions: [
-          TextButton(
-            onPressed: () {
-              ApplyJob()(evaluatedJob: ejob);
-              Navigator.pop(context, true);
-            },
-            child: Row(
-              children: const [
-                Text(
-                  'Apply',
+          if (widget.isAvailable) ...[
+            TextButton(
+              onPressed: () {
+                if (widget.isAvailable) {
+                  ApplyJob()(evaluatedJob: ejob);
+                }
+                Navigator.pop(context, true);
+              },
+              child: Row(
+                children: const [
+                  Text(
+                    'Apply',
                   style: TextStyle(
                     fontSize: 20,
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
-                ),
-                SizedBox(width: 10),
-                Icon(
-                  Icons.add_circle_outline,
-                  size: 20,
-                  color: Colors.white,
-                ),
-              ],
+                  ),
+                  SizedBox(width: 10),
+                  Icon(
+                    Icons.add_circle_outline,
+                    size: 20,
+                    color: Colors.white,
+                  ),
+                ],
+              ),
             ),
-          ),
+          ],
         ],
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         title: Text(

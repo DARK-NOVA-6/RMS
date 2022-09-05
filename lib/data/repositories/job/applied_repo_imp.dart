@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:untitled/data/models/job/applied_job_model.dart';
+import 'package:untitled/domain/usecases/authentication/get_connected_user.dart';
 
 import '../../../core/errors/failures/failure.dart';
+import '../../../core/utils/custom_converter.dart';
 import '../../../domain/entities/job/applied_job.dart';
 import '../../../domain/entities/job/evaluated_job.dart';
 import '../../../domain/repositories/authentication_repo.dart';
@@ -13,6 +15,7 @@ class AppliedRepoImp implements AppliedRepo {
   final FirebaseFirestore firebaseFirestore;
   final AuthenticationRepo authenticationRepo;
   final CollectionReference<Map<String, dynamic>> collection;
+  final CollectionReference<Map<String, dynamic>> collection2;
   final Query query;
   final PaginaterFirestore paginaterFirestore;
 
@@ -20,14 +23,15 @@ class AppliedRepoImp implements AppliedRepo {
     required this.firebaseFirestore,
     required this.authenticationRepo,
   })  : collection = firebaseFirestore.collection('jobs-applications'),
+        collection2 = firebaseFirestore.collection('user-applications'),
         query = firebaseFirestore
             .collection('jobs-applications')
-            .where('job-seeker-id', isEqualTo: authenticationRepo.userId)
+            .where('job-seeker-id', isEqualTo: GetConnectedUser().userId)
             .orderBy('applied-time'),
         paginaterFirestore = PaginaterFirestore(
           query: firebaseFirestore
               .collection('jobs-applications')
-              .where('job-seeker-id', isEqualTo: authenticationRepo.userId)
+              .where('job-seeker-id', isEqualTo: GetConnectedUser().userId)
               .orderBy('applied-time'),
         );
 
@@ -37,9 +41,18 @@ class AppliedRepoImp implements AppliedRepo {
       AppliedJobModel.toSnapshot(
         evaluatedJob: evaluatedJob,
         timestamp: Timestamp.now(),
-        userInfo: authenticationRepo.connectedUser!,
+        userInfo: GetConnectedUser().connectedUser!,
       ),
     );
+    var old = await collection2.doc(GetConnectedUser().userId!).get();
+    var apps = [evaluatedJob.id];
+    if (old.exists) {
+      apps = CustomConverter().toListString(list: old.data()!['list']);
+      apps.add(evaluatedJob.id);
+    }
+    collection2.doc(GetConnectedUser().userId!).set({
+      'list': apps,
+    });
     return Future.value([]);
   }
 
@@ -61,23 +74,38 @@ class AppliedRepoImp implements AppliedRepo {
 
   @override
   Future<Either<Failure, List<AppliedJob>>> fetch({required int limit}) async {
-    var response = await paginaterFirestore.fetch(limit: limit);
-    var result = response!.docs
-        .map(
-          (e) => AppliedJobModel.fromSnapshot(
-            id: e.id,
-            documentSnapshot: e.data() as Map<String, dynamic>,
-          )!,
-        )
-        .toList();
-    paginaterFirestore.commitFetching();
+    List<AppliedJob> result = [];
+    try {
+      var response = await paginaterFirestore.fetch(limit: limit);
+      result = response!.docs
+          .map(
+            (e) => AppliedJobModel.fromSnapshot(
+              id: e.id,
+              documentSnapshot: e.data() as Map<String, dynamic>,
+            )!,
+          )
+          .toList();
+      paginaterFirestore.commitFetching();
+    } catch (e) {
+      result = [];
+    }
     return Future.value(Right(result));
   }
 
   @override
-  Future<Either<Failure, void>> cancel({required String id}) {
+  Future<Either<Failure, void>> cancel(
+      {required String id, required String jobId}) async {
     try {
-      collection.doc(id).update({'state': 'canceled'});
+      collection.doc(id).delete();
+      var old = await collection2.doc(authenticationRepo.userId!).get();
+      var apps = [];
+      if (old.exists) {
+        apps = CustomConverter().toListString(list: old.data()!['list']);
+        apps.remove(jobId);
+      }
+      collection2.doc(authenticationRepo.userId!).set({
+        'list': apps,
+      });
       return Future<Either<Failure, void>>.value(const Right(null));
     } catch (e) {
       return Future<Either<Failure, void>>.value(

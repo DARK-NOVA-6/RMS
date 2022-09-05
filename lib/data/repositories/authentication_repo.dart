@@ -50,7 +50,7 @@ class AuthenticationUsingTwoSteps extends AuthenticationRepo {
   }) async {
     Failure failure;
     try {
-      function(email: email, password: password);
+      await function(email: email, password: password);
       return Future<Either<Failure, void>>.value(const Right(null));
     } on AuthenticationException catch (e) {
       failure = e.failure;

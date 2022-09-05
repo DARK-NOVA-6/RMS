@@ -50,6 +50,7 @@ class _RecommendedState extends State<Recommended> {
         .map((e) => JobWidget(
               job: e,
               callParent: deleteChild,
+              isAvailable: true,
             ))
         .toList();
     if (newJobs.isNotEmpty) {

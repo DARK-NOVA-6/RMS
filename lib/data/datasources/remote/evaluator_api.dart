@@ -3,50 +3,60 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 
+import '../../../core/utils/detect_uri_api.dart';
 import '../../../core/utils/encode_uri.dart';
+import '../../../domain/usecases/authentication/get_connected_user.dart';
 
 abstract class EvaluatorApi {
-  Future<Map<String, dynamic>> getRecommended(userId);
+  Future<Map<String, dynamic>> getRecommended();
 
-  Future<Map<String, dynamic>> getUnavailable(userId);
+  Future<Map<String, dynamic>> getUnavailable();
 }
 
 class EvaluatorApiImp implements EvaluatorApi {
-  // static String get uriApi => 'http://192.168.98.250:5000/api';
-  static String get uriApi => 'http://192.168.137.223:5000/api';
+  static const List<String> _uriApiPossible = [
+    'http://192.168.137.223:5000/',
+    'http://192.168.102.208:5000/'
+  ];
 
-  // static String get uriApi => 'http://192.168.102.208:5000/api';
-  // static String get uriApi => 'http://192.168.12.120:5000/api';
+  static final DetectUriApi _detectUriApi = DetectUriApi(
+    uriApiPossible: _uriApiPossible,
+  );
 
+  static Future<String> get uriApi async => _detectUriApi.uriApi;
   static Map<String, String> headers = {
     HttpHeaders.contentTypeHeader: "application/json",
     "Connection": "Keep-Alive",
-    "Keep-Alive": "timeout=20, max=100"
+    "Keep-Alive": "timeout=5, max=10"
   };
 
   @override
-  Future<Map<String, dynamic>> getRecommended(userId) async {
+  Future<Map<String, dynamic>> getRecommended() async {
+    String? userId = GetConnectedUser().userId;
+    if (userId == null) return {};
     try {
       final response = await http.get(
-        EncodeUri.encode('$uriApi/recommended/$userId'),
+        EncodeUri.encode('${await uriApi}/recommended/$userId'),
         headers: headers,
       );
       return Future.value(jsonDecode(response.body));
     } catch (e) {
-      return getRecommended(userId);
+      return {};
     }
   }
 
   @override
-  Future<Map<String, dynamic>> getUnavailable(userId) async {
+  Future<Map<String, dynamic>> getUnavailable() async {
+    String? userId = GetConnectedUser().userId;
+    if (userId == null) return {};
     try {
       final response = await http.get(
-        EncodeUri.encode('$uriApi/unavailable/$userId'),
+        EncodeUri.encode('${await uriApi}/unavailable/$userId'),
         headers: headers,
       );
       return Future.value(jsonDecode(response.body));
     } catch (e) {
-      return getUnavailable(userId);
+      return {};
     }
   }
 }

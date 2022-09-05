@@ -57,6 +57,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   void loginEventHandle(LoginEvent event, Emitter emit) async {
+    emit(Loading());
     if (!isEmail(event.email)) {
       emit(SignInErrorState(message: const InvalidEmail().message));
     } else {

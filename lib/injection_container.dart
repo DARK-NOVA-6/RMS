@@ -18,7 +18,6 @@ import 'data/repositories/keywords/keywords_languages_repo_substring.dart';
 import 'data/repositories/keywords/keywords_skills_repo_substring.dart';
 import 'data/repositories/keywords/keywords_universities_repo_substring.dart';
 import 'data/repositories/user_info_repo_imp.dart';
-import 'domain/entities/user/user_info.dart' as user_info;
 import 'domain/repositories/authentication_repo.dart';
 import 'domain/repositories/job/recommended_repo.dart';
 import 'domain/repositories/job/unavailable_repo.dart';
@@ -41,8 +40,6 @@ import 'domain/usecases/user/get_profile_user.dart';
 import 'domain/usecases/user/update_profile_user.dart';
 
 final sl = GetIt.instance;
-
-user_info.UserInfo? globalUserInfo;
 
 void init() {
   initData();
@@ -77,16 +74,12 @@ void initData() {
     () => RecommendedRepoImp(
       firebaseFirestore: sl(),
       evaluatorApi: sl(),
-      userId: 'KNvVSQq2xSUaxUNsEbHCu5VvHWv2',
-      // userId: GetConnectedUser(sl()).userId!,
     ),
   );
   sl.registerLazySingleton<UnavailableRepo>(
     () => UnavailableRepoImp(
       firebaseFirestore: sl(),
       evaluatorApi: sl(),
-      userId: 'KNvVSQq2xSUaxUNsEbHCu5VvHWv2',
-      // userId: GetConnectedUser(sl()).userId!,
     ),
   );
   sl.registerLazySingleton<AppliedRepo>(
@@ -117,7 +110,7 @@ void initData() {
 
 void initUseCases() {
   // authentication
-  sl.registerLazySingleton(() => GetConnectedUser(sl()));
+  sl.registerLazySingleton(() => GetConnectedUser());
   sl.registerLazySingleton(() => LogOut(sl()));
   sl.registerLazySingleton(() => SignInEmailAndPassword(sl()));
   sl.registerLazySingleton(() => SignUpEmailPassword(sl()));

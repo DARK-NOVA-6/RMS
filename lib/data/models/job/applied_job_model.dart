@@ -11,6 +11,7 @@ class AppliedJobModel extends AppliedJob {
   const AppliedJobModel({
     required super.title,
     required super.appliedId,
+    required super.jobId,
     required super.companyName,
     required super.appliedTime,
     required super.summary,
@@ -29,7 +30,8 @@ class AppliedJobModel extends AppliedJob {
     try {
       return AppliedJob(
         appliedId: id,
-        title: documentSnapshot!['title'],
+        jobId: documentSnapshot!['job-id'],
+        title: documentSnapshot['title'],
         companyName: documentSnapshot['company-name'],
         appliedTime: documentSnapshot['applied-time'],
         summary: documentSnapshot['summary-job'],
