@@ -18,6 +18,8 @@ class UpdateProfileUser {
       (failure) => errors = [failure.message],
       (data) => errors = [],
     );
+    print(errors);
+    print(newUserInfo);
     return Future<List<String>>.value(errors);
   }
 }

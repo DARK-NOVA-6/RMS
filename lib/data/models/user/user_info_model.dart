@@ -10,7 +10,7 @@ class UserInfoModel extends UserInfo {
     return UserInfo(
       id: userId,
       summary: documentSnapshot['summary'],
-      companies: documentSnapshot['companies'],
+      companies: _convertToListString(documentSnapshot['companies']),
       email: documentSnapshot['email'],
       firstName: documentSnapshot['first-name'],
       middleName: documentSnapshot['middle-name'],
