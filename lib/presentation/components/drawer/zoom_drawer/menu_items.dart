@@ -16,30 +16,30 @@ class MenuItems {
     title: 'Profile',
     icon: Icons.person_outline_outlined,
   );
-  static const MenuItem mailBox = MenuItem(
-    title: 'MailBox',
-    icon: Icons.mail_outline_rounded,
-  );
-  static const MenuItem reports = MenuItem(
-    title: 'Reports',
-    icon: Icons.report_rounded,
-  );
-  static const MenuItem aboutUs = MenuItem(
-    title: 'About Us',
-    icon: Icons.info_outline_rounded,
-  );
-  static const MenuItem rateUs = MenuItem(
-    title: 'Rate Us',
-    icon: Icons.star_rate_outlined,
-  );
+  // static const MenuItem mailBox = MenuItem(
+  //   title: 'MailBox',
+  //   icon: Icons.mail_outline_rounded,
+  // );
+  // static const MenuItem reports = MenuItem(
+  //   title: 'Reports',
+  //   icon: Icons.report_rounded,
+  // );
+  // static const MenuItem aboutUs = MenuItem(
+  //   title: 'About Us',
+  //   icon: Icons.info_outline_rounded,
+  // );
+  // static const MenuItem rateUs = MenuItem(
+  //   title: 'Rate Us',
+  //   icon: Icons.star_rate_outlined,
+  // );
   static List<MenuItem> group1 = <MenuItem>[
     jobs,
     profile,
-    mailBox,
+    // mailBox,
   ];
   static List<MenuItem> group2 = <MenuItem>[
-    reports,
-    aboutUs,
-    rateUs,
+    // reports,
+    // aboutUs,
+    // rateUs,
   ];
 }

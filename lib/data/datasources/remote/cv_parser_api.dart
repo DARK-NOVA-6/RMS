@@ -11,7 +11,8 @@ abstract class CvParserApi {
 
 class CvParserApiImp implements CvParserApi {
   static const List<String> _uriApiPossible = [
-    'http://192.168.97.229:5000/',
+    // 'http://192.168.97.229:5000/',
+    'http://192.168.102.208:5000/',
   ];
 
 

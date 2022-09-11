@@ -6,6 +6,7 @@ import '../../../core/errors/failures/authentication_failures.dart';
 import '../../../domain/usecases/authentication/log_out.dart';
 import '../../../domain/usecases/authentication/sign_in_email_password.dart';
 import '../../../domain/usecases/authentication/sign_up_email_password.dart';
+import '../../../injection_container.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -35,6 +36,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<LoginEvent>(loginEventHandle);
     on<LogOutEvent>((event, emit) async {
       await logOut();
+      sl.reset(dispose: true);
       emit(AuthInitial());
     });
   }

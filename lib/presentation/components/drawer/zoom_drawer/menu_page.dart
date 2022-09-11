@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import '../../../../provider/theme.dart';
 import '../../../../provider/theme_notifier.dart';
 import '../../../blocs/authentication/auth_bloc.dart';
+import '../../../components/components.dart';
 import 'menu_items.dart' as mi;
 
 // ignore: must_be_immutable
@@ -88,12 +89,29 @@ class _MenuPageState extends State<MenuPage> {
                       ),
                       ...mi.MenuItems.group2.map(buildMenuItem).toList(),
                       const Spacer(flex: 3),
-                      ElevatedButton(
-                        onPressed: () {
-                          BlocProvider.of<AuthBloc>(context).add(LogOutEvent());
-                          Phoenix.rebirth(context);
-                        },
-                        child: Text('logout'),
+                      Container(
+                        margin: const EdgeInsets.only(
+                          right: 20,
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 35,
+                          vertical: 25,
+                        ),
+                        child: MyElevatedButton(
+                          press: () async {
+                            BlocProvider.of<AuthBloc>(context)
+                                .add(LogOutEvent());
+                            Phoenix.rebirth(context);
+                            // Navigator.pop(context);
+                            // Navigator.pushReplacement(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (_) => Authenticate(),
+                            //   ),
+                            // );
+                          },
+                          text: 'log out',
+                        ),
                       ),
                       Consumer(
                         builder: (context, ThemeNotifier themeNotifier, child) {
