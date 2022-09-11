@@ -9,6 +9,8 @@ abstract class RecommendedRepo {
 
   Future<Either<Failure, FullEvaluatedJob>> detailed({required String id});
 
+  Future<void> addInquiry({required String inquiry, required String jobId});
+
   void refresh();
 
   bool get noMoreData;

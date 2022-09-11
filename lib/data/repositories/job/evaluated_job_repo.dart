@@ -12,6 +12,7 @@ class EvaluatedJobRepo {
   final CollectionReference<Map<String, dynamic>> collection2;
   final Query query;
   final Future<Map<String, dynamic>> Function() evaluatedAPiResponse;
+
   late List<String> jobsId = [];
   late Map<String, dynamic>? evaluatedApi;
 

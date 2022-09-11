@@ -13,6 +13,8 @@ abstract class AppliedRepo {
 
   Future<List<Failure>> apply({required EvaluatedJob evaluatedJob});
 
+  Future<void> addInquiry({required String inquiry, required String jobId});
+
   void refresh();
 
   bool get noMoreData;

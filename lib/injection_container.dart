@@ -74,12 +74,14 @@ void initData() {
     () => RecommendedRepoImp(
       firebaseFirestore: sl(),
       evaluatorApi: sl(),
+      authenticationRepo: sl(),
     ),
   );
   sl.registerLazySingleton<UnavailableRepo>(
     () => UnavailableRepoImp(
       firebaseFirestore: sl(),
       evaluatorApi: sl(),
+      authenticationRepo: sl(),
     ),
   );
   sl.registerLazySingleton<AppliedRepo>(
