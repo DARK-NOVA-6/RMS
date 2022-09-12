@@ -62,22 +62,19 @@ class _ProfileState extends State<Profile> {
     UserInfo userInfo =
         TransformerUserController.fromUserController(userController);
 
-    List<String> errors = await updateProfileUser(newUserInfo: userInfo);
-    if (errors.isEmpty) {
-      // UserInfo newUserInfo = GetProfileUser()();
-      // userController = TransformerUserController.fromUserInfo(newUserInfo);
-
-    } else {
-      userController = TransformerUserController.fromUserInfo(
-        GetConnectedUser().connectedUser,
-      );
-    }
-    // result = await save(
-    //     TransformerUserController.fromUserController(userController));
+    UserController? newUserController;
+    await updateProfileUser(newUserInfo: userInfo).then((value) {
+      newUserController = TransformerUserController.fromUserInfo(
+          GetConnectedUser().connectedUser);
+    });
 
     setState(() {
+      if(newUserController != null) {
+        userController = newUserController!;
+      }
       isLoading = false;
     });
+
     // ignore: use_build_context_synchronously
     Provider.of<UpdateActionBarActions>(context, listen: false)
         .changeEditMode(false);
