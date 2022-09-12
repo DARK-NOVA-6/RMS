@@ -63,13 +63,16 @@ class _ProfileState extends State<Profile> {
         TransformerUserController.fromUserController(userController);
 
     UserController? newUserController;
-    await updateProfileUser(newUserInfo: userInfo).then((value) {
+    List<String> err =
+        await updateProfileUser(newUserInfo: userInfo).then((value) {
       newUserController = TransformerUserController.fromUserInfo(
           GetConnectedUser().connectedUser);
+      return value;
     });
 
+    print(err);
     setState(() {
-      if(newUserController != null) {
+      if (newUserController != null) {
         userController = newUserController!;
       }
       isLoading = false;
@@ -165,23 +168,23 @@ class _ProfileState extends State<Profile> {
                 SpeedDialChild(
                     child: const Icon(Icons.download),
                     onTap: () async {
-                      const path =
-                          '/storage/emulated/0/Download/2.pdf';
-                      print(path);
-                      final File file = File(path);
-                      try {
-                        http.Response response = await http.get(
-                          Uri.parse('http://192.168.137.223:5000'),
-                          headers: {
-                            'Content-Type': 'application/json',
-                          },
-                        );
-                        file.writeAsBytes(response.bodyBytes).then((value) {
-                          print('download done');
-                        });
-                      } catch (e) {
-                        print(e);
-                      }
+                      // const path =
+                      //     '/storage/emulated/0/Download/2.pdf';
+                      // print(path);
+                      // final File file = File(path);
+                      // try {
+                      //   http.Response response = await http.get(
+                      //     Uri.parse('http://192.168.137.223:5000'),
+                      //     headers: {
+                      //       'Content-Type': 'application/json',
+                      //     },
+                      //   );
+                      //   file.writeAsBytes(response.bodyBytes).then((value) {
+                      //     print('download done');
+                      //   });
+                      // } catch (e) {
+                      //   print(e);
+                      // }
                     },
                     label: 'Download an existing CV',
                     labelStyle: const TextStyle(

@@ -16,14 +16,15 @@ import '../../errors/failures/user_info_failures.dart';
 class UserInfoValidator {
   static Future<List<UserInfoFailure>> validate(UserInfo userInfo) async {
     List<UserInfoFailure> errors = [];
-    bool invalidEmail = _validateEmails(userInfo.emails);
+    print(userInfo.emails);
+    // bool invalidEmail = _validateEmails(userInfo.emails);
     bool invalidPhone = _validatePhone(userInfo.phones);
     bool invalidEdu = await _validateEdu(userInfo.eduQualifications);
     bool invalidSkill = await _validateSkill(userInfo.skills);
     bool invalidLang = await _validateLang(userInfo.languages);
     bool invalidJobTitle = await _validateJobTitle(userInfo.experiences);
 
-    if (invalidEmail) errors.add(const InvalidEduUserInfoFailure());
+    // if (invalidEmail) errors.add(const InvalidEmailUserInfoFailure());
     if (invalidEdu) errors.add(const InvalidEduUserInfoFailure());
     if (invalidPhone) errors.add(const InvalidPhoneUserInfoFailure());
     if (invalidSkill) errors.add(const InvalidSkillUserInfoFailure());

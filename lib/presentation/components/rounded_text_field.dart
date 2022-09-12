@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class RoundedTextField extends StatelessWidget {
+class RoundedTextField extends StatefulWidget {
   const RoundedTextField({
     Key? key,
     required this.controller,
@@ -20,6 +20,8 @@ class RoundedTextField extends StatelessWidget {
     this.w = 0.7,
     this.h = 0.06,
     this.multiLines = false,
+    this.suffixText,
+    this.suffixPress,
   }) : super(key: key);
   final TextEditingController controller;
   final bool pass, email, code, numbers, isDouble, phone;
@@ -30,51 +32,73 @@ class RoundedTextField extends StatelessWidget {
   final String label;
   final bool enabled;
   final bool multiLines;
+  final Function(String)? suffixPress;
+  final String? suffixText;
 
+  @override
+  State<RoundedTextField> createState() => _RoundedTextFieldState();
+}
+
+class _RoundedTextFieldState extends State<RoundedTextField> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Container(
       decoration: BoxDecoration(
-        color: color,
+        color: widget.color,
         borderRadius: const BorderRadius.all(Radius.circular(20)),
       ),
       padding: const EdgeInsets.only(left: 15),
-      width: size.width * w,
-      height: (multiLines) ? null : size.height * h,
+      width: size.width * widget.w,
+      height: (widget.multiLines) ? null : size.height * widget.h,
       child: Material(
         elevation: 20.0,
-        color: color,
-        shadowColor: color,
+        color: widget.color,
+        shadowColor: widget.color,
         borderRadius: const BorderRadius.all(Radius.circular(20)),
         child: TextFormField(
-          maxLines: (multiLines) ? null : 1,
-          keyboardType: (email == true)
+          maxLines: (widget.multiLines) ? null : 1,
+          keyboardType: (widget.email == true)
               ? TextInputType.emailAddress
-              : (code == true || numbers == true || isDouble == true)
+              : (widget.code == true ||
+                      widget.numbers == true ||
+                      widget.isDouble == true)
                   ? TextInputType.number
                   : null,
           inputFormatters: [
-            if (phone || code || numbers) ...[
+            if (widget.phone || widget.code || widget.numbers) ...[
               FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
             ],
-            if (code) ...[
+            if (widget.code) ...[
               LengthLimitingTextInputFormatter(6),
             ],
-            if (phone) ...[
+            if (widget.phone) ...[
               LengthLimitingTextInputFormatter(10),
             ],
-            if (isDouble) ...[
+            if (widget.isDouble) ...[
               FilteringTextInputFormatter.allow(RegExp(r'(^\d*\.?\d*)'))
             ]
           ],
-          controller: controller,
-          obscureText: pass,
+          controller: widget.controller,
+          obscureText: widget.pass,
           style: const TextStyle(
             color: Colors.black,
             fontSize: 18,
           ),
           decoration: InputDecoration(
+            suffixIcon: widget.suffixText != null
+                ? TextButton(
+                    onPressed: (widget.suffixPress != null)
+                        ? () {
+                            widget.suffixPress!(widget.controller.text);
+                          }
+                        : null,
+                    child: Text(
+                      widget.suffixText!,
+                      style: const TextStyle(fontSize: 18),
+                    ),
+                  )
+                : null,
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20),
               borderSide: const BorderSide(
@@ -88,10 +112,10 @@ class RoundedTextField extends StatelessWidget {
                 width: 3.0,
               ),
             ),
-            enabled: enabled,
+            enabled: widget.enabled,
             label: Padding(
               padding: const EdgeInsets.all(5),
-              child: Text(label),
+              child: Text(widget.label),
             ),
             floatingLabelStyle: const TextStyle(
               fontSize: 22,
@@ -102,9 +126,11 @@ class RoundedTextField extends StatelessWidget {
               color: Colors.black,
               fontSize: 22,
             ),
-            icon: (icon == Icons.ac_unit) ? null : Icon(icon, color: secColor),
-            hintText: hintText,
-            fillColor: secColor,
+            icon: (widget.icon == Icons.ac_unit)
+                ? null
+                : Icon(widget.icon, color: widget.secColor),
+            hintText: widget.hintText,
+            fillColor: widget.secColor,
             hintStyle: const TextStyle(color: Colors.black),
             filled: true,
             contentPadding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),

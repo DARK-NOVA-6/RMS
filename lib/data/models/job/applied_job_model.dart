@@ -24,7 +24,7 @@ class AppliedJobModel extends AppliedJob {
     required super.languages,
     required super.score,
     required super.state,
-    required super.rate,
+    required super.rating,
     required super.notes,
     required super.inquiries,
   });

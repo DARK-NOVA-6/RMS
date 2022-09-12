@@ -4,15 +4,15 @@ import 'package:provider/provider.dart';
 import '../../../../../provider/update_action_bar_actions_notification.dart';
 import 'phone.dart';
 
-class PhoneList extends StatelessWidget {
-  const PhoneList({
+class EmailList extends StatelessWidget {
+  const EmailList({
     Key? key,
-    required this.phones,
+    required this.emails,
     required this.add,
     required this.remove,
   }) : super(key: key);
 
-  final List<TextEditingController> phones;
+  final List<TextEditingController> emails;
   final Function() add;
   final Function(int) remove;
 
@@ -24,7 +24,7 @@ class PhoneList extends StatelessWidget {
         width: MediaQuery.of(context).size.width * 0.9,
         child: ListTile(
           title: Text(
-            'Phone',
+            'Email',
             style: TextStyle(
               fontSize: 20,
               color: Theme.of(context).primaryColor,
@@ -52,11 +52,11 @@ class PhoneList extends StatelessWidget {
           primary: false,
           shrinkWrap: true,
           padding: const EdgeInsets.only(bottom: 10),
-          itemCount: phones.length,
+          itemCount: emails.length,
           itemBuilder: (context, index) {
             return PhoneTextField(
               enabled: Provider.of<UpdateActionBarActions>(context).edit,
-              phone: phones[index],
+              phone: emails[index],
               removePhone: ()=>remove(index),
             );
           },

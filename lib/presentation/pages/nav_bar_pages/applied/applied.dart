@@ -19,7 +19,7 @@ class Applied extends StatefulWidget implements Pages {
 }
 
 class _AppliedState extends State<Applied> {
-  bool loading = false, allLoaded = false;
+  bool loading = false, allLoaded = false, keyboardOpened = false;
   ScrollController scrollController = ScrollController();
   final GlobalKey<LiquidPullToRefreshState> _refreshIndicatorKey = GlobalKey();
   final FetchMoreApplied fetchMoreApplied = sl();
@@ -56,10 +56,12 @@ class _AppliedState extends State<Applied> {
     if (newJobs.isNotEmpty) {
       jobs.addAll(Iterable.castFrom(newJobs));
     }
-    setState(() {
-      allLoaded = newJobs.length < 3;
-      loading = false;
-    });
+    if (mounted) {
+      setState(() {
+        allLoaded = newJobs.length < 3;
+        loading = false;
+      });
+    }
   }
 
   @override
@@ -69,8 +71,8 @@ class _AppliedState extends State<Applied> {
     scrollController.addListener(() {
       if (scrollController.position.pixels >=
               scrollController.position.maxScrollExtent &&
-          !loading) {
-        _handleProgress();
+          !loading){
+        // _handleProgress();
       }
     });
   }

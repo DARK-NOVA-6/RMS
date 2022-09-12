@@ -53,7 +53,9 @@ class TransformerUserController {
       exp.title.text = e.title;
       exp.start.text =
           e.start == null ? '' : DateFormat.yMMMd().format(e.start!.toDate());
-      exp.duration.text = '0.01';
+      exp.duration.text = e.start == null || e.start == null
+          ? ''
+          : e.end!.toDate().difference(e.start!.toDate()).toString();
       return exp;
     }).toList();
   }
@@ -76,6 +78,7 @@ class TransformerUserController {
 
   static PersonalControllers _convertPersonal(UserInfo userInfo) {
     return PersonalControllers(
+      rating: userInfo.rating.toString(),
       fName: TextEditingController(text: userInfo.firstName),
       mName: TextEditingController(text: userInfo.middleName),
       lName: TextEditingController(text: userInfo.lastName),
@@ -84,6 +87,8 @@ class TransformerUserController {
       tempGender: userInfo.gender,
       tempPhones:
           userInfo.phones.map((e) => TextEditingController(text: e)).toList(),
+      tempEmails:
+          userInfo.emails.map((e) => TextEditingController(text: e)).toList(),
     );
   }
 
@@ -101,6 +106,8 @@ class TransformerUserController {
       middleName: userController.personalControllers.mName.text,
       phones:
           userController.personalControllers.phones.map((c) => c.text).toList(),
+      emails:
+          userController.personalControllers.emails.map((c) => c.text).toList(),
       experiences: userController.expControllers
           .map(
             (c) => PastJob(

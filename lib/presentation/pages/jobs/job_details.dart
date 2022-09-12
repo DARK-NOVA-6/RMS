@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:untitled/domain/usecases/job/recommended/apply_job.dart';
+import 'package:untitled/presentation/pages/jobs/job_elements/job_questions_not_applied.dart';
 
 import '../../../domain/entities/job/evaluated_job.dart';
+import '../../components/components.dart';
 import 'job_elements/job_elements.dart';
 
 class JobDetails extends StatefulWidget {
@@ -147,11 +149,11 @@ class _JobDetailsState extends State<JobDetails> {
                 children: const [
                   Text(
                     'Apply',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   SizedBox(width: 10),
                   Icon(
@@ -185,7 +187,20 @@ class _JobDetailsState extends State<JobDetails> {
                 text2: text[index].right,
               ),
               itemCount: text.length,
-            )
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+              child: MyElevatedButton(
+                text: 'show inquiries',
+                press: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => JobQuestionsNotApplied(ejob: ejob),
+                    ),
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),

@@ -16,24 +16,32 @@ class Rating extends StatelessWidget {
       children: [
         Container(
           margin: const EdgeInsets.only(bottom: 2),
-          child: const Icon(
+          child: Icon(
             Icons.star,
-            shadows: [
-              Shadow(color: Colors.black, offset: Offset(0, 0), blurRadius: 12),
-            ],
             color: Colors.yellow,
+            shadows: [
+              Shadow(
+                offset: const Offset(0, 0),
+                color: Theme.of(context).primaryColor,
+                blurRadius: 30,
+              ),
+            ],
             size: 35,
           ),
         ),
         const SizedBox(width: 10),
         Text(
           rating.toString(),
-          style: const TextStyle(
-            fontSize: 24,
+          style: TextStyle(
+            fontSize: 28,
             fontWeight: FontWeight.bold,
             color: Colors.yellow,
             shadows: [
-              Shadow(color: Colors.black, offset: Offset(0, 0), blurRadius: 8),
+              Shadow(
+                offset: const Offset(0, 0),
+                color: Theme.of(context).primaryColor,
+                blurRadius: 30,
+              ),
             ],
           ),
         ),
