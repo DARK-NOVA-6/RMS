@@ -18,7 +18,7 @@ class AddInquiryMethod {
         collection2 = firebaseFirestore.collection('jobs-applications');
 
   Future<void> call({required String inquiry, required String jobId}) async {
-    List<InquiryJob> inquiries = InquiryJobModel.fromJsonAndSnapshot(
+    List<InquiryJob> inquiries = InquiryJobModel.fromSnapshot(
       CustomConverter.convertToListMap(
         (await collection.doc(jobId).get()).data()!['inquiries'],
       ),
@@ -44,18 +44,18 @@ class AddInquiryMethod {
     );
     inquiries.add(inquiryJob);
     await collection.doc(jobId).update({
-      'inquiries': InquiryJobModel.toJsonAndSnapshot(inquiries),
+      'inquiries': InquiryJobModel.toSnapshot(inquiries),
     });
     var all = await collection2.where('job-id', isEqualTo: jobId).get();
     for (var application in all.docs) {
-      List<InquiryJob> inquiries = InquiryJobModel.fromJsonAndSnapshot(
+      List<InquiryJob> inquiries = InquiryJobModel.fromSnapshot(
         CustomConverter.convertToListMap(
           application.data()['inquiries'],
         ),
       );
       inquiries.add(inquiryJob);
       collection2.doc(application.id).update({
-        'inquiries': InquiryJobModel.toJsonAndSnapshot(inquiries),
+        'inquiries': InquiryJobModel.toSnapshot(inquiries),
       });
     }
   }

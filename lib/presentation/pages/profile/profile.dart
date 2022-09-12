@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/data/datasources/remote/cv_parser_api.dart';
@@ -127,6 +128,7 @@ class _ProfileState extends State<Profile> {
   }
 
   Future<File> saveFileLocal(PlatformFile file) async {
+    print('path::${file.path}');
     final appStorage = await getApplicationDocumentsDirectory();
     final newFile = File('${appStorage.path}/${file.name}');
     return File(file.path!).copy(newFile.path);
@@ -165,7 +167,25 @@ class _ProfileState extends State<Profile> {
               children: [
                 SpeedDialChild(
                     child: const Icon(Icons.download),
-                    onTap: () {},
+                    onTap: () async {
+                      const path =
+                          '/storage/emulated/0/Download/2.pdf';
+                      print(path);
+                      final File file = File(path);
+                      try {
+                        http.Response response = await http.get(
+                          Uri.parse('http://192.168.137.223:5000'),
+                          headers: {
+                            'Content-Type': 'application/json',
+                          },
+                        );
+                        file.writeAsBytes(response.bodyBytes).then((value) {
+                          print('download done');
+                        });
+                      } catch (e) {
+                        print(e);
+                      }
+                    },
                     label: 'Download an existing CV',
                     labelStyle: const TextStyle(
                       fontSize: 20,

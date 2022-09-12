@@ -59,7 +59,7 @@ class AppliedJobModel extends AppliedJob {
           CustomConverter.convertToListMap(documentSnapshot['notes']),
         )!,
         rate: documentSnapshot['rate'],
-        inquiries: InquiryJobModel.fromJsonAndSnapshot(
+        inquiries: InquiryJobModel.fromSnapshot(
           CustomConverter.convertToListMap(documentSnapshot['inquiries']),
         ),
       );

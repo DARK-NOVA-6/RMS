@@ -48,7 +48,7 @@ class EvaluatedJobModel extends EvaluatedJob {
           jsonData: jsonData['languages'],
           documentSnapshot: documentSnapshot['languages'],
         )!,
-        inquiries: InquiryJobModel.fromJsonAndSnapshot(
+        inquiries: InquiryJobModel.fromSnapshot(
           CustomConverter.convertToListMap(documentSnapshot['inquiries']),
         ),
         score: jsonData['score'],
