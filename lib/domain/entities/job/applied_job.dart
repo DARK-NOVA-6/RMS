@@ -18,9 +18,9 @@ class AppliedJob extends Equatable {
   final List<EvExperienceDescription> experiences;
   final List<EvLanguageDescription> languages;
   final num score;
-  final num rate;
   final List<AppliedNote> notes;
   final List<InquiryJob> inquiries;
+  final num rating;
 
   const AppliedJob({
     required this.title,
@@ -35,8 +35,8 @@ class AppliedJob extends Equatable {
     required this.languages,
     required this.score,
     required this.state,
-    required this.rate,
     required this.notes,
+    required this.rating,
     required this.inquiries,
   });
 
@@ -44,6 +44,7 @@ class AppliedJob extends Equatable {
   List<Object?> get props =>
       [
         title,
+        rating,
         appliedId,
         jobId,
         companyName,
@@ -55,7 +56,6 @@ class AppliedJob extends Equatable {
         languages,
         score,
         state,
-        rate,
         notes,
         inquiries,
       ];

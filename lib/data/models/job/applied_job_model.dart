@@ -43,6 +43,7 @@ class AppliedJobModel extends AppliedJob {
         summary: documentSnapshot['summary-job'],
         score: documentSnapshot['score'],
         state: documentSnapshot['state'],
+        rating: documentSnapshot['rating'],
         skills: EvSkillDescriptionModel.fromSnapshot(
           documentSnapshot: documentSnapshot['skills'],
         )!,
@@ -58,7 +59,6 @@ class AppliedJobModel extends AppliedJob {
         notes: AppliedNoteModel.fromSnapshot(
           CustomConverter.convertToListMap(documentSnapshot['notes']),
         )!,
-        rate: documentSnapshot['rate'],
         inquiries: InquiryJobModel.fromSnapshot(
           CustomConverter.convertToListMap(documentSnapshot['inquiries']),
         ),
@@ -86,7 +86,7 @@ class AppliedJobModel extends AppliedJob {
       'full-name-job-seeker':
           '${userInfo.firstName} ${userInfo.middleName} ${userInfo.lastName}',
       'score': evaluatedJob.score,
-      'rate': 0,
+      'rating': 0,
       'state':
           ApplicationStatesModel.stateToString(ApplicationStates.screening),
       'edu-qualifications': EvEduQualificationDescriptionModel.toSnapshot(
@@ -102,6 +102,7 @@ class AppliedJobModel extends AppliedJob {
         evaluatedJob.skills,
       ),
       'notes': [],
+      'inquiries': [],
     };
   }
 }
