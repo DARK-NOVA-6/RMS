@@ -10,6 +10,7 @@ import '../../../domain/entities/job/evaluated_job.dart';
 import '../../../domain/repositories/authentication_repo.dart';
 import '../../../domain/repositories/job/applied_repo.dart';
 import '../paginater_firestore.dart';
+import 'add_inquiry_method.dart';
 
 class AppliedRepoImp implements AppliedRepo {
   final FirebaseFirestore firebaseFirestore;
@@ -18,11 +19,16 @@ class AppliedRepoImp implements AppliedRepo {
   final CollectionReference<Map<String, dynamic>> collection2;
   final Query query;
   final PaginaterFirestore paginaterFirestore;
+  final AddInquiryMethod addInquiryMethod;
 
   AppliedRepoImp({
     required this.firebaseFirestore,
     required this.authenticationRepo,
-  })  : collection = firebaseFirestore.collection('jobs-applications'),
+  })  : addInquiryMethod = AddInquiryMethod(
+          authenticationRepo: authenticationRepo,
+          firebaseFirestore: firebaseFirestore,
+        ),
+        collection = firebaseFirestore.collection('jobs-applications'),
         collection2 = firebaseFirestore.collection('user-applications'),
         query = firebaseFirestore
             .collection('jobs-applications')
@@ -59,11 +65,12 @@ class AppliedRepoImp implements AppliedRepo {
   @override
   Future<Either<Failure, AppliedJob>> detailed({required String id}) async {
     try {
+      var result = (await collection.doc(id).get()).data();
       return Future.value(
         Right(
           AppliedJobModel.fromSnapshot(
             id: id,
-            documentSnapshot: (await collection.doc(id).get()).data(),
+            documentSnapshot: result,
           )!,
         ),
       );
@@ -118,4 +125,8 @@ class AppliedRepoImp implements AppliedRepo {
 
   @override
   void refresh() => paginaterFirestore.refresh();
+
+  @override
+  Future<void> addInquiry({required String inquiry, required String jobId}) =>
+      addInquiryMethod(inquiry: inquiry, jobId: jobId);
 }

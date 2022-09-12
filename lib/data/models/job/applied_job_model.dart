@@ -4,8 +4,11 @@ import 'package:untitled/data/models/job/job_application_states_model.dart';
 import 'package:untitled/domain/entities/job/applied_job.dart';
 import 'package:untitled/domain/entities/job/job_application_states.dart';
 
+import '../../../core/utils/custom_converter.dart';
 import '../../../domain/entities/job/evaluated_job.dart';
 import '../../../domain/entities/user/user_info.dart' as user_ent;
+import 'applied_note_model.dart';
+import 'inquiry_job_model.dart';
 
 class AppliedJobModel extends AppliedJob {
   const AppliedJobModel({
@@ -21,6 +24,9 @@ class AppliedJobModel extends AppliedJob {
     required super.languages,
     required super.score,
     required super.state,
+    required super.rate,
+    required super.notes,
+    required super.inquiries,
   });
 
   static AppliedJob? fromSnapshot({
@@ -49,8 +55,17 @@ class AppliedJobModel extends AppliedJob {
         languages: EvLanguageDescriptionModel.fromSnapshot(
           documentSnapshot: documentSnapshot['languages'],
         )!,
+        notes: AppliedNoteModel.fromSnapshot(
+          CustomConverter.convertToListMap(documentSnapshot['notes']),
+        )!,
+        rate: documentSnapshot['rate'],
+        inquiries: InquiryJobModel.fromJsonAndSnapshot(
+          CustomConverter.convertToListMap(documentSnapshot['inquiries']),
+        ),
       );
-    } catch (e) {
+    } catch (e, s) {
+      print(e);
+      print(s);
       return null;
     }
   }
@@ -71,6 +86,7 @@ class AppliedJobModel extends AppliedJob {
       'full-name-job-seeker':
           '${userInfo.firstName} ${userInfo.middleName} ${userInfo.lastName}',
       'score': evaluatedJob.score,
+      'rate': 0,
       'state':
           ApplicationStatesModel.stateToString(ApplicationStates.screening),
       'edu-qualifications': EvEduQualificationDescriptionModel.toSnapshot(
@@ -85,6 +101,7 @@ class AppliedJobModel extends AppliedJob {
       'skills': EvSkillDescriptionModel.toSnapshot(
         evaluatedJob.skills,
       ),
+      'notes': [],
     };
   }
 }

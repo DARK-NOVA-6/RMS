@@ -1,28 +1,30 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
-import 'contact_info.dart';
-
 class Company extends Equatable {
-  final String id;
+  final String adminId;
   final String name;
-  final DateTime establishmentDate;
-  final String summary;
-  final Map<String, List<ContactInfo>> contactAddressInfo;
+  final String address;
+  final Timestamp creationDate;
+  final List<String> phones;
+  final List<String> emails;
 
   const Company({
-    required this.id,
+    required this.adminId,
     required this.name,
-    required this.establishmentDate,
-    required this.contactAddressInfo,
-    required this.summary,
+    required this.address,
+    required this.creationDate,
+    required this.phones,
+    required this.emails,
   });
 
   @override
   List<Object?> get props => [
-        id,
+        adminId,
         name,
-        establishmentDate,
-        contactAddressInfo,
-        summary,
+        address,
+        creationDate,
+        phones,
+        emails,
       ];
 }

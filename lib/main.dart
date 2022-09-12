@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:provider/provider.dart';
+import 'package:untitled/domain/usecases/job/applied/add_inquiry_applied.dart';
 import 'package:untitled/presentation/blocs/authentication/auth_bloc.dart';
 import 'package:untitled/provider/update_action_bar_actions_notification.dart';
 
@@ -22,7 +23,11 @@ void main() async {
   // globalUserInfo =
   //     (await getProfileUser(userId: 'KNvVSQq2xSUaxUNsEbHCu5VvHWv2'))!;
   // runApp(const MyApp2());
-
+  // Future.delayed(Duration(seconds: 1)).then((value) {
+  //   AddInquiryApplied()(
+  //       jobId: '1P9zzJqQ26AcIcPBTsN3',
+  //       inquiry: 'last one :) is this real job???');
+  // });
   runApp(
     Phoenix(
       child: ChangeNotifierProvider(

@@ -19,8 +19,8 @@ abstract class AutocompleteSubstringApi {
 class AutocompleteSubstringApiImp implements AutocompleteSubstringApi {
   static const List<String> _uriApiPossible = [
     // 'http://192.168.97.229:5000/',
-    'http://192.168.102.208:5000/',
-
+    'http://192.168.137.223:5000/',
+    // 'http://192.168.102.208:5000/',
   ];
 
   static final DetectUriApi _detectUriApi = DetectUriApi(
