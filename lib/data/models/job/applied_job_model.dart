@@ -102,7 +102,7 @@ class AppliedJobModel extends AppliedJob {
         evaluatedJob.skills,
       ),
       'notes': [],
-      'inquiries': [],
+      'inquiries': InquiryJobModel.toSnapshot(evaluatedJob.inquiries),
     };
   }
 }
