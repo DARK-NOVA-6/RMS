@@ -14,18 +14,8 @@ abstract class EvaluatorApi {
 }
 
 class EvaluatorApiImp implements EvaluatorApi {
-  static const List<String> _uriApiPossible = [
-    // 'http://192.168.97.229:5000/',
-    // 'http://192.168.137.223:5000/',
-    'http://192.168.102.208:5000/',
-  ];
+  static Future<String> get uriApi async => DetectUriApi.uriApi;
 
-
-  static final DetectUriApi _detectUriApi = DetectUriApi(
-    uriApiPossible: _uriApiPossible,
-  );
-
-  static Future<String> get uriApi async => _detectUriApi.uriApi;
   static Map<String, String> headers = {
     HttpHeaders.contentTypeHeader: "application/json",
     "Connection": "Keep-Alive",

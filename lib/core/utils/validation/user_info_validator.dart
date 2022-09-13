@@ -31,6 +31,7 @@ class UserInfoValidator {
     if (invalidLang) errors.add(const InvalidLangUserInfoFailure());
     if (invalidJobTitle) errors.add(const InvalidJobTitleUserInfoFailure());
 
+    print(errors);
     return Future<List<UserInfoFailure>>.value(errors);
   }
 

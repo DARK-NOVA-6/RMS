@@ -55,7 +55,8 @@ class TransformerUserController {
           e.start == null ? '' : DateFormat.yMMMd().format(e.start!.toDate());
       exp.duration.text = e.start == null || e.start == null
           ? ''
-          : e.end!.toDate().difference(e.start!.toDate()).toString();
+          : ((e.end!.toDate().difference(e.start!.toDate())).inDays / 365)
+              .toString();
       return exp;
     }).toList();
   }
@@ -94,6 +95,11 @@ class TransformerUserController {
 
   static UserInfo fromUserController(UserController userController) {
     return UserInfo(
+      rating: GetConnectedUser().connectedUser!.rating,
+      id: GetConnectedUser().connectedUser!.id,
+      location: GetConnectedUser().connectedUser!.location,
+      nationality: GetConnectedUser().connectedUser!.nationality,
+      companies: GetConnectedUser().connectedUser!.companies,
       summary: userController.personalControllers.freeSpace.text,
       email: GetConnectedUser().connectedUser!.email,
       skills:

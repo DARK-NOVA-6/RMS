@@ -36,7 +36,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<LoginEvent>(loginEventHandle);
     on<LogOutEvent>((event, emit) async {
       await logOut();
-      sl.reset(dispose: true);
+      await sl.reset(dispose: true);
+      init();
       emit(AuthInitial());
     });
   }
@@ -49,6 +50,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     } else if (!isEmail(event.email)) {
       emit(SignUpErrorState(message: const InvalidEmail().message));
     } else {
+      await sl.reset(dispose: true);
+      init();
       final result = await signUpEmailPassword(
           email: event.email, password: event.password);
       result.fold(
@@ -65,6 +68,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     } else {
       final result = await signInEmailAndPassword(
           email: event.email, password: event.password);
+      await sl.reset(dispose: true);
+      init();
       result.fold(
         (failure) => emit(SignInErrorState(message: failure.message)),
         (user) => emit(const SignedInState()),

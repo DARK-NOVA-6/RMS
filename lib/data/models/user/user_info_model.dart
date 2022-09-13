@@ -2,10 +2,12 @@ import '../../../domain/entities/user/user_info.dart';
 import 'education_certificate_model.dart';
 import 'past_job_model.dart';
 
+// ignore: must_be_immutable
 class UserInfoModel extends UserInfo {
-  static UserInfo? fromSnapshot(
-      {required Map<String, dynamic>? documentSnapshot,
-      required String userId}) {
+  static UserInfo? fromSnapshot({
+    required Map<String, dynamic>? documentSnapshot,
+    required String userId,
+  }) {
     if (documentSnapshot == null) return null;
     return UserInfo(
       id: userId,
@@ -20,6 +22,7 @@ class UserInfoModel extends UserInfo {
       location: documentSnapshot['location'],
       nationality: documentSnapshot['nationality'],
       rating: documentSnapshot['rating'],
+      ratingCounter: documentSnapshot['--rating-counter'],
       emails: _convertToListString(documentSnapshot['emails']),
       phones: _convertToListString(documentSnapshot['phones']),
       languages: _convertToListString(documentSnapshot['languages']),
@@ -41,7 +44,7 @@ class UserInfoModel extends UserInfo {
 
   static Map<String, dynamic> toSnapshot(UserInfo userInfo) {
     return {
-      'companies' : userInfo.companies,
+      'companies': userInfo.companies,
       'summary': userInfo.summary,
       'email': userInfo.email,
       'first-name': userInfo.firstName,
@@ -52,13 +55,14 @@ class UserInfoModel extends UserInfo {
       'location': userInfo.location,
       'nationality': userInfo.nationality,
       'rating': userInfo.rating,
+      '--rating-counter': userInfo.ratingCounter,
       'emails': userInfo.emails,
       'phones': userInfo.phones,
       'languages': userInfo.languages,
       'skills': userInfo.skills,
       'experiences': PastJobModel.listToSnapshot(userInfo.experiences),
       'edu-qualifications':
-          EducationCertificateModel.listToSnapshot(userInfo.eduQualifications),
+      EducationCertificateModel.listToSnapshot(userInfo.eduQualifications),
     };
   }
 }
