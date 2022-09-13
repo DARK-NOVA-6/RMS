@@ -63,9 +63,7 @@ class AppliedJobModel extends AppliedJob {
           CustomConverter.convertToListMap(documentSnapshot['inquiries']),
         ),
       );
-    } catch (e, s) {
-      print(e);
-      print(s);
+    } catch (e) {
       return null;
     }
   }

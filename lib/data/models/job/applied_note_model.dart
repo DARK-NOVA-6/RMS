@@ -1,4 +1,3 @@
-
 import '../../../domain/entities/job/applied_note.dart';
 
 class AppliedNoteModel extends AppliedNote {

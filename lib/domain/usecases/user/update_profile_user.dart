@@ -12,14 +12,11 @@ class UpdateProfileUser {
     List<String> errors = (await UserInfoValidator.validate(newUserInfo))
         .map((e) => e.message)
         .toList();
-    print(errors);
     if (errors.isNotEmpty) return Future<List<String>>.value(errors);
     (await userInfoRepo.updateUserInfo(newUserInfo: newUserInfo)).fold(
       (failure) => errors = [failure.message],
       (data) => errors = [],
     );
-    print(errors);
-    print(newUserInfo);
     return Future<List<String>>.value(errors);
   }
 }

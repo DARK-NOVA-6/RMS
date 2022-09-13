@@ -2,7 +2,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class BottomNavBar extends StatefulWidget{
+class BottomNavBar extends StatefulWidget {
   BottomNavBar({
     Key? key,
     required this.changeIndex,

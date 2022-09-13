@@ -57,7 +57,7 @@ class EmailList extends StatelessWidget {
             return PhoneTextField(
               enabled: Provider.of<UpdateActionBarActions>(context).edit,
               phone: emails[index],
-              removePhone: ()=>remove(index),
+              removePhone: () => remove(index),
             );
           },
         ),

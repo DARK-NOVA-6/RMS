@@ -57,11 +57,11 @@ class _RecommendedState extends State<Recommended> {
       jobs.addAll(Iterable.castFrom(newJobs));
     }
 
-    if(mounted) {
+    if (mounted) {
       setState(() {
-      loading = false;
-      allLoaded = newJobs.length < 6;
-    });
+        loading = false;
+        allLoaded = newJobs.length < 6;
+      });
     }
   }
 

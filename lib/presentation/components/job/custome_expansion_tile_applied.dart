@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:untitled/domain/entities/job/applied_job.dart';
 import 'package:untitled/provider/theme.dart';
 
-import '../../../domain/usecases/job/applied/add_inquiry_applied.dart';
 import '../../pages/jobs/job_elements/bullet_point.dart';
-import '../components.dart';
 
 // ignore: must_be_immutable
 class AppliedCustomExpansionTile extends StatelessWidget {
@@ -61,20 +58,20 @@ class AppliedCustomExpansionTile extends StatelessWidget {
             children: job.eduQualifications
                 .map(
                   (item) => Row(
-                children: [
-                  const MyBullet(),
-                  const SizedBox(width: 15),
-                  Expanded(
-                    child: Text(
-                      '${item.degree} - ${item.field}'
+                    children: [
+                      const MyBullet(),
+                      const SizedBox(width: 15),
+                      Expanded(
+                        child: Text(
+                          '${item.degree} - ${item.field}'
                           ' ${(item.isRequired) ? '(*)' : ''}',
-                      style: fontSize_18.copyWith(
-                          color: (!item.isSatisfied) ? Colors.red : null),
-                    ),
+                          style: fontSize_18.copyWith(
+                              color: (!item.isSatisfied) ? Colors.red : null),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            )
+                )
                 .toList(),
           ),
         ),
@@ -91,20 +88,20 @@ class AppliedCustomExpansionTile extends StatelessWidget {
             children: job.experiences
                 .map(
                   (item) => Row(
-                children: [
-                  const MyBullet(),
-                  const SizedBox(width: 15),
-                  Expanded(
-                    child: Text(
-                      '${item.title} - ${item.period} Years'
+                    children: [
+                      const MyBullet(),
+                      const SizedBox(width: 15),
+                      Expanded(
+                        child: Text(
+                          '${item.title} - ${item.period} Years'
                           ' ${(item.isRequired) ? '(*)' : ''}',
-                      style: fontSize_18.copyWith(
-                          color: (!item.isSatisfied) ? Colors.red : null),
-                    ),
+                          style: fontSize_18.copyWith(
+                              color: (!item.isSatisfied) ? Colors.red : null),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            )
+                )
                 .toList(),
           ),
         ),
@@ -121,19 +118,19 @@ class AppliedCustomExpansionTile extends StatelessWidget {
             children: job.skills
                 .map(
                   (item) => Row(
-                children: [
-                  const MyBullet(),
-                  const SizedBox(width: 15),
-                  Expanded(
-                    child: Text(
-                      '${item.title} ${(item.isRequired) ? '(*)' : ''}',
-                      style: fontSize_18.copyWith(
-                          color: (!item.isSatisfied) ? Colors.red : null),
-                    ),
+                    children: [
+                      const MyBullet(),
+                      const SizedBox(width: 15),
+                      Expanded(
+                        child: Text(
+                          '${item.title} ${(item.isRequired) ? '(*)' : ''}',
+                          style: fontSize_18.copyWith(
+                              color: (!item.isSatisfied) ? Colors.red : null),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            )
+                )
                 .toList(),
           ),
         ),
@@ -150,19 +147,19 @@ class AppliedCustomExpansionTile extends StatelessWidget {
             children: job.languages
                 .map(
                   (item) => Row(
-                children: [
-                  const MyBullet(),
-                  const SizedBox(width: 15),
-                  Expanded(
-                    child: Text(
-                      '${item.title} ${(item.isRequired) ? '(*)' : ''}',
-                      style: fontSize_18.copyWith(
-                          color: (!item.isSatisfied) ? Colors.red : null),
-                    ),
+                    children: [
+                      const MyBullet(),
+                      const SizedBox(width: 15),
+                      Expanded(
+                        child: Text(
+                          '${item.title} ${(item.isRequired) ? '(*)' : ''}',
+                          style: fontSize_18.copyWith(
+                              color: (!item.isSatisfied) ? Colors.red : null),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            )
+                )
                 .toList(),
           ),
         ),

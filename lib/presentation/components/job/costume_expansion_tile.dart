@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:untitled/domain/entities/job/evaluated_job.dart';
 
-import '../../pages/jobs/job_elements/bullet_point.dart';
 import '../../../provider/theme.dart';
+import '../../pages/jobs/job_elements/bullet_point.dart';
 
 // ignore: must_be_immutable
 class CustomExpansionTile extends StatelessWidget {

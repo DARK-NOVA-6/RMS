@@ -11,7 +11,7 @@ class AppliedNote extends Equatable {
 
   @override
   List<Object?> get props => [
-    note,
-    state,
-  ];
+        note,
+        state,
+      ];
 }

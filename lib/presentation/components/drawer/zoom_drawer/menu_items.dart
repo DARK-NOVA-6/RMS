@@ -16,6 +16,7 @@ class MenuItems {
     title: 'Profile',
     icon: Icons.person_outline_outlined,
   );
+
   // static const MenuItem mailBox = MenuItem(
   //   title: 'MailBox',
   //   icon: Icons.mail_outline_rounded,

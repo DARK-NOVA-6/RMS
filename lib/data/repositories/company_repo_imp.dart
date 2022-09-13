@@ -46,12 +46,9 @@ class CompanyRepoImp implements CompanyRepo {
               ),
             ),
           );
-      print('hi4');
-
       user_ent.UserInfo current = authenticationRepo.connectedUser!;
 
       current.companies.add(company);
-      print(current.companies);
       userInfoRepo.updateUserInfo(
           newUserInfo: user_ent.UserInfo(
         id: current.id,
@@ -73,7 +70,6 @@ class CompanyRepoImp implements CompanyRepo {
         experiences: current.experiences,
         languages: current.languages,
       ));
-      print('hi');
       return true;
     } else {
       return false;

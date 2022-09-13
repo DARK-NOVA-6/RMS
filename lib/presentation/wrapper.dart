@@ -32,7 +32,6 @@ class _WrapperState extends State<Wrapper> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     String? selected;
@@ -53,7 +52,6 @@ class _WrapperState extends State<Wrapper> {
             var listTemp = snapshot.data!.docs[0];
             List<String> list =
                 CustomConverter().toListString(list: listTemp['list']);
-            print(list);
             return Material(
               child: DropdownButton(
                 value: selected,

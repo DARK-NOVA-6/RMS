@@ -57,7 +57,7 @@ class PhoneList extends StatelessWidget {
             return PhoneTextField(
               enabled: Provider.of<UpdateActionBarActions>(context).edit,
               phone: phones[index],
-              removePhone: ()=>remove(index),
+              removePhone: () => remove(index),
             );
           },
         ),

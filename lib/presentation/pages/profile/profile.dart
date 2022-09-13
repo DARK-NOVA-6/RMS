@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/data/datasources/remote/cv_parser_api.dart';
@@ -63,14 +62,12 @@ class _ProfileState extends State<Profile> {
         TransformerUserController.fromUserController(userController);
 
     UserController? newUserController;
-    List<String> err =
         await updateProfileUser(newUserInfo: userInfo).then((value) {
       newUserController = TransformerUserController.fromUserInfo(
           GetConnectedUser().connectedUser);
       return value;
     });
 
-    print(err);
     setState(() {
       if (newUserController != null) {
         userController = newUserController!;
@@ -128,7 +125,6 @@ class _ProfileState extends State<Profile> {
   }
 
   Future<File> saveFileLocal(PlatformFile file) async {
-    print('path::${file.path}');
     final appStorage = await getApplicationDocumentsDirectory();
     final newFile = File('${appStorage.path}/${file.name}');
     return File(file.path!).copy(newFile.path);

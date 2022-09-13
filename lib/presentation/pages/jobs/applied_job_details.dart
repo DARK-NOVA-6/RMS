@@ -1,8 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:untitled/domain/entities/job/applied_job.dart';
-import 'package:untitled/domain/usecases/job/applied/add_inquiry_applied.dart';
 import 'package:untitled/presentation/components/components.dart';
 import 'package:untitled/presentation/pages/jobs/job_elements/job_questions.dart';
 

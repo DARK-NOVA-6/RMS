@@ -6,7 +6,7 @@ class PersonalControllers {
   late final List<TextEditingController> phones;
   late final List<TextEditingController> emails;
 
-  late final String gender,rating;
+  late final String gender, rating;
 
   PersonalControllers({
     required this.fName,

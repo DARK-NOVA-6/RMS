@@ -19,7 +19,6 @@ abstract class AutocompleteSubstringApi {
 class AutocompleteSubstringApiImp implements AutocompleteSubstringApi {
   static Future<String> get uriApi async => DetectUriApi.uriApi;
 
-
   static Map<String, String> headers = {
     HttpHeaders.contentTypeHeader: "application/json",
     "Connection": "Keep-Alive",

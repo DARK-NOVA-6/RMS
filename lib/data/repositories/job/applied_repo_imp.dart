@@ -39,9 +39,7 @@ class AppliedRepoImp implements AppliedRepo {
               .collection('jobs-applications')
               .where('job-seeker-id', isEqualTo: GetConnectedUser().userId)
               .orderBy('applied-time'),
-        ) {
-    print('userid :: : ${GetConnectedUser().userId}');
-  }
+        );
 
   @override
   Future<List<Failure>> apply({required EvaluatedJob evaluatedJob}) async {

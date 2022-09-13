@@ -36,7 +36,7 @@ class EvaluatedJobModel extends EvaluatedJob {
           documentSnapshot: documentSnapshot['skills'],
         )!,
         eduQualifications:
-        EvEduQualificationDescriptionModel.fromJsonAndSnapshot(
+            EvEduQualificationDescriptionModel.fromJsonAndSnapshot(
           jsonData: jsonData['edu-qualifications'],
           documentSnapshot: documentSnapshot['edu-qualifications'],
         )!,

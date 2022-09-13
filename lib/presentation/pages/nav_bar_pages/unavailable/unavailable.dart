@@ -52,11 +52,11 @@ class _UnavailableState extends State<Unavailable> {
       jobs.addAll(Iterable.castFrom(newJobs));
     }
 
-    if(mounted) {
+    if (mounted) {
       setState(() {
-      loading = false;
-      allLoaded = newJobs.length < 3;
-    });
+        loading = false;
+        allLoaded = newJobs.length < 3;
+      });
     }
   }
 

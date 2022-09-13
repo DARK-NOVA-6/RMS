@@ -71,7 +71,7 @@ class _AppliedState extends State<Applied> {
     scrollController.addListener(() {
       if (scrollController.position.pixels >=
               scrollController.position.maxScrollExtent &&
-          !loading){
+          !loading) {
         // _handleProgress();
       }
     });

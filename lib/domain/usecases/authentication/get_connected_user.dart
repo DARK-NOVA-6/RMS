@@ -5,8 +5,7 @@ import '../../repositories/authentication_repo.dart';
 class GetConnectedUser {
   final AuthenticationRepo authenticationRepo;
 
-  GetConnectedUser() :
-        authenticationRepo = sl () ;
+  GetConnectedUser() : authenticationRepo = sl();
 
   String? get userId => authenticationRepo.userId;
 

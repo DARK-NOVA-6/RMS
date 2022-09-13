@@ -4,8 +4,6 @@ import 'package:equatable/equatable.dart';
 part 'education_certificate.dart';
 part 'past_job.dart';
 
-
-
 // ignore: must_be_immutable
 class UserInfo extends Equatable {
   String? id;
@@ -51,8 +49,7 @@ class UserInfo extends Equatable {
   });
 
   @override
-  List<Object?> get props =>
-      [
+  List<Object?> get props => [
         id,
         companies,
         email,

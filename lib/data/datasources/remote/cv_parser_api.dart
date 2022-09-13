@@ -12,7 +12,6 @@ abstract class CvParserApi {
 class CvParserApiImp implements CvParserApi {
   static Future<String> get uriApi async => DetectUriApi.uriApi;
 
-
   @override
   Future<void> upload({required File cvPdf, required String userId}) async {
     var stream = http.ByteStream(Stream.castFrom(cvPdf.openRead()));

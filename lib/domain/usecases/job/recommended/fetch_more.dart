@@ -13,7 +13,6 @@ class FetchMoreRecommended {
       (failure) => result = [],
       (data) => result = data,
     );
-    print(result);
     return result;
   }
 

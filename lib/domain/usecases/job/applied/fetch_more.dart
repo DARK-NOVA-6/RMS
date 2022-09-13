@@ -16,10 +16,9 @@ class FetchMoreApplied {
   Future<List<AppliedJob>> call({required int limit}) async {
     List<AppliedJob> result = [];
     (await appliedRepo.fetch(limit: limit)).fold(
-          (failure) => result = [],
+      (failure) => result = [],
       (data) => result = data,
     );
-    print(result);
     return result;
   }
 

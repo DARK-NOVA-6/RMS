@@ -62,7 +62,7 @@ class UserInfoModel extends UserInfo {
       'skills': userInfo.skills,
       'experiences': PastJobModel.listToSnapshot(userInfo.experiences),
       'edu-qualifications':
-      EducationCertificateModel.listToSnapshot(userInfo.eduQualifications),
+          EducationCertificateModel.listToSnapshot(userInfo.eduQualifications),
     };
   }
 }
